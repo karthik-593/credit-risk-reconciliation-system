@@ -1,0 +1,9 @@
+data/
+models/
+*.zip
+*.csv
+*.csv.gz
+*.pkl
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
