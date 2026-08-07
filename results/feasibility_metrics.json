@@ -1,0 +1,57 @@
+{
+  "source": "Transcribed verbatim from DECISIONS.md, Findings 2-4. Do not recompute; read only.",
+  "finding2_model_a": {
+    "description": "Tabular-only baseline (13 origination-time features), locked split random_state=42",
+    "pr_auc": 0.2769,
+    "roc_auc": 0.6912,
+    "base_rate": 0.1526,
+    "train_rows": 86460,
+    "test_rows": 21616
+  },
+  "finding3_selection_bias": {
+    "description": "has_desc selection-effect control, full 2007-2013 resolved population, fresh stratified split random_state=42",
+    "population_rows": 227957,
+    "train_rows": 182365,
+    "test_rows": 45592,
+    "a_full": { "pr_auc": 0.2809, "roc_auc": 0.6882 },
+    "b_full": { "pr_auc": 0.2807, "roc_auc": 0.6879 },
+    "delta_pr_auc": -0.0002,
+    "has_desc_gain": 6.83,
+    "has_desc_rank": 13,
+    "n_features": 14
+  },
+  "finding4_text_lift": {
+    "description": "A / A+len / C on the identical desc-only population (108,076 rows), 3 seeds, seed 42 reuses the Finding 2 split exactly",
+    "population_rows": 108076,
+    "seeds": [42, 43, 44],
+    "models": {
+      "A": {
+        "pr_auc_mean": 0.2753, "pr_auc_std": 0.0043, "pr_auc_per_seed": [0.2769, 0.2796, 0.2695],
+        "roc_auc_mean": 0.6911, "roc_auc_std": 0.0007, "roc_auc_per_seed": [0.6912, 0.6919, 0.6902]
+      },
+      "A+len": {
+        "pr_auc_mean": 0.2767, "pr_auc_std": 0.0048, "pr_auc_per_seed": [0.2780, 0.2818, 0.2703],
+        "roc_auc_mean": 0.6918, "roc_auc_std": 0.0009, "roc_auc_per_seed": [0.6923, 0.6926, 0.6905]
+      },
+      "C": {
+        "pr_auc_mean": 0.2853, "pr_auc_std": 0.0043, "pr_auc_per_seed": [0.2866, 0.2897, 0.2795],
+        "roc_auc_mean": 0.6969, "roc_auc_std": 0.0019, "roc_auc_per_seed": [0.6973, 0.6990, 0.6944]
+      }
+    },
+    "deltas_pr_auc": {
+      "length_channel_Alen_minus_A": { "mean": 0.0014, "std": 0.0006, "per_seed": [0.0011, 0.0022, 0.0007] },
+      "content_lift_C_minus_A": { "mean": 0.0099, "std": 0.0002, "per_seed": [0.0097, 0.0101, 0.0100] },
+      "content_beyond_length_C_minus_Alen": { "mean": 0.0086, "std": 0.0005, "per_seed": [0.0086, 0.0079, 0.0093] }
+    },
+    "has_desc_selection_bar_pr_auc": -0.0002,
+    "top20_tfidf_gain_seed42": [
+      ["appreciate", 20.75], ["need", 20.22], ["bills", 20.11], ["business", 20.01],
+      ["college", 19.87], ["matter", 18.18], ["retirement", 18.08], ["combine", 17.78],
+      ["rate", 17.38], ["thats", 17.17], ["card", 17.15], ["advertising", 16.91],
+      ["fix", 16.83], ["problems", 16.48], ["growing", 15.43], ["things", 15.34],
+      ["opening", 15.19], ["proceeds", 15.11], ["loans", 15.08], ["pool", 15.04]
+    ]
+  },
+  "verdict": "PASS",
+  "verdict_summary": "Content lift (C-A) positive across all 3 seeds; survives the flat has_desc presence bar and the verbosity bar (A+len); top-feature audit clean, no template residue. Effect is modest (+0.0099 PR-AUC, ~3.6% relative over A) and vintage-bounded (2007-2013 only, desc field discontinued industry-wide after 2015)."
+}

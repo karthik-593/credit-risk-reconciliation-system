@@ -1,0 +1,299 @@
+# DECISIONS — Loan Text-Signal Feasibility Test
+
+A running log of what was tested, what came back, and what was decided. Written plainly,
+including what didn't work. This file is the honest record — the same discipline that made
+the KKBox repo defensible. Record results here as each prompt returns.
+
+---
+
+## Finding 0 — Data audit (Prompt 1) — COMPLETE
+
+**Question:** Does usable borrower text and a real default label coexist in the same years?
+
+**Result:**
+
+`desc` fill rate by issue year:
+
+| Year | Total | Non-empty desc | % Filled | Median len (chars) |
+|---|---|---|---|---|
+| 2007 | 603 | 588 | 97.5% | 152 |
+| 2008 | 2,393 | 2,393 | 100.0% | 196 |
+| 2009 | 5,281 | 5,025 | 95.2% | 290 |
+| 2010 | 12,537 | 8,286 | 66.1% | 344 |
+| 2011 | 21,721 | 12,723 | 58.6% | 264 |
+| 2012 | 53,367 | 32,743 | 61.4% | 187 |
+| 2013 | 134,814 | 48,730 | 36.2% | 132 |
+| 2014 | 235,629 | 15,274 | 6.5% | 115 |
+| 2015+ | — | ~0 | 0.0% | — |
+
+Maturity (2007–2013): resolved (Fully Paid + Charged Off) = **227,957 / 230,716 (98.8%)**.
+Full-set default rate in-window ≈ 15%.
+
+**Decision:** Both gates pass. Text and outcomes coexist in **2007–2013**. Restrict the
+entire test to that window. Proceed to the signal test.
+
+**Caveats carried forward:**
+- **Selection bias:** `desc` fill *decays* 97% → 36% across the window. Who writes a
+  description is not random → must separate "has text" (Model B) from "text content"
+  (Model C). This is why the test is 3-way, not 2-way.
+- **Template cruft:** every `desc` wrapped as `Borrower added on MM/DD/YY > … <br>`.
+  Strip before text features.
+
+---
+
+## Finding 1 — Fixed frame + template strip (Prompt A) — COMPLETE
+
+**Question:** After restricting to 2007–2013 resolved rows with non-empty desc, how
+many rows remain, and did the template strip leave real borrower text?
+
+**Result:**
+- Resolved frame (2007–2013, Fully Paid + Charged Off): 227,957 rows — matches Finding 0.
+- Class balance, full resolved: 192,619 FP (84.50%) / 35,338 CO (15.50%).
+- Non-empty desc (whitespace-stripped): 108,076 rows (47.4% of resolved). Reconciles
+  with Finding 0's 110,488 in-window desc rows after subtracting unresolved loans +
+  whitespace-only descs (~2,400).
+- Class balance, desc subset: 84.74% / 15.26% — marginal default rate 0.24 pts below full.
+- Template strip: 'Borrower added on MM/DD/YY >' prefix, <br>, and HTML removed;
+  multi-entry descs concatenated with prose intact (per 5 before/after examples).
+- Saved: feasibility_frame.pkl (108,076 × 20, incl. desc_clean).
+
+**Decision:** Clean text remains; population fixed at 108,076. Proceed to Model A (Prompt B).
+
+**Caveats carried forward:**
+- Near-identical *marginal* default rate (15.26 vs 15.50) is NOT evidence that has_desc
+  lacks a *conditional* selection effect — that is exactly what Prompt C measures. Not
+  pre-judged here.
+- has_desc is constant (=1) on this desc-only frame, so Model B necessarily runs on the
+  full resolved set. The decisive gate compares C's lift (desc-only pop) against the
+  has_desc lift (full pop) — keep the two populations straight when reading the verdict.
+- Multi-entry template residue is the highest-risk cleaning failure; Prompt D's
+  top-feature audit is the backstop.
+
+---
+
+## Finding 2 — Model A, tabular baseline + locked split (Prompt B) — COMPLETE
+
+**Question:** What is the tabular-only default-prediction performance — the number to beat?
+
+**Leakage audit:** 13 features, all origination-time — loan_amnt, term, int_rate, grade,
+sub_grade, annual_inc, dti, emp_length, home_ownership, verification_status,
+fico_range_low, fico_range_high, purpose. No paid_*, balance, last_fico_*, recoveries, or
+status-derived fields. Note: int_rate/grade/sub_grade are LendingClub's own priced-in risk
+assessment — known at origination (not leakage), but they make the baseline strong and
+absorptive, which raises the bar for text. ROC-AUC 0.69 is consistent with a clean
+no-leakage model; a near-1.0 would have been the alarm.
+
+**Encoding:** term→numeric months; emp_length ordinal 0–10 with 4,114 (~3.8%) NaN left for
+XGBoost native sparsity handling (not imputed); grade/sub_grade/home_ownership/
+verification_status/purpose as category dtype via enable_categorical. Split: stratified
+80/20, random_state=42 → train 86,460 / test 21,616, both 15.26%. Indices → split_indices.pkl.
+
+**Result (held-out test, 21,616 rows):**
+- PR-AUC 0.2769 (no-skill = base rate 0.1526; ~1.81×).
+- ROC-AUC 0.6912.
+
+**Decision:** Baseline recorded. Split discipline for downstream models:
+- Model C (Prompt D) reuses split_indices.pkl EXACTLY — identical desc-only population.
+- Model B (Prompt C) reuses the split POLICY only (stratified 80/20, rs=42) on its own
+  full 227,957-row population — has_desc is constant on the desc-only frame, so B cannot
+  run there. Two populations; do not conflate.
+- Lock PR-AUC = sklearn average_precision_score and the XGBoost hyperparameters; reuse
+  verbatim for A-full/B-full/C so the A→C delta reflects features only.
+
+---
+
+## Finding 3 — has_desc selection effect (Prompt C) — COMPLETE
+
+**Question:** Does *merely having* a description predict default, independent of content?
+
+**Result (full 2007–2013 resolved set, 227,957 rows; fresh stratified 80/20, rs=42;
+Model A hyperparameters; PR-AUC = average_precision_score; train 182,365 / test 45,592,
+both 15.50%):**
+- A-full (13 tabular): PR-AUC 0.2809 / ROC-AUC 0.6882.
+- B-full (+ has_desc): PR-AUC 0.2807 / ROC-AUC 0.6879.
+- Delta B-full − A-full = **−0.0002 PR-AUC** → flat (negative is noise-level; read as zero).
+- has_desc gain 6.83, ranks 13/14 — indistinguishable from the weakest tabular feature
+  (fico_range_high 6.70), far below grade (181.12).
+
+**SELECTION-EFFECT BAR = −0.0002 (flat).**
+
+**Decision:** The presence of a desc carries ~zero conditional signal once grade/rate/etc.
+are in the model — because that selection runs THROUGH grade/rate, which tabular already
+holds. Gate for Prompt D effectively reduces to (C − A) > 0.
+
+**Caveats carried forward — the bar is low but the burden is NOT:**
+- A flat bar means the selection control absorbs no spurious lift. All defense against a
+  FALSE pass now falls on Prompt D's top-feature audit, min_df floor, and 3-seed stability.
+  A tiny artifactual lift would clear this gate — authenticity scrutiny goes UP, not down.
+- has_desc is binary; it cannot see WITHIN-writer selection (e.g. desc length/verbosity as
+  a borrower-trait proxy). TF-IDF L2-norm dampens raw length but not vocabulary richness.
+  DECISION: INCLUDE A+len (tabular + desc_clean word count) as a second bar, folded into
+  Prompt D on the identical desc-only rows/split/seeds. A+len becomes the stricter
+  baseline: the content claim requires C to beat A+len, not just A. Length counted on
+  desc_clean so template/multi-entry wrappers don't masquerade as verbosity.
+
+---
+
+## Finding 4 — Model C, text content + verdict (Prompt D) — COMPLETE
+
+**Question:** Does the CONTENT of borrower text add signal beyond (a) tabular, (b) has_desc
+presence, and (c) desc verbosity?
+
+**Result (desc-only frame, 108,076 rows; 3 seeds 42/43/44, split reshuffled per seed;
+Model A hyperparameters; PR-AUC = average_precision_score; TF-IDF max_features~1500,
+English stopwords, min_df=5):**
+
+| Model | PR-AUC | ROC-AUC |
+|---|---|---|
+| A (13 tabular) | 0.2753 ± 0.0043 | 0.6911 ± 0.0007 |
+| A+len (+ word count) | 0.2767 ± 0.0048 | 0.6918 ± 0.0009 |
+| C (+ TF-IDF ~1500) | 0.2853 ± 0.0043 | 0.6969 ± 0.0019 |
+
+Deltas (PR-AUC), all seeds positive:
+- Length channel (A+len − A): +0.0014 ± 0.0006
+- Content lift (C − A): +0.0099 ± 0.0002 (per seed: 0.0097 / 0.0101 / 0.0100)
+- Content beyond length (C − A+len): +0.0086 ± 0.0005
+- has_desc selection bar (Finding 3): −0.0002 (flat)
+
+Top-20 TF-IDF by gain (seed 42): appreciate, need, bills, business, college, matter,
+retirement, combine, rate, thats, card, advertising, fix, problems, growing, things,
+opening, proceeds, loans, pool. Zero template residue (no 'borrower'/'added'/'br'/dates).
+Several tokens (business, college, pool, proceeds, opening) are purpose-adjacent — yet
+`purpose` is already a tabular column, so this lift is WITHIN-purpose discrimination the
+column cannot capture. Direct rebuttal to the README's "text is an echo of the fields" fear.
+
+**Verdict: PASS.** Content lift positive across all 3 seeds, survives the presence bar
+(flat) and the verbosity bar (+0.0086 beyond A+len), audit clean. The CONTENT of borrower
+text carries genuine incremental signal.
+
+**Honest caveats on the PASS — real, not large:**
+- Effect is MODEST: +0.0099 PR-AUC, ~3.6% relative over A. The earlier "43× the bar"
+  framing is DROPPED — the has_desc bar is statistically zero, so a ratio against it is
+  meaningless. The real competing baseline was A+len (+0.0014), which content beat by
+  +0.0086.
+- The magnitude is itself data for PROJECT.md risk #2 (does text change the decision often
+  enough to matter). Statistical PASS ≠ large effect; scope the project accordingly.
+- The top-feature semantic story ('stress vocabulary', 'tone words') is interpretation,
+  not a finding. The audit passed on its actual criterion — no residue, no leakage.
+  Direction of each token unverified (gain shows use, not sign).
+
+---
+
+## Final call
+
+**GO — build the project, framed honestly for what it is.** Gate zero passed: borrower
+text carries real, seed-stable signal beyond tabular fields, beyond desc presence, and
+beyond verbosity, with no template/leakage artifacts. The signal is genuine but modest
+(+0.0099 PR-AUC), which pre-answers part of PROJECT.md risk #2 — measure "how often does
+text change the decision" early, because a lift this size predicts it moves the margin,
+not the mass.
+
+**First day-one risk to retest at scale:** this entire finding lives on the desc-only
+population (the 47% who wrote text) in 2007–2013. LendingClub STOPPED collecting `desc` in
+2015. So the signal is not only vintage-bounded but built on an input feature that no
+longer exists on new data — the "at scale" version of this test is not retestable on
+post-2015 loans because the column is gone. That bounds what the full project can honestly
+claim: it is a methods demonstration on a historical corpus (legitimate for the fintech
+portfolio target), NOT a deployable live system. Build it as the former, say so plainly,
+and the desc-only / stopped-collecting scope becomes a stated limitation rather than a
+discovered embarrassment.
+
+---
+---
+
+# BUILD PHASE — Reconciliation Agent (post-gate)
+
+Gate passed, so PROJECT.md is un-shelved and the agentic layer is being built. Same honest
+record, continued. Logged after each verified result.
+
+## Build 0 — Architecture: what was cut and why — COMPLETE
+
+**Question:** A "make it a true multi-agent system" proposal (5 agents, 8 NLP sub-tasks,
+narrative-risk probability, evidence-retrieval loop) was on the table. Adopt it?
+
+**Decision:** Partially. Kept the good additions; cut everything unfalsifiable. Final
+design is **4 nodes**, not 5 inflated agents:
+tabular_score → text_stance → reconciler → explanation.
+
+Adopted from the proposal:
+- Explanation as a separate node (clean split of decide vs. write-memo).
+- Business metrics for eval (% decisions changed by text, human-review rate, calibration,
+  FP/FN) alongside trajectory/faithfulness.
+- Specify the reconciler logic explicitly (don't leave it vague).
+
+Rejected — and why (this is the discipline that separates this from theatre):
+- **8-task Narrative Agent** (fraud, contradiction, employment-consistency): LendingClub
+  has NO ground truth for these. Unvalidatable outputs = vibes with a label. Do the one
+  task the feasibility test validated: corroborate / mitigate / neutral vs tabular risk.
+- **"Narrative Risk = 0.42, confidence 0.84":** an LLM asked to rate risk 0–1 emits an
+  uncalibrated confabulation. The XGBoost probability is calibrated against realized
+  default; do not weigh a real number against a made-up one.
+- **Evidence-retrieval loop** ("retrieve more → re-run reconciliation"): a static
+  application has no additional borrower evidence to fetch. Motion for the appearance of
+  agency. Replaced with: low confidence → human review.
+- **Calling every node an "agent":** a deterministic XGBoost scorer is not an agent.
+  Reserve the claim for the reconciler's routing, which is the one place with real agency.
+- **Tech maximalism** (LangSmith + BGE + spaCy + FAISS + reranker): each is a dependency
+  to explain and a way to ship nothing. v1 stays minimal.
+
+## Build 1 — Core invariants — COMPLETE
+
+**Decision:** Three non-negotiables baked into the code, not just intended:
+1. **Independence:** text_stance NEVER reads p_default. It forms its narrative read from
+   desc + retrieved policy only. The reconciler is the FIRST node to see both channels.
+   This is the agentic analog of the content-vs-selection separation that made Finding 4
+   honest — if the text channel sees the score first, "agreement" is meaningless.
+2. **Reconciler decides by RULES** over (stance, confidence), not a learned meta-classifier
+   (no training data for the meta-decision) and not an LLM that invents the decision. An
+   LLM may WRITE the disagreement memo; it does not MAKE the call.
+3. **Retrieval is a tool** the stance node calls, not a separate "agent".
+
+## Build 2 — Node implementation — COMPLETE (uncommitted)
+
+In `agent/reconciler_agent.py`. Graph/state/routing unchanged from the agreed skeleton.
+
+- **_score_tabular:** loads models/model_a.pkl; RE-DERIVES Model A's training-time
+  categorical codes from feasibility_frame.pkl before encoding. Why: XGBoost categorical
+  splits are code-based; an independent `.astype("category")` per call assigns codes by
+  whichever strings appear in that call, so the same string could map to a different code
+  than training used — silently corrupting every categorical split. Returns (p_default,
+  top-5 SHAP drivers via TreeExplainer). Tested on a real sample — works.
+- **_retrieve_policy:** 19-chunk synthetic underwriting corpus (DTI limits, hardship/
+  medical, employment verification, fraud flags, purpose-specific), BM25 via rank_bm25,
+  top-k=4. Tested — sensible matches.
+- **_call_llm_json:** provider-agnostic LLMClient Protocol + configure_llm_client()
+  injection (no vendor committed yet), strict JSON parse with code-fence tolerance, falls
+  back to stance="neutral"/confidence=0.0 on any parse/validation failure or unconfigured
+  client. Tested: good / fenced / broken / invalid-stance + unconfigured-error path.
+
+## Build 3 — Tests — COMPLETE (uncommitted)
+
+- **Routing smoke test** (test_reconciler_routing.py): reconciler → _route →
+  auto_decision/human_review → explanation with stubbed states. 5/5:
+  agree-risky→auto_decline, agree-safe→auto_approve, both disagree directions→human_review,
+  low-confidence→human_review.
+- **stance→reconciler seam** (test_stance_reconciler_seam.py): real text_stance (real BM25,
+  real JSON parse) through real reconciler, stub LLMClient. 4/4:
+  mitigates+0.85→disagree, corroborates+0.20→disagree, corroborates+0.85→agree,
+  unparseable→neutral→low_conf.
+- **Full graph invoke** (test_full_graph_invoke.py): one real application through
+  build_graph().invoke(); real _score_tabular against models/model_a.pkl (p_default=0.1700,
+  correct SHAP drivers), real _retrieve_policy, stub LLM. Final state threaded p_default,
+  stance=mitigates_risk, route=agree, decision=auto_approve, non-empty memo end-to-end.
+
+**Note carried forward:** the `disagree` route fires only in two corners (risky+mitigates,
+safe+corroborates). Most applications won't hit them — watch the DISAGREE RATE in the eval.
+A near-zero rate is PROJECT.md risk #2 surfacing (text rarely changes the decision), and it
+is a finding to REPORT, not a bug to tune away.
+
+## Pending
+
+- Presentation notebook (notebooks/feasibility_story.ipynb): communication layer over
+  Findings 0–4; numbers READ from the DECISIONS.md record (results/feasibility_metrics.json),
+  NOT recomputed. Only descriptive stats (fill rate, class balance) recomputed.
+- Wire a real LLM client to the stance node (Anthropic a reasonable default for the
+  structured-JSON-with-quoted-evidence task; one adapter).
+- The eval on the locked test split: decisions vs tabular-alone, disagree rate, and whether
+  flipped cases are better calibrated against realized default. This is the headline metric.
+- Commit discipline: requirements.txt bump (langgraph, shap, rank_bm25 — PINNED) in the
+  SAME commit as the code that needs it.
