@@ -1,0 +1,33 @@
+{
+  "max_depth": 2,
+  "learning_rate": 0.16082866822939967,
+  "min_child_weight": 13,
+  "subsample": 0.9342507578839896,
+  "colsample_bytree": 0.5617104625598865,
+  "reg_lambda": 0.3008927197344441,
+  "n_estimators": 427,
+  "early_stopping_rounds": 30,
+  "random_state": 42,
+  "objective": "binary:logistic",
+  "eval_metric": "aucpr",
+  "tree_method": "hist",
+  "enable_categorical": true,
+  "features": [
+    "loan_amnt",
+    "term",
+    "int_rate",
+    "grade",
+    "sub_grade",
+    "annual_inc",
+    "dti",
+    "emp_length",
+    "home_ownership",
+    "verification_status",
+    "fico_range_low",
+    "fico_range_high",
+    "purpose"
+  ],
+  "optuna_best_val_pr_auc": 0.29396738123584737,
+  "optuna_n_trials": 40,
+  "refit_best_iteration": 134
+}

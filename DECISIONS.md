@@ -286,14 +286,44 @@ safe+corroborates). Most applications won't hit them — watch the DISAGREE RATE
 A near-zero rate is PROJECT.md risk #2 surfacing (text rarely changes the decision), and it
 is a finding to REPORT, not a bug to tune away.
 
+## Build 4 — Tabular tuning + calibration test (measured, not assumed) — COMPLETE
+
+**Question:** Does tuning Model A's hyperparameters move test performance, and does adding
+an isotonic calibration layer improve probability quality?
+
+**Split discipline:** notebooks/tabular_tuning.ipynb carved train_inner (~70%) / val (~15%)
+/ calib (~15%) out of the locked TRAIN indices only (stratified, seed 42). Categories
+re-derived once from the full feasibility_frame.pkl, never re-cast per split. The locked
+TEST set was read in exactly one cell — the last one — with X_test/y_test undefined
+everywhere above it (a real NameError guard, not a comment). 40-trial Optuna search
+(TPE, seed 42) optimized val PR-AUC; best params frozen to config/tabular_best_params.json.
+
+**Result (locked TEST, read once):**
+- model_a (original): PR-AUC 0.2769 / ROC-AUC 0.6912.
+- tuned: PR-AUC 0.2803 / ROC-AUC 0.6920. **Delta +0.0034** — small, as expected; tuning a
+  13-feature tabular model has limited headroom.
+- Isotonic calibration, fit on the ~13k-row calib slice, tested on locked TEST: Brier
+  0.1213 → 0.1216, ECE 0.0029 → 0.0046. **Both got slightly worse.** Raw XGBoost was
+  already well-calibrated out of the box (ECE 0.0029 is tight); isotonic on a calib slice
+  this size added noise rather than correcting bias.
+
+**Decision:** Remove the isotonic layer from scripts/train_final.py. models/
+model_a_tuned_calibrated.pkl now holds `{model, features, categories, config}` only — no
+calibrator key. Filename kept as-is (avoids touching the agent's load path later); the
+calib split is still carved out for reproducibility of train_inner/val, just unused.
+Removed because it was measured to not help on held-out data, not because calibration is
+assumed unnecessary in general — the honest-caveat discipline applies to convenient
+findings too, not just inconvenient ones.
+
+**Caveat carried forward:** a ~13k-row calib slice may simply be too small for isotonic to
+generalize on a model this already well-calibrated. If calibration is revisited, a larger
+calib slice or a parametric approach (Platt scaling) would be the next thing to try — not
+logged as a retry, since none is planned.
+
 ## Pending
 
-- Presentation notebook (notebooks/feasibility_story.ipynb): communication layer over
-  Findings 0–4; numbers READ from the DECISIONS.md record (results/feasibility_metrics.json),
-  NOT recomputed. Only descriptive stats (fill rate, class balance) recomputed.
-- Wire a real LLM client to the stance node (Anthropic a reasonable default for the
-  structured-JSON-with-quoted-evidence task; one adapter).
+- Wire a real LLM client to the stance node (one adapter for whichever provider is chosen).
 - The eval on the locked test split: decisions vs tabular-alone, disagree rate, and whether
   flipped cases are better calibrated against realized default. This is the headline metric.
-- Commit discipline: requirements.txt bump (langgraph, shap, rank_bm25 — PINNED) in the
-  SAME commit as the code that needs it.
+- Commit discipline: requirements.txt bump (langgraph, shap, rank_bm25, optuna — PINNED) in
+  the SAME commit as the code that needs it.

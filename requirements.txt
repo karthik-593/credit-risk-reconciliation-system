@@ -6,3 +6,4 @@ scipy>=1.18
 langgraph>=1.2
 shap>=0.52
 rank_bm25>=0.2
+optuna>=4.9
