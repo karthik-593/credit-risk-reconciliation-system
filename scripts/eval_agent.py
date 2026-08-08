@@ -1,22 +1,28 @@
 """
 Headline eval for the tabular/text reconciliation agent (agent/reconciler_agent.py),
-run over the locked TEST split's desc-only population. Three modes, one flag:
+run over the locked TEST split's desc-only population. Four modes, one flag:
 
   (default) STUB  -- deterministic, hash-keyed stub stances. Zero LLM tokens.
                       Exercises every route bucket + the underpowered guard.
   --validate      -- 40 REAL LLM calls only. Reports parse-success rate,
                       evidence-grounding rate, stance distribution. Gate
                       before spending tokens on the full run.
-  --real          -- full SAMPLE_N run with the real adapter (agent/llm_client.py).
+  --real          -- SAMPLE_N=2000 run with the real adapter (agent/llm_client.py).
                       Every stance cached by loan_id to
                       results/eval_stance_cache.pkl so re-runs are free.
+                      Saves results/agent_eval.json.
+  --full          -- the ENTIRE locked TEST population (21,616 rows), real
+                      adapter, same cache (reused for the 2,000 already
+                      scored, new calls only for the rest). Saves
+                      results/agent_eval_fullpower.json -- does NOT overwrite
+                      agent_eval.json.
 
 Population: split_indices.pkl TEST indices ONLY -- never train (train was
-tuning's; TEST is read here, once, for evaluation, same as the tuning
-notebook's own single test-touching cell). Rows come from
-feasibility_frame.pkl, the desc-only population the tabular models were both
-built and scored on. A base-rate-preserved random sample (SAMPLE_N, seed 42)
-is drawn from TEST.
+tuning's; TEST is read here for evaluation, same as the tuning notebook's own
+single test-touching cell). Rows come from feasibility_frame.pkl, the
+desc-only population the tabular models were both built and scored on.
+--validate/--real draw a base-rate-preserved random sample (seed 42) from
+TEST; --full uses all of it, no sampling.
 
 Does not modify agent/reconciler_agent.py. This script imports and calls its
 existing node functions (tabular_score, text_stance, reconciler, _route,
@@ -41,7 +47,8 @@ import reconciler_agent as ra  # noqa: E402
 FRAME_PATH = ROOT / "data" / "interim" / "feasibility_frame.pkl"
 SPLIT_PATH = ROOT / "data" / "interim" / "split_indices.pkl"
 CACHE_PATH = ROOT / "results" / "eval_stance_cache.pkl"
-OUT_PATH = ROOT / "results" / "agent_eval.json"
+# Output path is chosen in main() by mode: agent_eval.json (stub/real) or
+# agent_eval_fullpower.json (--full) -- --full must never overwrite the other.
 
 RAW_TABULAR_COLS = [
     "loan_amnt", "term", "int_rate", "grade", "sub_grade",
@@ -225,8 +232,9 @@ def run_validate(sample: pd.DataFrame) -> None:
 # stub / real: full run
 # ---------------------------------------------------------------------------
 def run_full(sample: pd.DataFrame, mode: str) -> pd.DataFrame:
+    uses_real_adapter = mode in ("real", "full")
     cache = {}
-    if mode == "real":
+    if uses_real_adapter:
         from llm_client import configure_from_config
         configure_from_config()
         if CACHE_PATH.exists():
@@ -236,9 +244,19 @@ def run_full(sample: pd.DataFrame, mode: str) -> pd.DataFrame:
     else:
         ra.configure_llm_client(StubLLMClient())
 
+    checkpoint_interval = 500 if len(sample) > 5000 else 100
+
     records = []
+    n_cache_hit = 0
+    n_new_calls = 0
     for i, (loan_id, row) in enumerate(sample.iterrows()):
-        state = run_one(row, loan_id, cache=cache if mode == "real" else None)
+        was_cached = uses_real_adapter and (loan_id in cache)
+        state = run_one(row, loan_id, cache=cache if uses_real_adapter else None)
+        if uses_real_adapter:
+            if was_cached:
+                n_cache_hit += 1
+            else:
+                n_new_calls += 1
         records.append({
             "loan_id": loan_id,
             "p_default": state["p_default"],
@@ -250,15 +268,18 @@ def run_full(sample: pd.DataFrame, mode: str) -> pd.DataFrame:
             "y": int(row["default"]),
             "stance_source": state.get("stance_source", "parsed"),
         })
-        if mode == "real" and (i + 1) % 100 == 0:
+        if uses_real_adapter and (i + 1) % checkpoint_interval == 0:
             with open(CACHE_PATH, "wb") as f:
                 pickle.dump(cache, f)
-            print(f"  ... {i + 1}/{len(sample)} (cache checkpointed)")
+            print(f"  ... {i + 1}/{len(sample)} (cache checkpointed; "
+                  f"hits={n_cache_hit} new_calls={n_new_calls})")
 
-    if mode == "real":
+    if uses_real_adapter:
         CACHE_PATH.parent.mkdir(parents=True, exist_ok=True)
         with open(CACHE_PATH, "wb") as f:
             pickle.dump(cache, f)
+        print(f"\nCache-hit vs new-call totals: {n_cache_hit} cache hits, "
+              f"{n_new_calls} new LLM calls ({len(cache)} stances now cached total)")
 
     return pd.DataFrame(records)
 
@@ -266,15 +287,34 @@ def run_full(sample: pd.DataFrame, mode: str) -> pd.DataFrame:
 # ---------------------------------------------------------------------------
 # Report sections
 # ---------------------------------------------------------------------------
+def wilson_ci(k: int, n: int, z: float = 1.96) -> tuple[float, float]:
+    """Wilson score interval for a binomial rate -- better-behaved than the
+    normal approximation at small n or rates near 0/1, both of which show up
+    in these buckets."""
+    if n == 0:
+        return (float("nan"), float("nan"))
+    phat = k / n
+    denom = 1 + z * z / n
+    center = (phat + z * z / (2 * n)) / denom
+    margin = (z * ((phat * (1 - phat) / n + z * z / (4 * n * n)) ** 0.5)) / denom
+    return (max(0.0, center - margin), min(1.0, center + margin))
+
+
 def bucket_stats(df: pd.DataFrame, mask, label: str, underpowered_log: list) -> dict:
     n = int(mask.sum())
     if n < UNDERPOWERED_N:
         print(f"  [{label}] n={n}  <-- UNDERPOWERED (<{UNDERPOWERED_N}), not interpreted")
         underpowered_log.append({"section": "realized_rates", "bucket": label, "n": n})
         return {"n": n, "underpowered": True}
-    rate = float(df.loc[mask, "y"].mean())
-    print(f"  [{label}] n={n}  realized_default_rate={rate:.4f}")
-    return {"n": n, "underpowered": False, "realized_default_rate": rate}
+    k = int(df.loc[mask, "y"].sum())
+    rate = k / n
+    ci_low, ci_high = wilson_ci(k, n)
+    print(f"  [{label}] n={n}  realized_default_rate={rate:.4f}  "
+          f"95% CI=[{ci_low:.4f}, {ci_high:.4f}]")
+    return {
+        "n": n, "underpowered": False, "k": k, "realized_default_rate": rate,
+        "ci_low": ci_low, "ci_high": ci_high,
+    }
 
 
 def section_route_distribution(df: pd.DataFrame) -> dict:
@@ -337,9 +377,22 @@ def section_realized_rates(df: pd.DataFrame, is_stub: bool, underpowered_log: li
         if a.get("underpowered") or b.get("underpowered"):
             print(f"  {expect_label}: skipped (one side underpowered)")
             return None
+
+        # CI overlap check FIRST -- a point-estimate direction is not
+        # reportable as a pass/fail when the intervals overlap; that's
+        # exactly the mistake Build 5 made (DECISIONS.md).
+        overlap = a["ci_low"] <= b["ci_high"] and b["ci_low"] <= a["ci_high"]
+        if overlap:
+            print(f"  {expect_label}: INCONCLUSIVE at this n "
+                  f"(95% CIs overlap: [{a['ci_low']:.4f},{a['ci_high']:.4f}] vs "
+                  f"[{b['ci_low']:.4f},{b['ci_high']:.4f}])")
+            return "inconclusive"
+
         holds = (a["realized_default_rate"] > b["realized_default_rate"]) if op == ">" \
             else (a["realized_default_rate"] < b["realized_default_rate"])
-        print(f"  {expect_label}: {'HOLDS' if holds else 'DOES NOT HOLD'}")
+        direction = "HOLDS" if holds else "DOES NOT HOLD (opposite direction)"
+        print(f"  {expect_label}: SIGNIFICANT -- {direction} (95% CIs disjoint: "
+              f"[{a['ci_low']:.4f},{a['ci_high']:.4f}] vs [{b['ci_low']:.4f},{b['ci_high']:.4f}])")
         return holds
 
     result["flagged_higher_than_clean_approve"] = compare(
@@ -363,26 +416,31 @@ def section_calibration_fp_fn(df: pd.DataFrame, underpowered_log: list) -> dict:
         return float(((sub["p_default"] - sub["y"]) ** 2).mean())
 
     brier_full = brier(df)
-    agree_mask = df["route"] == "agree"
-    n_agree = int(agree_mask.sum())
+    # "Automated" = whatever the agent actually auto-decided, defined by the
+    # DECISION, not the route label -- agree and low_conf both resolve to
+    # auto_decision under the current _route() (DECISIONS.md Build 5/6;
+    # low_conf no longer means "deferred"). Deriving this from route=="agree"
+    # alone would silently exclude low_conf's now-automated rows.
+    deferred_mask = df["agent_decision"] == "human_review"
+    automated_mask = ~deferred_mask
+    n_automated = int(automated_mask.sum())
     print(f"\n  Brier, full sample (n={len(df)}): {brier_full:.4f}")
-    if n_agree >= UNDERPOWERED_N:
-        brier_agree = brier(df[agree_mask])
-        calibration_lift = brier_full - brier_agree
-        print(f"  Brier, auto-decided (agree) subset (n={n_agree}): {brier_agree:.4f}")
+    if n_automated >= UNDERPOWERED_N:
+        brier_automated = brier(df[automated_mask])
+        calibration_lift = brier_full - brier_automated
+        print(f"  Brier, auto-decided subset (n={n_automated}): {brier_automated:.4f}")
         print(f"  Calibration lift: {calibration_lift:+.4f}")
     else:
-        brier_agree = None
+        brier_automated = None
         calibration_lift = None
-        print(f"  agree subset UNDERPOWERED (n={n_agree}), skipping calibration lift")
-        underpowered_log.append({"section": "calibration", "bucket": "agree_subset", "n": n_agree})
+        print(f"  auto-decided subset UNDERPOWERED (n={n_automated}), skipping calibration lift")
+        underpowered_log.append({"section": "calibration", "bucket": "automated_subset", "n": n_automated})
 
     fp_baseline_mask = (df["tabular_alone_decision"] == "decline") & (df["y"] == 0)
     fn_baseline_mask = (df["tabular_alone_decision"] == "approve") & (df["y"] == 1)
     fp_baseline = int(fp_baseline_mask.sum())
     fn_baseline = int(fn_baseline_mask.sum())
 
-    deferred_mask = df["route"] != "agree"
     fp_deferred = int((fp_baseline_mask & deferred_mask).sum())
     fn_deferred = int((fn_baseline_mask & deferred_mask).sum())
     fp_automated = fp_baseline - fp_deferred
@@ -393,7 +451,7 @@ def section_calibration_fp_fn(df: pd.DataFrame, underpowered_log: list) -> dict:
           f"FN={fn_baseline} ({100 * fn_baseline / len(df):.2f}%)")
     print(f"  Of those, deferred to human review instead of auto-executed: "
           f"FP={fp_deferred}  FN={fn_deferred}")
-    print(f"  Remaining automated (agree-route) errors: FP={fp_automated}  FN={fn_automated}")
+    print(f"  Remaining automated errors: FP={fp_automated}  FN={fn_automated}")
 
     review_rate = 100 * int(deferred_mask.sum()) / len(df)
     within_budget = review_rate <= REVIEW_BUDGET_PCT
@@ -402,7 +460,7 @@ def section_calibration_fp_fn(df: pd.DataFrame, underpowered_log: list) -> dict:
 
     return {
         "brier_full": brier_full,
-        "brier_agree_only": brier_agree,
+        "brier_automated": brier_automated,
         "calibration_lift": calibration_lift,
         "fp_baseline": fp_baseline, "fn_baseline": fn_baseline,
         "fp_deferred": fp_deferred, "fn_deferred": fn_deferred,
@@ -456,40 +514,35 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     mode_group = parser.add_mutually_exclusive_group()
     mode_group.add_argument("--validate", action="store_true", help="40 real LLM calls only; gate before --real.")
-    mode_group.add_argument("--real", action="store_true", help="Full run with the real LLM adapter; caches by loan_id.")
+    mode_group.add_argument("--real", action="store_true", help="SAMPLE_N=2000 run with the real LLM adapter; caches by loan_id.")
+    mode_group.add_argument("--full", action="store_true", help="ENTIRE locked TEST population, real adapter, same cache; saves to agent_eval_fullpower.json.")
     args = parser.parse_args()
 
-    mode = "real" if args.real else ("validate" if args.validate else "stub")
+    mode = "full" if args.full else ("real" if args.real else ("validate" if args.validate else "stub"))
     print(f"=== eval_agent.py -- mode={mode} ===\n")
 
     test_frame = load_test_population()
     test_rate = test_frame["default"].mean()
     print(f"TEST population: {len(test_frame):,} rows, default rate {test_rate:.4f}")
 
-    n = VALIDATE_N if mode == "validate" else SAMPLE_N
-    sample = base_rate_sample(test_frame, n, SEED)
-    sample_rate = sample["default"].mean()
-    check = "OK" if abs(sample_rate - 0.1526) < 0.02 else "CHECK"
-    print(f"Sample: {len(sample):,} rows (seed={SEED}), default rate {sample_rate:.4f} "
-          f"(target ~0.1526, {check})\n")
+    if mode == "full":
+        sample = test_frame
+        sample_rate = test_rate
+        print(f"Using the ENTIRE locked TEST population: {len(sample):,} rows. No sampling; "
+              f"train/val are never read by this script.\n")
+    else:
+        n = VALIDATE_N if mode == "validate" else SAMPLE_N
+        sample = base_rate_sample(test_frame, n, SEED)
+        sample_rate = sample["default"].mean()
+        check = "OK" if abs(sample_rate - 0.1526) < 0.02 else "CHECK"
+        print(f"Sample: {len(sample):,} rows (seed={SEED}), default rate {sample_rate:.4f} "
+              f"(target ~0.1526, {check})\n")
 
     if mode == "validate":
         run_validate(sample)
         return
 
     records_df = run_full(sample, mode)
-
-    if mode == "real":
-        n_api_error = int((records_df["stance_source"] == "api_error").sum())
-        if n_api_error > 0:
-            print("\n" + "!" * 78)
-            print(f"WARNING: {n_api_error}/{len(records_df)} rows hit api_error (network/rate-limit/")
-            print("quota/timeout after retries) and fell back to stance=neutral, confidence=0.0.")
-            print("Those rows are NOT real model verdicts -- they inflate low_conf/disagree-rate")
-            print("and contaminate every section below. Check results/agent_eval.json's per-record")
-            print("stance_source field before trusting this report; re-run once the underlying")
-            print("failure is resolved.")
-            print("!" * 78)
 
     print("\n" + "=" * 78)
     print(f"AGENT EVAL REPORT (mode={mode}, n={len(records_df)})")
@@ -501,19 +554,49 @@ def main():
         print("confidence distribution, not agent behavior. This run verifies the eval")
         print("mechanics and the underpowered guard only. Re-run with --real for findings.")
 
+    # --- 0. stance_source breakdown FIRST. Failures are EXCLUDED from every
+    # metric below (not folded into "neutral"), so a transient infra failure
+    # can't silently masquerade as a real low-confidence verdict.
+    n_total = len(records_df)
+    source_counts = records_df["stance_source"].value_counts()
+    print("\n=== 0. stance_source breakdown (failures excluded from all metrics below) ===")
+    for src in ["parsed", "parse_error", "api_error", "empty"]:
+        c = int(source_counts.get(src, 0))
+        print(f"  {src:12s}: {c:6d} ({100 * c / n_total:.2f}%)")
+
+    excluded_mask = records_df["stance_source"].isin(["api_error", "empty"])
+    n_excluded = int(excluded_mask.sum())
+    if n_excluded > 0:
+        print("\n" + "!" * 78)
+        print(f"WARNING: {n_excluded}/{n_total} rows never produced a stance (api_error/empty) "
+              f"and are EXCLUDED from every section below -- not folded into neutral/low_conf.")
+        print("This run is partially contaminated for COVERAGE purposes even though the")
+        print("analyzed rows themselves are clean. Check results records for stance_source.")
+        print("!" * 78)
+
+    analyzed_df = records_df.loc[~excluded_mask].copy()
+    n_analyzed = len(analyzed_df)
+    print(f"\nAnalyzed rows (all sections below use this population): {n_analyzed}/{n_total} "
+          f"({100 * n_analyzed / n_total:.2f}%)")
+
     underpowered_log: list = []
     report = {
         "mode": mode,
-        "sample_n": len(records_df),
+        "sample_n": n_total,
+        "analyzed_n": n_analyzed,
+        "excluded_n": n_excluded,
         "seed": SEED,
         "test_population_n": len(test_frame),
         "test_default_rate": float(test_rate),
         "sample_default_rate": float(sample_rate),
-        "route_distribution": section_route_distribution(records_df),
-        "decisions_changed": section_decisions_changed(records_df),
-        "realized_rates": section_realized_rates(records_df, mode == "stub", underpowered_log),
-        "calibration_fp_fn": section_calibration_fp_fn(records_df, underpowered_log),
-        "fairness": section_fairness(records_df, sample, underpowered_log),
+        "stance_source_breakdown": {
+            src: int(source_counts.get(src, 0)) for src in ["parsed", "parse_error", "api_error", "empty"]
+        },
+        "route_distribution": section_route_distribution(analyzed_df),
+        "decisions_changed": section_decisions_changed(analyzed_df),
+        "realized_rates": section_realized_rates(analyzed_df, mode == "stub", underpowered_log),
+        "calibration_fp_fn": section_calibration_fp_fn(analyzed_df, underpowered_log),
+        "fairness": section_fairness(analyzed_df, sample, underpowered_log),
     }
 
     print("\n=== 6. Underpowered guard (buckets n<30, not interpreted) ===")
@@ -523,12 +606,13 @@ def main():
         for item in underpowered_log:
             print(f"  [{item['section']}] {item['bucket']}: n={item['n']}")
     report["underpowered_buckets"] = underpowered_log
-    report["records"] = records_df.to_dict(orient="records")
+    report["records"] = records_df.to_dict(orient="records")  # ALL rows, incl. excluded, for transparency
 
-    OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
-    with open(OUT_PATH, "w") as f:
+    out_path = ROOT / "results" / ("agent_eval_fullpower.json" if mode == "full" else "agent_eval.json")
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(out_path, "w") as f:
         json.dump(report, f, indent=2, default=str)
-    print(f"\nSaved {OUT_PATH}")
+    print(f"\nSaved {out_path}")
 
 
 if __name__ == "__main__":

@@ -320,10 +320,153 @@ generalize on a model this already well-calibrated. If calibration is revisited,
 calib slice or a parametric approach (Platt scaling) would be the next thing to try — not
 logged as a retry, since none is planned.
 
+## Build 5 — first --real eval (flawed, superseded) — COMPLETE
+
+**Question:** With the reconciler agent wired to the tuned tabular model and qwen2.5:latest
+(both pre-flight checks clean — zero policy-text-as-evidence violations, textbook-correct
+route/stance cross-tab on the 40-loan validate set) — what does the agent do on the full
+2,000-loan locked-test sample?
+
+**Raw numbers, as run:**
+- Disagree rate: 5.10% (102/2000). Route split: agree 26.15% / disagree 5.10% / low_conf
+  68.75%.
+- Review rate: 73.85% (1,477/2,000) vs a ~15% assumed budget — ~5x over.
+- Decisions changed by text: 1,474 tabular-approve → deferred; only 3 tabular-decline →
+  deferred.
+- Realized default: approve_but_flagged 14.71% (n=102) vs clean_approve 15.49% (n=523) —
+  expected inequality (flagged > clean) did NOT hold. clean_decline / decline_but_mitigated:
+  both n=0 (underpowered, tabular declined almost nobody).
+- Calibration lift: −0.0018 (auto-decided subset very slightly *worse* calibrated than the
+  full sample, not better).
+- Fairness slice: approval rate shifted ~72–78pp downward, uniformly, across every
+  home_ownership and verification_status group (tabular ~100% approve → agent ~21–29%
+  approve in every group alike).
+
+**DIAGNOSIS — why these numbers don't mean what they look like they mean:**
+
+1. **73.85% "review rate" is mostly model SILENCE, not model DISAGREEMENT.** The old
+   `_route()` sent both `disagree` (102 loans, genuine tabular-vs-text conflict) AND
+   `low_conf` (1,375 loans — neutral stance or confidence < 0.55) to human_review. A neutral/
+   low-confidence stance means the text channel had nothing to say, not that it pushed back
+   on the tabular read. Routing silence to review inflates the review-rate number without
+   reflecting any real disagreement — this is a routing-policy artifact, not an agent finding.
+2. **The 0.50 threshold barely ever fires at a 15.5% base rate.** Tabular-alone baseline: FP=2,
+   FN=304 out of 2,000 — almost nobody gets auto-declined, because a calibrated model trained
+   on ~15% positives rarely pushes any single row's probability past 0.50. That's WHY
+   `clean_decline`/`decline_but_mitigated` came back n=0 (underpowered) — the decline side of
+   every comparison was structurally empty before the agent did anything. 0.50 was never
+   tuned for this base rate; it was Model A's convenience default, carried forward unexamined.
+3. **The n=102 `approve_but_flagged` vs `clean_approve` gap (14.71% vs 15.49%, 0.78pt) is well
+   inside the ~±7pt 95% CI on a group this size** (Wilson: approve_but_flagged ≈
+   [9.1%, 22.9%], clean_approve ≈ [12.6%, 18.8%] — substantially overlapping). "Does not hold"
+   was the correct mechanical read of the point estimates, but the honest statistical read is
+   **inconclusive at this n**, not a failed hypothesis. Reporting it as a flat "does not hold"
+   without the interval was itself a small honesty gap in Build 5's report — flagged here so
+   it isn't repeated.
+4. **The fairness "shift" (~72–78pp, uniform across every group) is the review-rate artifact
+   wearing a different hat.** Since ~74% of loans got deferred to human_review regardless of
+   group, "agent_approve rate" cratered relative to "tabular_approve rate" identically
+   everywhere — a mechanical consequence of (1) and (2), not a group-specific finding. Uniform
+   magnitude across unrelated proxy groups is itself evidence it's a routing artifact, not a
+   fairness effect.
+
+**The finding that SURVIVES this diagnosis, and is real:** 68.75% of stances came back
+`neutral` or below the confidence threshold. **The stance channel is low-signal on this
+population** — most 2007–2013 `desc` text is short, boilerplate, or genuinely uninformative
+about risk, and the agent (correctly) declines to manufacture a confident read out of it. This
+is PROJECT.md risk #2 landing for real, not a bug: text rarely gives the agent something
+worth acting on, and a routing policy that defers on silence should not be confused with a
+routing policy that defers on disagreement. That distinction is exactly what Build 5's flaw
+(1) collapsed, and what Fix 2 (next) restores.
+
+**Decision:** Do not delete or overwrite this entry — it's the honest record of catching a
+routing-policy bug and a missing-CI reporting gap before either shaped a real conclusion. Two
+fixes follow (Build 6): (a) pick HIGH_RISK on the VAL slice instead of hardcoding 0.50, (b)
+change `_route()` so low_conf defers to the tabular decision and only genuine `disagree`
+triggers human review.
+
+## Build 6 — corrected eval — COMPLETE
+
+**Fix 1 (threshold, leakage-safe):** scripts/compute_decision_threshold.py picked HIGH_RISK
+on the VAL slice of the TRAIN split only (train_inner/val/calib carved from
+split_indices.pkl's train_idx, same split as notebooks/tabular_tuning.ipynb — TEST never
+read). F1-max for the default class on 12,969 val rows (15.27% default rate): **threshold =
+0.1703**, val F1 = 0.358, val decline rate = 35.4%. Non-degenerate, no Youden's J fallback
+needed. Frozen to config/decision_threshold.json; `reconciler_agent.HIGH_RISK` now reads it
+at import time instead of a hardcoded 0.50.
+
+**Fix 2 (routing, scoped edit):** `_route()` changed from `agree→auto_decision,
+else→human_review` to `disagree→human_review, else (agree OR low_conf)→auto_decision`.
+low_conf now takes the tabular decision instead of triggering review — silence defers to the
+calibrated model, only a confident, opposing stance earns a review. `reconciler()`'s own
+stance/confidence logic, the graph, and the state schema are unchanged; verified via the same
+11 existing tests (2 required fixture updates — one for the new HIGH_RISK boundary moving a
+hardcoded p_default from "safe" to "risky", one for the new low_conf→auto_decline behavior —
+both documented inline in the test files; test_full_graph_invoke.py needed no fixture change,
+its real application's p_default naturally crossed the new threshold and the test's
+assertions are membership-based, not exact-route).
+
+**Re-run discipline:** scripts/eval_agent.py --real re-run from results/eval_stance_cache.pkl
+— **zero new LLM calls** (2,000/2,000 cache hits; stances don't depend on threshold or
+routing, only p_default/route/decision are recomputed). Caught and fixed a second bug while
+reviewing the first pass: section 4 (calibration/FP-FN/review-rate) was still deriving
+"deferred" from `route != "agree"`, which was correct under the OLD routing but silently
+wrong under the NEW one (low_conf is no longer deferred). Fixed to derive from
+`agent_decision == "human_review"` directly — the review-rate number now matches section 2's
+"decisions changed" exactly (12.20% both), which is itself the check that the bug is gone.
+
+**Report (n=2,000, same locked-TEST sample, seed 42):**
+
+1. **stance_source:** 2,000/2,000 parsed. Zero api_error, zero parse_error, zero empty —
+   clean run, cache reuse didn't introduce any staleness.
+2. **Route:** agree 19.05% (381) / disagree **12.20%** (244) / low_conf 68.75% (1,375).
+   Disagree rate is now real (was 5.10% under the contaminated Build 5 routing).
+3. **Decisions changed by text:** 244 (12.20%) — 57 approve→deferred (2.85%), 187
+   decline→deferred (9.35%). Matches the disagree rate exactly, as it must now that only
+   `disagree` triggers review.
+4. **Realized default, WITH Wilson 95% CIs (z=1.96):**
+   | bucket | n | rate | 95% CI |
+   |---|---|---|---|
+   | clean_approve | 336 | 10.12% | [7.33%, 13.81%] |
+   | approve_but_flagged | 57 | 8.77% | [3.81%, 18.95%] |
+   | clean_decline | 45 | 22.22% | [12.54%, 36.27%] |
+   | decline_but_mitigated | 187 | 25.13% | [19.46%, 31.81%] |
+
+   Decline-side buckets are non-empty for the first time (real threshold). Both directional
+   comparisons: **INCONCLUSIVE at this n** — CIs overlap substantially in both cases. This is
+   the honest result, not a downgrade of Build 5's flaw (3): even with the threshold fixed, a
+   sample this size doesn't have the power to resolve whether disagreement tracks realized
+   risk, given the effect (if any) is plausibly on the same modest scale the feasibility phase
+   found (~0.01 PR-AUC).
+5. **Calibration + FP/FN + review budget:** Brier full 0.1241, auto-decided subset (n=1,756)
+   0.1180, **calibration lift +0.0062** (small, positive, real this time — computed on the
+   correct automated population). Tabular-alone baseline FP=561 (28.05%) / FN=131 (6.55%).
+   Deferral catches these asymmetrically: **25.0% of FPs deferred (140/561) vs only 3.8% of
+   FNs (5/131)** — disagreement-based review disproportionately catches bad-decline cases, not
+   bad-approve cases. Remaining automated errors: FP=421, FN=126. **Review rate 12.20% vs
+   ~15% budget — within budget** (was reported as 5x over in Build 5; that was entirely the
+   routing bug).
+6. **Fairness slice:** shifts collapsed from Build 5's ~72–78pp to **−2.2pp to −3.9pp** across
+   every home_ownership/verification_status group — none exceed the 5pp flag threshold.
+   Confirms Build 5 diagnosis (4): it really was the review-rate artifact, not a fairness
+   effect.
+7. **Underpowered flags:** only `home_ownership=OTHER` (n=2). No realized-rate bucket is
+   underpowered anymore.
+
+**Honest verdict:** The engineering problems are fixed and verifiably so — review rate now
+matches its own definition, sits within budget, calibration lift is positive, the fairness
+artifact is gone, decline-side buckets exist. But the **scientific question is still open,
+not resolved in the agent's favor**: whether a confident text disagreement actually predicts
+realized default better than tabular alone is INCONCLUSIVE at n=2,000 in both directions
+tested. Combined with 68.75% of stances landing neutral/low-confidence, this is consistent
+with — not a reversal of — the standing finding: the stance channel is low-signal on this
+population (PROJECT.md risk #2). What changed is that the eval now measures this honestly
+instead of through a routing bug that made the whole system look both more active and more
+harmful than it is. More data (a larger TEST-adjacent eval population, or accepting a wider
+CI) is the only way to move the two INCONCLUSIVE comparisons off dead center — not logged as
+a planned next step, since none is committed yet.
+
 ## Pending
 
-- Wire a real LLM client to the stance node (one adapter for whichever provider is chosen).
-- The eval on the locked test split: decisions vs tabular-alone, disagree rate, and whether
-  flipped cases are better calibrated against realized default. This is the headline metric.
-- Commit discipline: requirements.txt bump (langgraph, shap, rank_bm25, optuna — PINNED) in
-  the SAME commit as the code that needs it.
+- Commit discipline: requirements.txt bump (langgraph, shap, rank_bm25, optuna,
+  python-dotenv, requests — PINNED) in the SAME commit as the code that needs it.

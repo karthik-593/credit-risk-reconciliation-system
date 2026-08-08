@@ -4,8 +4,8 @@ Credit-Risk Reconciliation Agent â 4-node LangGraph skeleton.
 Flow:
     START -> tabular_score -> text_stance -> reconciler
                                                 |
-                             agree ------------> auto_decision --\
-                             disagree/low-conf -> human_review ---> explanation -> END
+                     agree/low-conf (text silent or agrees) -> auto_decision --\
+                     disagree (text actively conflicts)      -> human_review ---> explanation -> END
 
 Design invariants (do not break these â they are the whole point):
   1. text_stance NEVER sees p_default. It forms an INDEPENDENT read from the
@@ -97,13 +97,29 @@ class AppState(TypedDict, total=False):
 
 
 CONF_THRESHOLD = 0.55          # below this, narrative read is too weak to trust
-HIGH_RISK = 0.50               # tabular p_default cutoff for "risky"
+
+_REPO_ROOT = Path(__file__).resolve().parent.parent
+_DECISION_THRESHOLD_PATH = _REPO_ROOT / "config" / "decision_threshold.json"
+
+
+def _load_high_risk_threshold() -> float:
+    """HIGH_RISK is chosen on the VAL slice only (F1-max for the default
+    class, Youden's J fallback if degenerate) by
+    scripts/compute_decision_threshold.py -- never hardcoded, never touches
+    TEST. 0.50 was Model A's unexamined convenience default; at this
+    dataset's ~15% base rate it almost never fired. See
+    config/decision_threshold.json for the frozen value and how it was
+    picked."""
+    with open(_DECISION_THRESHOLD_PATH) as f:
+        return json.load(f)["threshold"]
+
+
+HIGH_RISK = _load_high_risk_threshold()   # tabular p_default cutoff for "risky"
 
 
 # ==========================================================================
 # Stub 1 â tabular scoring (Model A, from the reconciliation pipeline)
 # ==========================================================================
-_REPO_ROOT = Path(__file__).resolve().parent.parent
 _MODEL_PATH = _REPO_ROOT / "models" / "model_a_tuned_calibrated.pkl"
 
 _EMP_LENGTH_MAP = {
@@ -401,7 +417,14 @@ def explanation(state: AppState) -> dict:
 
 
 def _route(state: AppState) -> str:
-    return "auto_decision" if state["route"] == "agree" else "human_review"
+    """agree AND low_conf both take the tabular decision (auto_decision) --
+    a neutral/low-confidence stance means the text channel is SILENT, not
+    that it disagrees, so defer to tabular rather than manufacture a review.
+    Only genuine disagree (a confident, opposing stance) goes to human_review.
+    Changed from the original agree-only rule after Build 5's --real run
+    showed low_conf routing to review was inflating review volume with
+    silence, not disagreement -- see DECISIONS.md Build 5/6."""
+    return "human_review" if state["route"] == "disagree" else "auto_decision"
 
 
 # --------------------------------------------------------------------------

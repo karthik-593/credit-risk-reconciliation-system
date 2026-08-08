@@ -75,7 +75,10 @@ CASES = [
             "stance_rationale": "Vague statement of financial stress with no specific triggering event.",
         },
         "expect_route": "low_conf",
-        "expect_decision": "human_review",
+        # low_conf now takes the tabular decision (Fix 2, DECISIONS.md Build 5/6):
+        # p_default=0.55 >= HIGH_RISK -> auto_decline, not human_review. Only a
+        # genuine "disagree" route still goes to human_review.
+        "expect_decision": "auto_decline",
     },
 ]
 

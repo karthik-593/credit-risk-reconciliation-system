@@ -1,0 +1,10 @@
+{
+  "threshold": 0.1702895164489746,
+  "method": "f1_max",
+  "val_f1_at_threshold": 0.35799086757990867,
+  "val_decline_rate": 0.35392088827203333,
+  "val_rows": 12969,
+  "val_default_rate": 0.15267175572519084,
+  "random_state": 42,
+  "note": "Selected on the VAL slice of the TRAIN split only (train_inner/val/calib carved from split_indices.pkl's train_idx, same split as notebooks/tabular_tuning.ipynb / scripts/train_final.py). split_indices.pkl's test_idx was never read by this script."
+}

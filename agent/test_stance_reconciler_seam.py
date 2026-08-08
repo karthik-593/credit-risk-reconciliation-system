@@ -58,7 +58,10 @@ CASES = [
     {
         "name": "corroborates+safe-tabular -> disagree",
         "client": FixedStanceClient("corroborates_risk", 0.8),
-        "p_default": 0.20,
+        # 0.20 was "safe" under the old hardcoded HIGH_RISK=0.50; it is NOT
+        # safe under the VAL-selected threshold (~0.17, DECISIONS.md Build
+        # 5/6). 0.05 stays genuinely below the threshold either way.
+        "p_default": 0.05,
         "expect_stance": "corroborates_risk",
         "expect_route": "disagree",
         "expect_stance_source": "parsed",
