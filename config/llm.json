@@ -1,0 +1,14 @@
+{
+  "provider": "ollama",
+  "model": "qwen2.5:latest",
+  "model_verified_date": "2026-08-08",
+  "model_verified_source": "`ollama list` and GET http://localhost:11434/api/tags both show qwen2.5:latest present locally (ID 845dbda0ea48, 4.7GB, 7.6B params). A live POST to http://localhost:11434/v1/chat/completions with this model returned HTTP 200 with the expected OpenAI-compatible choices[0].message.content shape.",
+  "provider_switch_note": "Switched from gemini (gemini-3.6-flash) after its free tier hard-capped at 20 requests/day. Then switched from llama3.1:8b to qwen2.5:latest after a --validate run showed llama3.1:8b systematically misapplying policy_5.1 (flagging generic debt-payoff language, e.g. 'pay for my wedding expenses', as prior-default risk) and in 3/5 ungrounded cases citing the POLICY TEXT itself as if it were applicant evidence -- a real reasoning defect, not a data artifact. See DECISIONS.md.",
+  "base_url": "http://localhost:11434/v1/chat/completions",
+  "temperature": 0,
+  "max_tokens": 2048,
+  "max_retries": 2,
+  "retry_base_delay_seconds": 2.0,
+  "timeout_seconds": 120,
+  "timeout_note": "120s is intentionally generous and applied uniformly to every call, not just a detected 'first' one -- Ollama can unload an idle model and need 20-60s to reload it into VRAM on any cold call."
+}

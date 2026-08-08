@@ -34,6 +34,16 @@ class BrokenClient:
         return "this is not json"
 
 
+class RaisingClient:
+    """Stub LLMClient whose complete() raises, simulating a network/rate-limit/
+    quota/timeout failure after the adapter's own retries are exhausted --
+    exercises the api_error path (distinct from a parse_error: the call never
+    produced a response at all)."""
+
+    def complete(self, system: str, user: str) -> str:
+        raise RuntimeError("simulated: Gemini call failed after 5 attempts: 429 quota exceeded")
+
+
 APPLICATION = {"application": {"desc_clean": "I want to consolidate my credit card debt."}}
 
 CASES = [
@@ -43,6 +53,7 @@ CASES = [
         "p_default": 0.85,
         "expect_stance": "mitigates_risk",
         "expect_route": "disagree",
+        "expect_stance_source": "parsed",
     },
     {
         "name": "corroborates+safe-tabular -> disagree",
@@ -50,6 +61,7 @@ CASES = [
         "p_default": 0.20,
         "expect_stance": "corroborates_risk",
         "expect_route": "disagree",
+        "expect_stance_source": "parsed",
     },
     {
         "name": "corroborates+risky-tabular -> agree",
@@ -57,6 +69,7 @@ CASES = [
         "p_default": 0.85,
         "expect_stance": "corroborates_risk",
         "expect_route": "agree",
+        "expect_stance_source": "parsed",
     },
     {
         "name": "broken JSON -> neutral fallback -> low_conf",
@@ -64,6 +77,15 @@ CASES = [
         "p_default": 0.50,
         "expect_stance": "neutral",
         "expect_route": "low_conf",
+        "expect_stance_source": "parse_error",
+    },
+    {
+        "name": "api call fails -> neutral fallback -> low_conf",
+        "client": RaisingClient(),
+        "p_default": 0.50,
+        "expect_stance": "neutral",
+        "expect_route": "low_conf",
+        "expect_stance_source": "api_error",
     },
 ]
 
@@ -78,6 +100,10 @@ def run_case(case: dict) -> None:
     assert stance_out["stance"] == case["expect_stance"], (
         f"[{case['name']}] stance: expected {case['expect_stance']!r}, got {stance_out['stance']!r}"
     )
+    assert stance_out["stance_source"] == case["expect_stance_source"], (
+        f"[{case['name']}] stance_source: expected {case['expect_stance_source']!r}, "
+        f"got {stance_out['stance_source']!r}"
+    )
 
     # Fabricate the tabular channel to isolate the stance -> reconciler seam.
     full_state = {**state, **stance_out, "p_default": case["p_default"]}
@@ -86,7 +112,8 @@ def run_case(case: dict) -> None:
         f"[{case['name']}] route: expected {case['expect_route']!r}, got {route_out['route']!r}"
     )
 
-    print(f"PASS  {case['name']:42s} stance={stance_out['stance']:18s} route={route_out['route']}")
+    print(f"PASS  {case['name']:42s} stance={stance_out['stance']:18s} "
+          f"source={stance_out['stance_source']:12s} route={route_out['route']}")
 
 
 if __name__ == "__main__":

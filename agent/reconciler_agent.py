@@ -88,6 +88,8 @@ class AppState(TypedDict, total=False):
     stance_policy_ids: list
     stance_confidence: float
     stance_rationale: str
+    stance_source: Literal["parsed", "parse_error", "api_error", "empty"]
+    stance_error_detail: str
     # reconciliation
     route: Literal["agree", "disagree", "low_conf"]
     decision: Literal["auto_approve", "auto_decline", "human_review"]
@@ -102,8 +104,7 @@ HIGH_RISK = 0.50               # tabular p_default cutoff for "risky"
 # Stub 1 â tabular scoring (Model A, from the reconciliation pipeline)
 # ==========================================================================
 _REPO_ROOT = Path(__file__).resolve().parent.parent
-_MODEL_PATH = _REPO_ROOT / "models" / "model_a.pkl"
-_TRAIN_FRAME_PATH = _REPO_ROOT / "data" / "interim" / "feasibility_frame.pkl"
+_MODEL_PATH = _REPO_ROOT / "models" / "model_a_tuned_calibrated.pkl"
 
 _EMP_LENGTH_MAP = {
     "< 1 year": 0, "1 year": 1, "2 years": 2, "3 years": 3, "4 years": 4,
@@ -112,8 +113,7 @@ _EMP_LENGTH_MAP = {
 }
 _CATEGORICAL_COLS = ["grade", "sub_grade", "home_ownership", "verification_status", "purpose"]
 
-_model_bundle: Optional[dict] = None       # {"model": XGBClassifier, "features": [...]}
-_train_categories: Optional[dict] = None   # {col: pandas CategoricalIndex} from training data
+_model_bundle: Optional[dict] = None       # {"model", "features", "categories", "config"}
 _shap_explainer = None
 
 
@@ -151,26 +151,9 @@ def _load_model_bundle() -> dict:
     return _model_bundle
 
 
-def _load_train_categories(feature_order: list[str]) -> dict:
-    """Recover the exact categorical vocabulary Model A was fit against by
-    re-running the same encoding step (not a re-fit) over the training
-    frame Model A was built from."""
-    global _train_categories
-    if _train_categories is None:
-        df = pd.read_pickle(_TRAIN_FRAME_PATH)
-        X = df[feature_order].copy()
-        X["term"] = X["term"].astype(str).str.extract(r"(\d+)").astype("float32")
-        X["emp_length"] = X["emp_length"].map(_EMP_LENGTH_MAP).astype("float32")
-        for c in _CATEGORICAL_COLS:
-            X[c] = X[c].astype("category")
-        _train_categories = {c: X[c].cat.categories for c in _CATEGORICAL_COLS}
-    return _train_categories
-
-
 def _score_tabular(features: dict) -> tuple[float, list]:
     bundle = _load_model_bundle()
-    model, feature_order = bundle["model"], bundle["features"]
-    categories = _load_train_categories(feature_order)
+    model, feature_order, categories = bundle["model"], bundle["features"], bundle["categories"]
 
     X = _build_tabular_row(features, feature_order, categories)
     p_default = float(model.predict_proba(X)[:, 1][0])
@@ -243,7 +226,16 @@ def _retrieve_policy(desc_clean: str, k: int = 4) -> list[dict]:
 class LLMClient(Protocol):
     """Minimal interface text_stance needs. Implement this against whichever
     provider SDK you choose and pass it to configure_llm_client(); the graph
-    itself has no dependency on a specific vendor."""
+    itself has no dependency on a specific vendor.
+
+    Contract on failure: complete() should RAISE (network error, non-2xx
+    after retries, timeout, quota/rate-limit exhaustion, etc.) rather than
+    return None or an empty string to signal failure. _call_llm_json treats
+    any exception raised here as stance_source="api_error" -- distinct from
+    a call that returns text successfully but fails to parse as valid stance
+    JSON (stance_source="parse_error"). Don't swallow the underlying error
+    inside the adapter; let it propagate so its message ends up in
+    stance_error_detail."""
 
     def complete(self, system: str, user: str) -> str:
         """Return the raw model response text for a single-turn completion."""
@@ -261,12 +253,25 @@ def configure_llm_client(client: LLMClient) -> None:
     _llm_client = client
 
 
-_NEUTRAL_FALLBACK = {
+_NEUTRAL_FALLBACK_BASE = {
     "stance": "neutral",
     "evidence_spans": [],
     "cited_policy_ids": [],
     "confidence": 0.0,
-    "rationale": "LLM output could not be parsed as valid JSON; defaulted to neutral.",
+}
+
+# Kept for backward compatibility with anything reading the old shape directly
+# (e.g. rationale text comparisons) -- prefer checking stance_source instead,
+# which distinguishes WHY this fallback fired.
+_NEUTRAL_FALLBACK = {
+    **_NEUTRAL_FALLBACK_BASE,
+    "rationale": "No narrative read available; see stance_source for why.",
+}
+
+_FALLBACK_RATIONALE_BY_SOURCE = {
+    "empty": "No LLM client configured or the model returned an empty response; no narrative read available.",
+    "api_error": "The LLM call failed (network/API/rate-limit/timeout) after retries; no narrative read available.",
+    "parse_error": "The model responded but its output did not parse as valid stance JSON; no narrative read available.",
 }
 
 _VALID_STANCES = {"corroborates_risk", "mitigates_risk", "neutral"}
@@ -284,21 +289,45 @@ def _strip_code_fence(text: str) -> str:
     return "\n".join(lines).strip()
 
 
+def _neutral_fallback(source: str, detail: str) -> dict:
+    """Same safe neutral/0.0 result regardless of cause, but source+detail
+    make WHY it fired visible to callers instead of looking identical to a
+    genuine neutral verdict."""
+    return {
+        **_NEUTRAL_FALLBACK_BASE,
+        "rationale": _FALLBACK_RATIONALE_BY_SOURCE[source],
+        "stance_source": source,
+        "stance_error_detail": detail,
+    }
+
+
 def _call_llm_json(system: str, user: str) -> dict:
     if _llm_client is None:
-        raise RuntimeError(
-            "No LLM client configured. Call configure_llm_client(client) with an "
-            "object implementing LLMClient.complete(system, user) -> str before "
-            "invoking the graph."
-        )
+        return _neutral_fallback("empty", "no LLM client configured")
+
     try:
         raw = _llm_client.complete(system, user)
+    except Exception as exc:
+        # Anything raised while getting a response at all -- network error,
+        # non-2xx after retries, timeout, quota exhaustion -- is an
+        # infrastructure failure, not a model verdict.
+        return _neutral_fallback("api_error", f"{type(exc).__name__}: {exc}")
+
+    if not raw or not raw.strip():
+        return _neutral_fallback("empty", "LLM returned an empty response")
+
+    try:
         parsed = json.loads(_strip_code_fence(raw))
         if parsed.get("stance") not in _VALID_STANCES:
             raise ValueError(f"invalid stance: {parsed.get('stance')!r}")
-        return parsed
-    except Exception:
-        return dict(_NEUTRAL_FALLBACK)
+    except Exception as exc:
+        # The call succeeded -- this is a real response that failed to parse
+        # as valid stance JSON, not an infrastructure failure.
+        return _neutral_fallback("parse_error", f"{type(exc).__name__}: {exc}")
+
+    parsed = dict(parsed)
+    parsed.setdefault("stance_source", "parsed")
+    return parsed
 
 
 # --------------------------------------------------------------------------
@@ -324,6 +353,8 @@ def text_stance(state: AppState) -> dict:
         "stance_policy_ids": out.get("cited_policy_ids", []),
         "stance_confidence": float(out.get("confidence", 0.0)),
         "stance_rationale": out.get("rationale", ""),
+        "stance_source": out.get("stance_source", "parsed"),
+        "stance_error_detail": out.get("stance_error_detail", ""),
     }
 
 
