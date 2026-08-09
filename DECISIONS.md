@@ -466,6 +466,78 @@ harmful than it is. More data (a larger TEST-adjacent eval population, or accept
 CI) is the only way to move the two INCONCLUSIVE comparisons off dead center — not logged as
 a planned next step, since none is committed yet.
 
+## Build 7 — full-power eval (n=21,616) — COMPLETE
+
+**Question:** Build 6's two headline comparisons were inconclusive at n=2,000 (decline-side
+buckets only 45–187 rows). Does the full locked-TEST population — 10x the power — resolve
+either one? Sample size ONLY changed: threshold (0.1703), routing, stance prompt, and model
+(qwen2.5:latest) all frozen exactly as Build 6 left them; reconciler_agent.py untouched.
+
+**Execution:** scripts/eval_agent.py gained a `--full` mode: entire locked TEST population
+(21,616 rows, split_indices.pkl test_idx — train/val never read), reusing
+results/eval_stance_cache.pkl for the 2,000 already scored and calling qwen2.5 fresh for the
+other 19,616 (2,000 cache hits / 19,616 new calls, confirmed by an explicit counter). Zero
+transient failures across all 19,616 new local calls — stance_source breakdown (now computed
+and printed FIRST, before any other section) came back 21,616/21,616 `parsed`, so no rows
+needed excluding. Saved to results/agent_eval_fullpower.json — results/agent_eval.json (the
+n=2,000 Build 6 result) was left untouched, both kept.
+
+**Report:**
+
+1. **stance_source:** 21,616/21,616 parsed. Clean.
+2. **Route:** agree 18.71% (4,045) / disagree **11.57%** (2,500) / low_conf 69.72% (15,071).
+   Disagree and review rate both settled slightly lower than Build 6's n=2,000 read (12.20%
+   → 11.57%) — consistent, not a reversal.
+3. **Decisions changed:** 2,500 (11.57%) — 672 approve→deferred (3.11%), 1,828
+   decline→deferred (8.46%).
+4. **THE HEADLINE, with power:**
+
+   | bucket | n | rate | 95% CI |
+   |---|---|---|---|
+   | clean_approve | 3,563 | 10.10% | [9.16%, 11.14%] |
+   | approve_but_flagged | 672 | 11.90% | [9.67%, 14.57%] |
+   | clean_decline | 482 | 28.01% | [24.19%, 32.18%] |
+   | decline_but_mitigated | 1,828 | 25.33% | [23.39%, 27.37%] |
+
+   - `approve_but_flagged > clean_approve`: **INCONCLUSIVE** — CIs still overlap
+     ([9.67,14.57] vs [9.16,11.14], overlap region 1.47pp wide). Notable: the point estimate
+     now sits in the EXPECTED direction (11.90% > 10.10%), reversing Build 6's n=57 read where
+     it pointed the wrong way.
+   - `decline_but_mitigated < clean_decline`: **INCONCLUSIVE** — CIs still overlap
+     ([23.39,27.37] vs [24.19,32.18], overlap region 3.18pp wide). Point estimate also now in
+     the expected direction (25.33% < 28.01%).
+
+   **Neither comparison reached significance even at 10x the power.** Both overlaps narrowed
+   and both point estimates flipped to the theoretically-expected direction — genuinely closer
+   to a real effect than Build 6 suggested, but "closer" is not "there." Per the standing rule:
+   an overlap is reported as INCONCLUSIVE, not rounded into a trend, regardless of which way
+   the point estimate leans.
+5. **Calibration + FP/FN + review budget:** Brier full 0.1213, auto-decided subset (n=19,116)
+   0.1157, **calibration lift +0.0056** — closely replicates Build 6's +0.0062. FP/FN baseline
+   5,675 / 1,355. Deferral asymmetry confirmed at scale: **24.1% of FPs caught (1,365/5,675)
+   vs only 5.9% of FNs (80/1,355)** — matches Build 6's 25.0%/3.8% almost exactly. **Review
+   rate 11.57% vs ~15% budget — within budget**, slightly better than Build 6's 12.20%.
+6. **Fairness:** shifts −2.6pp to −3.8pp across every group — near-identical to Build 6's
+   −2.2pp to −3.9pp. Stable replication; no group exceeds the 5pp flag.
+7. **Underpowered:** only `home_ownership=NONE` (n=7) and `OTHER` (n=22) — both structurally
+   small categories, not a power problem the eval could fix. No realized-rate bucket is
+   underpowered.
+
+**Honest verdict:** Full power changed the CONFIDENCE of the read, not its conclusion. Every
+operational number (review rate, calibration lift, FP/FN asymmetry, fairness shifts)
+replicated Build 6 closely, which is itself informative — n=2,000 was already a stable
+estimate for those. The two scientific comparisons narrowed and both flipped toward the
+expected direction, but neither crossed into significance: **whether a confident text
+disagreement predicts realized default better than tabular alone is still not established**,
+even at the full locked-TEST population. This is not a failure of the eval — it is the
+correct, honest resolution of an effect that, if real, is small enough that 21,616 loans
+split across four comparison buckets still isn't quite enough to separate it from noise. The
+standing finding holds: the stance channel is low-signal on this population (69.72%
+neutral/low_conf), and the disagreement it does produce is operationally cheap (11.57% review
+rate, within budget) without yet being provably predictive. Reported as inconclusive, not
+rounded either way — a bigger population, a different comparison design, or accepting a wider
+CI are the only paths to resolving it further, none of which are committed next steps here.
+
 ## Pending
 
 - Commit discipline: requirements.txt bump (langgraph, shap, rank_bm25, optuna,
