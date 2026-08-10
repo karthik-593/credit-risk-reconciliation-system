@@ -1,0 +1,10 @@
+{
+  "n_loans_evaluated": 21616,
+  "disagree_rate_pct": 11.565507031828275,
+  "review_rate_pct": 11.565507031828275,
+  "review_budget_pct": 15.0,
+  "within_budget": true,
+  "fp_catch_pct": 24.05286343612335,
+  "fn_catch_pct": 5.904059040590406,
+  "calibration_lift": 0.005610254820698088
+}

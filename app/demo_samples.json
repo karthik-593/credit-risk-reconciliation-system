@@ -1,0 +1,4073 @@
+[
+  {
+    "loan_id": 1800548,
+    "desc_clean": "Debt Cons.-Pay off vehicle and cc",
+    "p_default": 0.046892885118722916,
+    "tabular_alone_decision": "approve",
+    "stance": "corroborates_risk",
+    "confidence": 1.0,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Debt Cons.-Pay off vehicle and cc"
+    ],
+    "stance_policy_ids": [
+      "policy_6.2"
+    ],
+    "stance_rationale": "The statement shows internal inconsistency between paying off a vehicle and a credit card, which is flagged as a fraud-review issue.",
+    "label": "#1800548 [disagree] \"Debt Cons.-Pay off vehicle and cc\""
+  },
+  {
+    "loan_id": 1770034,
+    "desc_clean": "After college I was eager to move out of my parents house and quickly racked up debt on my credit cards while attempting to make it on my own. I have wised up and I am now working to get my credit back into good standing. Lending Club offers a lower APR than my credit cards. Plain and simple.",
+    "p_default": 0.14679142832756042,
+    "tabular_alone_decision": "approve",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Lending Club offers a lower APR than my credit cards."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant's intent to consolidate high-interest debts into a single, lower-rate loan is consistent with the policy snippet that states such an intent does not indicate elevated risk.",
+    "label": "#1770034 [agree] \"After college I was eager to move out of my parents house an...\""
+  },
+  {
+    "loan_id": 1852551,
+    "desc_clean": "pay off credit cards",
+    "p_default": 0.13044783473014832,
+    "tabular_alone_decision": "approve",
+    "stance": "neutral",
+    "confidence": 0.0,
+    "route": "low_conf",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "pay off credit cards"
+    ],
+    "stance_policy_ids": [
+      "policy_6.3"
+    ],
+    "stance_rationale": "The statement is empty and does not provide any first-person financial detail.",
+    "label": "#1852551 [low_conf] \"pay off credit cards\""
+  },
+  {
+    "loan_id": 1801543,
+    "desc_clean": "To pay off Credit Cards etc",
+    "p_default": 0.07787112146615982,
+    "tabular_alone_decision": "approve",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "To pay off Credit Cards etc"
+    ],
+    "stance_policy_ids": [
+      "policy_5.1"
+    ],
+    "stance_rationale": "The statement indicates the loan is intended to pay off existing debt, which aligns with policy_5.1 as a strong corroborating risk factor.",
+    "label": "#1801543 [disagree] \"To pay off Credit Cards etc\""
+  },
+  {
+    "loan_id": 1832377,
+    "desc_clean": "The loan is to pay off high a intrest rate loan, credit cards and a long-standing loan",
+    "p_default": 0.29362955689430237,
+    "tabular_alone_decision": "decline",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "The loan is to pay off high a intrest rate loan, credit cards and a long-standing loan"
+    ],
+    "stance_policy_ids": [
+      "policy_1.3",
+      "policy_6.2"
+    ],
+    "stance_rationale": "The statement indicates the purpose of consolidating debts, which is considered low-risk according to policy_1.3. The mention of a 'long-standing loan' suggests potential long-term financial stability, aligning with policy_6.2.",
+    "label": "#1832377 [disagree] \"The loan is to pay off high a intrest rate loan, credit card...\""
+  },
+  {
+    "loan_id": 1852597,
+    "desc_clean": "I decided to take this loan because of very high interest rate with my credit cards it will take me a lifetime to really feel that I am truly paying my credit cards. Right now even though I was paying more than the minimum each month, I don't feel that I am making an progress.",
+    "p_default": 0.16850344836711884,
+    "tabular_alone_decision": "approve",
+    "stance": "neutral",
+    "confidence": 0.5,
+    "route": "low_conf",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Right now even though I was paying more than the minimum each month, I don't feel that I am making an progress."
+    ],
+    "stance_policy_ids": [],
+    "stance_rationale": "The statement indicates a lack of progress in repaying high-interest debts, which is neutral but does not directly corroborate or mitigate risk according to the provided policies.",
+    "label": "#1852597 [low_conf] \"I decided to take this loan because of very high interest ra...\""
+  },
+  {
+    "loan_id": 1627141,
+    "desc_clean": "Thank you for helping me to get rid of my last credit card! Let me know if you have any questions. I have been steadily employed by the fire department for 17 years and with this loan, I will pay off my last credit card the month before I retire and start my next career. Thank you.",
+    "p_default": 0.10944540053606033,
+    "tabular_alone_decision": "approve",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Let me know if you have any questions."
+    ],
+    "stance_policy_ids": [
+      "policy_5.1"
+    ],
+    "stance_rationale": "The statement implies the applicant is trying to avoid a prior credit card, which aligns with policy_5.1.",
+    "label": "#1627141 [disagree] \"Thank you for helping me to get rid of my last credit card!...\""
+  },
+  {
+    "loan_id": 1922396,
+    "desc_clean": "my photography business I need an additional camera which I can then deduct on my taxes next year. But I need it to get started on portraits",
+    "p_default": 0.2110319584608078,
+    "tabular_alone_decision": "decline",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_decline",
+    "y": 1,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "my photography business I need an additional camera which I can then deduct on my taxes next year. But I need it to get started on portraits"
+    ],
+    "stance_policy_ids": [
+      "policy_4.1"
+    ],
+    "stance_rationale": "The statement describes the loan proceeds funding a new business venture, which is a corroborating risk factor according to policy_4.1.",
+    "label": "#1922396 [agree] \"my photography business I need an additional camera which I...\""
+  },
+  {
+    "loan_id": 1881908,
+    "desc_clean": "TO REDUCE MY MONTHLY PAYMENTS FOR MY CREDIT CARDS TO REDUCE MY CREDIT CARD PAYMENTS",
+    "p_default": 0.08211297541856766,
+    "tabular_alone_decision": "approve",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "TO REDUCE MY MONTHLY PAYMENTS FOR MY CREDIT CARDS TO REDUCE MY CREDIT CARD PAYMENTS"
+    ],
+    "stance_policy_ids": [
+      "policy_5.1"
+    ],
+    "stance_rationale": "The statement indicates the applicant is using the loan to reduce credit card payments, which aligns with policy 5.1 that mentions using a loan to avoid prior defaults or collections actions.",
+    "label": "#1881908 [disagree] \"TO REDUCE MY MONTHLY PAYMENTS FOR MY CREDIT CARDS TO REDUCE...\""
+  },
+  {
+    "loan_id": 1850593,
+    "desc_clean": "to combine credit cards and auto loan into one lower payment",
+    "p_default": 0.3338780403137207,
+    "tabular_alone_decision": "decline",
+    "stance": "neutral",
+    "confidence": 0.5,
+    "route": "low_conf",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "to combine credit cards and auto loan into one lower payment"
+    ],
+    "stance_policy_ids": [
+      "policy_1.3",
+      "policy_6.2"
+    ],
+    "stance_rationale": "The statement does not provide specific details that would corroborate or mitigate risk, aligning with policy_1.3 which states standard intent for consolidation is low-risk but also policy_6.2 noting internal inconsistency as a fraud flag.",
+    "label": "#1850593 [low_conf] \"to combine credit cards and auto loan into one lower payment\""
+  },
+  {
+    "loan_id": 1769257,
+    "desc_clean": "I would like to consolidate two high interest rate credit cards",
+    "p_default": 0.06420783698558807,
+    "tabular_alone_decision": "approve",
+    "stance": "neutral",
+    "confidence": 0.8,
+    "route": "low_conf",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "\"I would like to consolidate two high interest rate credit cards\""
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The statement indicates a standard, low-risk purpose for the loan as per policy_1.3.",
+    "label": "#1769257 [low_conf] \"I would like to consolidate two high interest rate credit ca...\""
+  },
+  {
+    "loan_id": 1893767,
+    "desc_clean": "To help fund a new business venture",
+    "p_default": 0.1508236527442932,
+    "tabular_alone_decision": "approve",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "To help fund a new business venture"
+    ],
+    "stance_policy_ids": [
+      "policy_4.1"
+    ],
+    "stance_rationale": "The statement directly aligns with policy_4.1, which identifies funding for a new business as a corroborating risk factor.",
+    "label": "#1893767 [disagree] \"To help fund a new business venture\""
+  },
+  {
+    "loan_id": 1827586,
+    "desc_clean": "consolidtion of credit cards",
+    "p_default": 0.1842212677001953,
+    "tabular_alone_decision": "decline",
+    "stance": "corroborates_risk",
+    "confidence": 1.0,
+    "route": "agree",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "consolidtion of credit cards"
+    ],
+    "stance_policy_ids": [
+      "policy_6.2"
+    ],
+    "stance_rationale": "The statement indicates a debt consolidation purpose, which is flagged as a fraud-review issue by policy_6.2.",
+    "label": "#1827586 [agree] \"consolidtion of credit cards\""
+  },
+  {
+    "loan_id": 1614206,
+    "desc_clean": "This is to get out of a BoA credit card that went from 9.5% to over 25%. I am a good risk, never late on payments and I have a good work history. I plan on closing the account out as soon as it is payed off! Thank you all very much for funding this. This is a win-win. You get interest on your money, and i can eliminate a debt hangin over my head. I have been working with the same company since 1996 in the insurance business. The company I work for has been in business since 1947.",
+    "p_default": 0.0987701490521431,
+    "tabular_alone_decision": "approve",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I am a good risk, never late on payments and I have a good work history."
+    ],
+    "stance_policy_ids": [
+      "policy_5.1"
+    ],
+    "stance_rationale": "The statement indicates the applicant is currently in financial distress due to high interest rates on an existing credit card, which aligns with policy_5.1's focus on avoiding prior defaults.",
+    "label": "#1614206 [disagree] \"This is to get out of a BoA credit card that went from 9.5%...\""
+  },
+  {
+    "loan_id": 1641842,
+    "desc_clean": "I want to pay off our high interest credt cards and stop the standing still trying to pay them off. By getting a loan with a lower interest rate we'll be able to have the loan paid off in 3 years verses no end in sight with our credit cards. I would like you to know we have lived in our home since Nov. 1974 and married happily for 37 years. We don't miss our monthly payments. I want to thank you for considering put your trust in us and I want you all to know I would much rather pay a lower interest loan to business folks building portfolios then to the banks making sure I don't see zero balances. I want you folks to know I take it very serious that this is your futures. Once again thank you for considering us and hopefully wanting to help fund this loan to us. Sincerely, My Wife and I I would like to add that I plan to pay off about $7,500.00 of credit card debt in my wifes name along with my debts. These cards might be in my wifes name but have been used for both of us in our household. This is the reason for the amount of the loan request. Thank You for your time.",
+    "p_default": 0.24952679872512817,
+    "tabular_alone_decision": "decline",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 1,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "By getting a loan with a lower interest rate we'll be able to have the loan paid off in 3 years verses no end in sight with our credit cards."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant's intent to consolidate high-interest debts into a lower-rate loan is consistent with standard, low-risk loan purposes as per policy_1.3.",
+    "label": "#1641842 [disagree] \"I want to pay off our high interest credt cards and stop the...\""
+  },
+  {
+    "loan_id": 1646884,
+    "desc_clean": "Loan is to refinance credit card expenses used to finance a business start up. Business has now been in operation for two years with a NOI of $30,000 per year. Borrower has a 720 FICO score, no late payments, no judgments. Income from the following sources: $80,000 /yr - W2 wage income $30,000 /yr - Self-employment income $30,300 /yr - Rental property income. Loan will be used to pay the balance on a 15.75% APR credit card.",
+    "p_default": 0.042637649923563004,
+    "tabular_alone_decision": "approve",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Loan is to refinance credit card expenses used to finance a business start up.",
+      "Borrower has a 720 FICO score, no late payments, no judgments."
+    ],
+    "stance_policy_ids": [
+      "policy_4.1",
+      "policy_3.2"
+    ],
+    "stance_rationale": "The statement indicates the loan will be used to refinance credit card expenses, which is a corroborating risk factor according to policy_4.1. Additionally, the self-employment income mentioned without verification is also a corroborating risk factor as per policy_3.2.",
+    "label": "#1646884 [disagree] \"Loan is to refinance credit card expenses used to finance a...\""
+  },
+  {
+    "loan_id": 1641825,
+    "desc_clean": "This loan will be used to fund a business start up. I plan on getting into the aerial photography field. I will be using a technology of mounting a camera on a battery powered unmanned aerial vehicle (uav). This will be targeted to video producers, construction sites, high end real estate agents and municipalities for search and rescue. These funds will be used to cover the initial cost of starting a business.. Thank you! As I've mentioned in a answer to a question, I am also a LendingClub investor. *********If not fully funded by the deadline, I plan on relisting this loan as is. Thank you*********",
+    "p_default": 0.3164994418621063,
+    "tabular_alone_decision": "decline",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_decline",
+    "y": 1,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "This loan will be used to fund a business start up.",
+      "These funds will be used to cover the initial cost of starting a business."
+    ],
+    "stance_policy_ids": [
+      "policy_4.1"
+    ],
+    "stance_rationale": "The statement clearly indicates that the loan proceeds will fund a new business venture, which is explicitly stated as a corroborating risk factor in policy_4.1.",
+    "label": "#1641825 [agree] \"This loan will be used to fund a business start up. I plan o...\""
+  },
+  {
+    "loan_id": 1932860,
+    "desc_clean": "pay off visa card, personal loan, and use remaining cash for home repairs",
+    "p_default": 0.16473886370658875,
+    "tabular_alone_decision": "approve",
+    "stance": "corroborates_risk",
+    "confidence": 1.0,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "use remaining cash for home repairs"
+    ],
+    "stance_policy_ids": [
+      "policy_6.2"
+    ],
+    "stance_rationale": "The statement shows internal inconsistency as the funds are intended for home repairs but also to pay off debts, which is a fraud-review flag according to policy_6.2.",
+    "label": "#1932860 [disagree] \"pay off visa card, personal loan, and use remaining cash for...\""
+  },
+  {
+    "loan_id": 1802679,
+    "desc_clean": "credit card refinancing",
+    "p_default": 0.1542784869670868,
+    "tabular_alone_decision": "approve",
+    "stance": "neutral",
+    "confidence": 0.0,
+    "route": "low_conf",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "credit card refinancing"
+    ],
+    "stance_policy_ids": [
+      "policy_6.3"
+    ],
+    "stance_rationale": "The statement is empty and purely templated, carrying no narrative signal.",
+    "label": "#1802679 [low_conf] \"credit card refinancing\""
+  },
+  {
+    "loan_id": 1760713,
+    "desc_clean": "Debt consolidation",
+    "p_default": 0.02247539535164833,
+    "tabular_alone_decision": "approve",
+    "stance": "neutral",
+    "confidence": 0.0,
+    "route": "low_conf",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Debt consolidation"
+    ],
+    "stance_policy_ids": [
+      "policy_6.3"
+    ],
+    "stance_rationale": "The statement 'Debt consolidation' is boilerplate and does not provide any first-person financial detail.",
+    "label": "#1760713 [low_conf] \"Debt consolidation\""
+  },
+  {
+    "loan_id": 1854791,
+    "desc_clean": "Payoff and close my credit cards. Also, with extra amount over that, pay down the negative equity in my vehicle in order to trade it in on a more economically efficient one and have a cheaper payment.",
+    "p_default": 0.26213791966438293,
+    "tabular_alone_decision": "decline",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_decline",
+    "y": 1,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "pay down the negative equity in my vehicle in order to trade it in on a more economically efficient one and have a cheaper payment"
+    ],
+    "stance_policy_ids": [
+      "policy_3.2"
+    ],
+    "stance_rationale": "The statement indicates the applicant is taking steps to improve their financial situation, which aligns with policy guidance that self-employed income is a corroborating risk factor.",
+    "label": "#1854791 [agree] \"Payoff and close my credit cards. Also, with extra amount ov...\""
+  },
+  {
+    "loan_id": 1754571,
+    "desc_clean": "Hello, The Loan recevied from the bank The Lending Club is to help pay off my credit card debit. This is the reason I am requesting a loan which I will be making montly payments to. Thank you",
+    "p_default": 0.19173158705234528,
+    "tabular_alone_decision": "decline",
+    "stance": "neutral",
+    "confidence": 0.7,
+    "route": "low_conf",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "This is the reason I am requesting a loan which I will be making montly payments to."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant's statement indicates an intention to consolidate debts, which aligns with standard low-risk loan purposes as per policy_1.3.",
+    "label": "#1754571 [low_conf] \"Hello, The Loan recevied from the bank The Lending Club is t...\""
+  },
+  {
+    "loan_id": 1864428,
+    "desc_clean": "I want to pay off some high interest credit cards, that will take me forever unless i can pay and close. I want to pay off my credit card debt. If i keep paying minimum amount i know I will never finish paying off.",
+    "p_default": 0.17468008399009705,
+    "tabular_alone_decision": "decline",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "that will take me forever unless i can pay and close"
+    ],
+    "stance_policy_ids": [
+      "policy_5.1"
+    ],
+    "stance_rationale": "The applicant's statement suggests they are in a situation where paying off high-interest debt is difficult, which aligns with the policy indicating that such situations may indicate elevated risk.",
+    "label": "#1864428 [agree] \"I want to pay off some high interest credit cards, that will...\""
+  },
+  {
+    "loan_id": 1650330,
+    "desc_clean": "To help pay a few bills to get back on track.",
+    "p_default": 0.13928422331809998,
+    "tabular_alone_decision": "approve",
+    "stance": "neutral",
+    "confidence": 0.5,
+    "route": "low_conf",
+    "agent_decision": "auto_approve",
+    "y": 1,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "To help pay a few bills to get back on track."
+    ],
+    "stance_policy_ids": [
+      "policy_2.3"
+    ],
+    "stance_rationale": "The statement indicates general financial stress without specifying a triggering event, which is neutral according to policy.",
+    "label": "#1650330 [low_conf] \"To help pay a few bills to get back on track.\""
+  },
+  {
+    "loan_id": 1774752,
+    "desc_clean": "I will pay off my current debt and used the rest of the money to buy a car consolidate all my payment into one",
+    "p_default": 0.1596377044916153,
+    "tabular_alone_decision": "approve",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I will pay off my current debt and used the rest of the money to buy a car consolidate all my payment into one"
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant's statement indicates an intent to consolidate debts, which is noted as a standard, low-risk loan purpose in policy_1.3.",
+    "label": "#1774752 [agree] \"I will pay off my current debt and used the rest of the mone...\""
+  },
+  {
+    "loan_id": 1839688,
+    "desc_clean": "Paying off revolving Sears, and other high interest Home Depot and others. Thanks for your help so much your rates are so wonderful. And I will close the accounts I pay off.",
+    "p_default": 0.21236281096935272,
+    "tabular_alone_decision": "decline",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Paying off revolving Sears, and other high interest Home Depot and others."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant's intent to consolidate multiple high-interest debts into a single lower-rate payment aligns with standard, low-risk loan purposes as stated in policy_1.3.",
+    "label": "#1839688 [disagree] \"Paying off revolving Sears, and other high interest Home Dep...\""
+  },
+  {
+    "loan_id": 1628878,
+    "desc_clean": "Our total wedding expenses will be around $42K. So far my wife and I paid off half. We need the $16K to pay the rest. We also have some savings but we try not to spend most of it. I signed up for 5 years but we will try to pay off the loan as soon as possible. Partial of the money that we get back from the wedding will be going towards our loan.",
+    "p_default": 0.32522207498550415,
+    "tabular_alone_decision": "decline",
+    "stance": "neutral",
+    "confidence": 0.5,
+    "route": "low_conf",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "We need the $16K to pay the rest."
+    ],
+    "stance_policy_ids": [
+      "policy_4.3"
+    ],
+    "stance_rationale": "The statement provides a specific purpose for the loan, which is not vague or generic, aligning with policy_4.3.",
+    "label": "#1628878 [low_conf] \"Our total wedding expenses will be around $42K. So far my wi...\""
+  },
+  {
+    "loan_id": 1799912,
+    "desc_clean": "Strictly for debt consolidation of high-interest credit cards. Goal is to be debt free in 3 years - this will help me get there with lower interest rate and fixed pay schedule.",
+    "p_default": 0.02315479703247547,
+    "tabular_alone_decision": "approve",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Goal is to be debt free in 3 years - this will help me get there with lower interest rate and fixed pay schedule."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant's goal of becoming debt-free within a set timeframe using a lower-interest loan supports the policy that consolidating high-interest debts is a standard, low-risk purpose.",
+    "label": "#1799912 [agree] \"Strictly for debt consolidation of high-interest credit card...\""
+  },
+  {
+    "loan_id": 1881225,
+    "desc_clean": "To pay off debt",
+    "p_default": 0.28858569264411926,
+    "tabular_alone_decision": "decline",
+    "stance": "neutral",
+    "confidence": 0.3,
+    "route": "low_conf",
+    "agent_decision": "auto_decline",
+    "y": 1,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "To pay off debt"
+    ],
+    "stance_policy_ids": [],
+    "stance_rationale": "The statement does not provide enough context to determine if it is corroborating or mitigating risk.",
+    "label": "#1881225 [low_conf] \"To pay off debt\""
+  },
+  {
+    "loan_id": 1915310,
+    "desc_clean": "Dear Sirs: I have taken the next step in my entrepreneurial career &amp; will be purchasing a commercial truck. I am a return borrower at the LendingClub, having paid a $13,500 loan in full, monthly auto-debited payments on time. Expect no less from an ex-Googler. Thank you for investing in my success.",
+    "p_default": 0.17990684509277344,
+    "tabular_alone_decision": "decline",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I am a return borrower at the LendingClub, having paid a $13,500 loan in full, monthly auto-debited payments on time.",
+      "Expect no less from an ex-Googler."
+    ],
+    "stance_policy_ids": [
+      "policy_3.2"
+    ],
+    "stance_rationale": "The applicant's statement of being a return borrower and having paid off a previous loan corroborates risk as per policy 3.2, which states that self-employed or 1099 income disclosed in the applicant's own words is a corroborating risk factor.",
+    "label": "#1915310 [agree] \"Dear Sirs: I have taken the next step in my entrepreneurial...\""
+  },
+  {
+    "loan_id": 1777134,
+    "desc_clean": "Pay off credit cards",
+    "p_default": 0.17826047539710999,
+    "tabular_alone_decision": "decline",
+    "stance": "neutral",
+    "confidence": 0.0,
+    "route": "low_conf",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "\"Pay off credit cards\""
+    ],
+    "stance_policy_ids": [
+      "policy_6.3"
+    ],
+    "stance_rationale": "The statement is empty and does not provide any first-person financial detail.",
+    "label": "#1777134 [low_conf] \"Pay off credit cards\""
+  },
+  {
+    "loan_id": 1614001,
+    "desc_clean": "pay off credit cards pay off credit cards These funds will be used to pay off credit cards so that I can make one monthly payment to creditors.",
+    "p_default": 0.12965774536132812,
+    "tabular_alone_decision": "approve",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "These funds will be used to pay off credit cards so that I can make one monthly payment to creditors."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant's intent to consolidate multiple high-interest debts into a single lower-rate payment is consistent with standard, low-risk loan purposes as per policy_1.3.",
+    "label": "#1614001 [agree] \"pay off credit cards pay off credit cards These funds will b...\""
+  },
+  {
+    "loan_id": 1643473,
+    "desc_clean": "This loan will be used to pay off my remaining high interest credit cards. I am a current Lending Club member with excellent payment history and have enjoyed knowing I am helping people, not banks, grow and prosper. Please let me know if you'd like any additional information or income verification.",
+    "p_default": 0.14268027245998383,
+    "tabular_alone_decision": "approve",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "This loan will be used to pay off my remaining high interest credit cards."
+    ],
+    "stance_policy_ids": [
+      "policy_5.1"
+    ],
+    "stance_rationale": "The statement indicates the intent to consolidate debts, which aligns with policy_5.1 as a strong corroborating risk factor.",
+    "label": "#1643473 [disagree] \"This loan will be used to pay off my remaining high interest...\""
+  },
+  {
+    "loan_id": 1906216,
+    "desc_clean": "This loan is to pay off debt. I have had other loans with Lending Club which were all paid off well in advance of the loan termination date.",
+    "p_default": 0.029373571276664734,
+    "tabular_alone_decision": "approve",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I have had other loans with Lending Club which were all paid off well in advance of the loan termination date."
+    ],
+    "stance_policy_ids": [
+      "policy_5.1"
+    ],
+    "stance_rationale": "The statement indicates a history of paying off loans early, which aligns with policy_5.1's concern about using this loan to avoid prior defaults.",
+    "label": "#1906216 [disagree] \"This loan is to pay off debt. I have had other loans with Le...\""
+  },
+  {
+    "loan_id": 1910995,
+    "desc_clean": "I would like to pay off my credit cards and small debts.",
+    "p_default": 0.17416436970233917,
+    "tabular_alone_decision": "decline",
+    "stance": "neutral",
+    "confidence": 0.8,
+    "route": "low_conf",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I would like to pay off my credit cards and small debts."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The statement indicates a standard intent to consolidate debts, which the policy states does not inherently indicate elevated risk.",
+    "label": "#1910995 [low_conf] \"I would like to pay off my credit cards and small debts.\""
+  },
+  {
+    "loan_id": 1770964,
+    "desc_clean": "I'd like to restructure the higher rate credit cards so that I can be debt free in a few years. This rate is a better deal.",
+    "p_default": 0.1932515650987625,
+    "tabular_alone_decision": "decline",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 1,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "This rate is a better deal."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant's statement indicates an intention to consolidate debts, which the policy states is a standard, low-risk loan purpose.",
+    "label": "#1770964 [disagree] \"I'd like to restructure the higher rate credit cards so that...\""
+  },
+  {
+    "loan_id": 1769878,
+    "desc_clean": "Consolidating all CC and signature loan and working on Home improvements.",
+    "p_default": 0.2517007291316986,
+    "tabular_alone_decision": "decline",
+    "stance": "neutral",
+    "confidence": 0.5,
+    "route": "low_conf",
+    "agent_decision": "auto_decline",
+    "y": 1,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Consolidating all CC and signature loan and working on Home improvements."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3",
+      "policy_4.2"
+    ],
+    "stance_rationale": "The statement indicates a standard debt consolidation purpose, which is not inherently risky according to policy_1.3, and mentions home improvement, which is neutral-to-mitigating as per policy_4.2.",
+    "label": "#1769878 [low_conf] \"Consolidating all CC and signature loan and working on Home...\""
+  },
+  {
+    "loan_id": 1932099,
+    "desc_clean": "After having a medical issue and exhausting all other means,I used credit cards to take care of monthly expenses,gas ,food,ect.",
+    "p_default": 0.2022954225540161,
+    "tabular_alone_decision": "decline",
+    "stance": "mitigates_risk",
+    "confidence": 0.9,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "After having a medical issue and exhausting all other means"
+    ],
+    "stance_policy_ids": [
+      "policy_2.1"
+    ],
+    "stance_rationale": "The statement mentions using credit cards due to a medical issue, which is consistent with the policy's treatment of medical hardship as a mitigating factor.",
+    "label": "#1932099 [disagree] \"After having a medical issue and exhausting all other means,...\""
+  },
+  {
+    "loan_id": 1618831,
+    "desc_clean": "Job is very stable getting nice promotion working with financial company on Broadway. Have been a member of lending club with a loan used for debt consolidation life is going well, just want to have a small get together for my fiance and I we not into flashy weddings. I have not missed one payment on my other loan and love lending club over rip off credit cards. null",
+    "p_default": 0.1216525062918663,
+    "tabular_alone_decision": "approve",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Have been a member of lending club with a loan used for debt consolidation life is going well"
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The statement indicates the use of a previous loan for debt consolidation, which aligns with policy_1.3 and suggests a low-risk purpose.",
+    "label": "#1618831 [agree] \"Job is very stable getting nice promotion working with finan...\""
+  },
+  {
+    "loan_id": 1840761,
+    "desc_clean": "Debt consolidation for dentist and credit card",
+    "p_default": 0.14244875311851501,
+    "tabular_alone_decision": "approve",
+    "stance": "neutral",
+    "confidence": 0.5,
+    "route": "low_conf",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [],
+    "stance_policy_ids": [
+      "policy_1.1",
+      "policy_1.2"
+    ],
+    "stance_rationale": "The statement does not provide information about the DTI ratio or employment stability, which are key factors in the cited policies.",
+    "label": "#1840761 [low_conf] \"Debt consolidation for dentist and credit card\""
+  },
+  {
+    "loan_id": 1907971,
+    "desc_clean": "This loan is for consolidation of my credit card debts and also other debts. Instead of paying interest at different places, i chose to pay once a month. I found the lending club the best option to get things in place to avoid financial management issues.",
+    "p_default": 0.28930461406707764,
+    "tabular_alone_decision": "decline",
+    "stance": "neutral",
+    "confidence": 0.5,
+    "route": "low_conf",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I found the lending club the best option to get things in place to avoid financial management issues."
+    ],
+    "stance_policy_ids": [],
+    "stance_rationale": "The statement indicates a desire for better financial management, which is neutral according to the policies provided.",
+    "label": "#1907971 [low_conf] \"This loan is for consolidation of my credit card debts and a...\""
+  },
+  {
+    "loan_id": 1762564,
+    "desc_clean": "Achieve a successful home office online business",
+    "p_default": 0.3797593116760254,
+    "tabular_alone_decision": "decline",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_decline",
+    "y": 1,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Achieve a successful home office online business"
+    ],
+    "stance_policy_ids": [
+      "policy_4.1"
+    ],
+    "stance_rationale": "The statement indicates an intent to start a new business venture, which is a corroborating risk factor according to policy_4.1.",
+    "label": "#1762564 [agree] \"Achieve a successful home office online business\""
+  },
+  {
+    "loan_id": 1909211,
+    "desc_clean": "I've been making high interest credit card payments on three cards now for several years and the principal does not seem to ever go down. I want this loan to pay off these high interests credit cards for a more manageable loan with a lower interest rate that I can more easily manage.",
+    "p_default": 0.17731226980686188,
+    "tabular_alone_decision": "decline",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I want this loan to pay off these high interests credit cards for a more manageable loan with a lower interest rate that I can more easily manage."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant's intent to consolidate debts into a single, lower-interest loan is consistent with standard, low-risk practices as per policy_1.3.",
+    "label": "#1909211 [disagree] \"I've been making high interest credit card payments on three...\""
+  },
+  {
+    "loan_id": 1879899,
+    "desc_clean": "I would like to consolidate all of my credit cards to get a lower interest rate, and have a lower monthly payment so I can build up a savings account.",
+    "p_default": 0.08153389394283295,
+    "tabular_alone_decision": "approve",
+    "stance": "neutral",
+    "confidence": 0.8,
+    "route": "low_conf",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I would like to consolidate all of my credit cards to get a lower interest rate, and have a lower monthly payment so I can build up a savings account."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The statement aligns with the standard purpose for debt consolidation as outlined in policy_1.3, indicating no elevated risk.",
+    "label": "#1879899 [low_conf] \"I would like to consolidate all of my credit cards to get a...\""
+  },
+  {
+    "loan_id": 1898918,
+    "desc_clean": "I would greatly appreciate getting this loan due to the high interest rate on one of my bills which is 36.9%. This will allow me to get debt free faster. I have a very secure job in the healthcare field which allows for a secure financial future. Thank you for giving me this opportunity.",
+    "p_default": 0.20394305884838104,
+    "tabular_alone_decision": "decline",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I would greatly appreciate getting this loan due to the high interest rate on one of my bills which is 36.9%. This will allow me to get debt free faster."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant's statement indicates an intent to consolidate high-interest debts, which aligns with the policy that such a purpose is standard and low-risk.",
+    "label": "#1898918 [agree] \"I would greatly appreciate getting this loan due to the high...\""
+  },
+  {
+    "loan_id": 1938887,
+    "desc_clean": "Loan will be used pay off higher rate loans and credit cards.",
+    "p_default": 0.4033014178276062,
+    "tabular_alone_decision": "decline",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Loan will be used pay off higher rate loans and credit cards."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The statement indicates a clear intent to consolidate high-interest debts, which is considered a standard, low-risk loan purpose according to policy_1.3.",
+    "label": "#1938887 [disagree] \"Loan will be used pay off higher rate loans and credit cards...\""
+  },
+  {
+    "loan_id": 1857563,
+    "desc_clean": "My New Year's resolution is to get financially healthy! I plan on using this money to pay of my debt.",
+    "p_default": 0.14771325886249542,
+    "tabular_alone_decision": "approve",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I plan on using this money to pay of my debt."
+    ],
+    "stance_policy_ids": [
+      "policy_5.1"
+    ],
+    "stance_rationale": "The applicant's statement directly aligns with policy_5.1, indicating an intention to use the loan to resolve existing financial issues.",
+    "label": "#1857563 [agree] \"My New Year's resolution is to get financially healthy! I pl...\""
+  },
+  {
+    "loan_id": 1768441,
+    "desc_clean": "Debt consolidation on some high rate interest credit cards debt consolidation on some high interest credit cards.",
+    "p_default": 0.2811284065246582,
+    "tabular_alone_decision": "decline",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Debt consolidation on some high rate interest credit cards debt consolidation on some high interest credit cards."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The statement indicates a clear intent to consolidate debts, which is considered a standard, low-risk loan purpose according to policy_1.3.",
+    "label": "#1768441 [disagree] \"Debt consolidation on some high rate interest credit cards d...\""
+  },
+  {
+    "loan_id": 1914837,
+    "desc_clean": "I want to consolidate a loan and my credit cards.",
+    "p_default": 0.30594658851623535,
+    "tabular_alone_decision": "decline",
+    "stance": "neutral",
+    "confidence": 0.5,
+    "route": "low_conf",
+    "agent_decision": "auto_decline",
+    "y": 1,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "\"I want to consolidate a loan and my credit cards.\""
+    ],
+    "stance_policy_ids": [
+      "policy_1.3",
+      "policy_7.2"
+    ],
+    "stance_rationale": "The statement does not indicate any specific risk factors or inconsistencies, aligning with standard low-risk consolidation purposes as per policy_1.3 and neutral educational use in policy_7.2.",
+    "label": "#1914837 [low_conf] \"I want to consolidate a loan and my credit cards.\""
+  },
+  {
+    "loan_id": 1786664,
+    "desc_clean": "I owe back taxes",
+    "p_default": 0.3338167667388916,
+    "tabular_alone_decision": "decline",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I owe back taxes"
+    ],
+    "stance_policy_ids": [
+      "policy_6.2"
+    ],
+    "stance_rationale": "The statement 'I owe back taxes' is an admission of financial obligation, which could indicate potential difficulty in repaying the loan. This internal inconsistency with a stated purpose for borrowing suggests a fraud-review flag.",
+    "label": "#1786664 [agree] \"I owe back taxes\""
+  },
+  {
+    "loan_id": 1651080,
+    "desc_clean": "I am interested in taking out a loan for some money to update the kitchen in my house. I can easily afford a payment in the 300-350 range. I would be interested in borrowing 10,000-15,000. I would be most interested in a line of credit, that I can reaccess for future home projects once I have paid off this initial loan. I thought a line of credit loan made more sense than a credit card due to interest rates. I have good credit, and a good income, I just do not have much equity in my home so I have chosen not to refinance at this time. thankyou",
+    "p_default": 0.050914864987134933,
+    "tabular_alone_decision": "approve",
+    "stance": "neutral",
+    "confidence": 0.7,
+    "route": "low_conf",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I can easily afford a payment in the 300-350 range.",
+      "I have good credit, and a good income"
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant's statement indicates their ability to manage payments and good financial standing, which aligns with the policy that consolidation of high-interest debts is not inherently risky.",
+    "label": "#1651080 [low_conf] \"I am interested in taking out a loan for some money to updat...\""
+  },
+  {
+    "loan_id": 1843224,
+    "desc_clean": "Consolditation of debt for addition to my house.",
+    "p_default": 0.08121364563703537,
+    "tabular_alone_decision": "approve",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Consolditation of debt for addition to my house."
+    ],
+    "stance_policy_ids": [
+      "policy_1.1",
+      "policy_5.1"
+    ],
+    "stance_rationale": "The statement mentions consolidating debt, which is a risk factor according to policy_1.1 and indicates an attempt to avoid a prior default as per policy_5.1.",
+    "label": "#1843224 [disagree] \"Consolditation of debt for addition to my house.\""
+  },
+  {
+    "loan_id": 1875611,
+    "desc_clean": "Consolidating debt.",
+    "p_default": 0.30613744258880615,
+    "tabular_alone_decision": "decline",
+    "stance": "neutral",
+    "confidence": 0.0,
+    "route": "low_conf",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [],
+    "stance_policy_ids": [
+      "policy_6.3"
+    ],
+    "stance_rationale": "The statement is empty and does not provide any first-person financial detail.",
+    "label": "#1875611 [low_conf] \"Consolidating debt.\""
+  },
+  {
+    "loan_id": 1648059,
+    "desc_clean": "I work for a financial education and debt management organization and over the past four years have been working to pay of 30,000 in debt. I am down to about 15,000 but recently moved to a new apartment, married and have a child on the way. The medical expenses and extra expenses are threatening to take me in the other direction. I am several months from paying off both a personal loan and a pension loan. I have garnished a substantial increase in salary and now can have a working surplus budget to help me establish emergency savings. I would like to use this loan to pay off the above mentioned loans as well as small (but accumulating medical and credit card bills). This would leave me with one debt to repay for the 10K amount along with one credit card of about 5K, hopefully at a lower interest rate than what I currently have. By February of 2010 I expect a substantial refund due to the new family and can have this all paid off if I approach this according to my plan - in which this loan is essential.",
+    "p_default": 0.11529304832220078,
+    "tabular_alone_decision": "approve",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I have garnished a substantial increase in salary and now can have a working surplus budget to help me establish emergency savings.",
+      "By February of 2010 I expect a substantial refund due to the new family and can have this all paid off if I approach this according to my plan - in which this loan is essential."
+    ],
+    "stance_policy_ids": [
+      "policy_5.1",
+      "policy_2.1"
+    ],
+    "stance_rationale": "The applicant's increased salary and expected refund indicate a higher likelihood of repayment, mitigating risk as per policy_5.1. The mention of medical expenses is consistent with the loan amount requested, which is treated as a mitigating factor under policy_2.1.",
+    "label": "#1648059 [agree] \"I work for a financial education and debt management organiz...\""
+  },
+  {
+    "loan_id": 1867375,
+    "desc_clean": "After a difficult 2012,our family is ready for an overhaul.This would include consolidating credit cards that have been lingering for years.This would also allow us to put a much needed roof over our heads (leaks). This would all be paid for in 5 years,not possible with the cards otherwise. Thanks!!",
+    "p_default": 0.4332038164138794,
+    "tabular_alone_decision": "decline",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "This would also allow us to put a much needed roof over our heads (leaks)."
+    ],
+    "stance_policy_ids": [
+      "policy_5.1"
+    ],
+    "stance_rationale": "The statement mentions needing to fix a leaking roof, which could imply past financial difficulties and the need to avoid future defaults.",
+    "label": "#1867375 [agree] \"After a difficult 2012,our family is ready for an overhaul.T...\""
+  },
+  {
+    "loan_id": 1819433,
+    "desc_clean": "To pay off a personal loan with higher interest.",
+    "p_default": 0.22088946402072906,
+    "tabular_alone_decision": "decline",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_decline",
+    "y": 1,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "to pay off a personal loan with higher interest"
+    ],
+    "stance_policy_ids": [
+      "policy_5.1"
+    ],
+    "stance_rationale": "The statement indicates an intent to use the loan for debt consolidation, which aligns with policy_5.1 as it suggests a pattern of financial distress.",
+    "label": "#1819433 [agree] \"To pay off a personal loan with higher interest.\""
+  },
+  {
+    "loan_id": 1642099,
+    "desc_clean": "Trying to get our of credit card debt. Trying to get out of credit card debt by 2013.",
+    "p_default": 0.2053438276052475,
+    "tabular_alone_decision": "decline",
+    "stance": "neutral",
+    "confidence": 0.5,
+    "route": "low_conf",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Trying to get our of credit card debt. Trying to get out of credit card debt by 2013."
+    ],
+    "stance_policy_ids": [],
+    "stance_rationale": "The statement indicates the applicant is trying to reduce debt, but does not provide specific details that would corroborate or mitigate risk according to the policies provided.",
+    "label": "#1642099 [low_conf] \"Trying to get our of credit card debt. Trying to get out of...\""
+  },
+  {
+    "loan_id": 1855471,
+    "desc_clean": "this loan will be for paid off all the credit card my 7 year old son surgery from boston children hospital ,and some other mic bills hanging around and more",
+    "p_default": 0.35157260298728943,
+    "tabular_alone_decision": "decline",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "and some other mic bills hanging around and more"
+    ],
+    "stance_policy_ids": [
+      "policy_6.2"
+    ],
+    "stance_rationale": "The statement includes vague and inconsistent uses of funds, which aligns with the policy on internal inconsistency.",
+    "label": "#1855471 [agree] \"this loan will be for paid off all the credit card my 7 year...\""
+  },
+  {
+    "loan_id": 1833033,
+    "desc_clean": "The loan will pay off my credit cards (BofA, GE, CitiBank &amp; Disc.) w/ my final paymt along w/ a cancellation of those accounts. This loan will enable me to have one payment option that I was not able to get in the past and pay off this loan faster by saving from the interest I was paying before.",
+    "p_default": 0.2572595477104187,
+    "tabular_alone_decision": "decline",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "This loan will enable me to have one payment option that I was not able to get in the past and pay off this loan faster by saving from the interest I was paying before."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant's statement indicates a clear intent to consolidate high-interest debts, which aligns with standard low-risk loan purposes as per policy_1.3.",
+    "label": "#1833033 [disagree] \"The loan will pay off my credit cards (BofA, GE, CitiBank &a...\""
+  },
+  {
+    "loan_id": 1889501,
+    "desc_clean": "I work full time while starting two businesses. I would like to consolidate personal debt to focus on funding the businesses a little easier.",
+    "p_default": 0.11338084936141968,
+    "tabular_alone_decision": "approve",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "starting two businesses"
+    ],
+    "stance_policy_ids": [
+      "policy_4.1"
+    ],
+    "stance_rationale": "Starting multiple businesses is cited as a corroborating risk factor, indicating potential financial instability.",
+    "label": "#1889501 [disagree] \"I work full time while starting two businesses. I would like...\""
+  },
+  {
+    "loan_id": 1939036,
+    "desc_clean": "I have never defaulted on any loan or credit card. I am trying to get debt consolidation for one payment and a light at the end of the tunnel.",
+    "p_default": 0.2049417942762375,
+    "tabular_alone_decision": "decline",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I am trying to get debt consolidation for one payment and a light at the end of the tunnel."
+    ],
+    "stance_policy_ids": [
+      "policy_2.3",
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant's statement indicates an intent to consolidate debts, which is considered a standard, low-risk loan purpose according to policy.",
+    "label": "#1939036 [disagree] \"I have never defaulted on any loan or credit card. I am tryi...\""
+  },
+  {
+    "loan_id": 1761866,
+    "desc_clean": "pay off one car and credit cards",
+    "p_default": 0.17145214974880219,
+    "tabular_alone_decision": "decline",
+    "stance": "corroborates_risk",
+    "confidence": 1.0,
+    "route": "agree",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "pay off one car and credit cards"
+    ],
+    "stance_policy_ids": [
+      "policy_6.2"
+    ],
+    "stance_rationale": "The statement shows internal inconsistency as the loan purpose is not clearly defined, which is a fraud-review flag according to policy_6.2.",
+    "label": "#1761866 [agree] \"pay off one car and credit cards\""
+  },
+  {
+    "loan_id": 1917995,
+    "desc_clean": "Purchase of a pool for our house, build a deck around the pool and pay off three credit cards.",
+    "p_default": 0.19346651434898376,
+    "tabular_alone_decision": "decline",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "pay off three credit cards"
+    ],
+    "stance_policy_ids": [
+      "policy_5.1",
+      "policy_6.2"
+    ],
+    "stance_rationale": "The statement indicates using the loan to pay off existing debt, which is a risk factor according to policy_5.1. Additionally, there is an internal inconsistency between purchasing a pool and paying off credit cards, triggering a fraud-review flag as per policy_6.2.",
+    "label": "#1917995 [agree] \"Purchase of a pool for our house, build a deck around the po...\""
+  },
+  {
+    "loan_id": 1913838,
+    "desc_clean": "Credit Card debt consolidation",
+    "p_default": 0.09140291064977646,
+    "tabular_alone_decision": "approve",
+    "stance": "neutral",
+    "confidence": 0.0,
+    "route": "low_conf",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Credit Card debt consolidation"
+    ],
+    "stance_policy_ids": [
+      "policy_6.3"
+    ],
+    "stance_rationale": "The statement is empty and does not provide any first-person financial detail.",
+    "label": "#1913838 [low_conf] \"Credit Card debt consolidation\""
+  },
+  {
+    "loan_id": 1832572,
+    "desc_clean": "Need loan to consolidate high rate debts and other misc bills payment allowing me to have one payment that I can focus on paying quickly and in an organizing way.",
+    "p_default": 0.13319911062717438,
+    "tabular_alone_decision": "approve",
+    "stance": "neutral",
+    "confidence": 0.0,
+    "route": "low_conf",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Need loan to consolidate high rate debts and other misc bills payment allowing me to have one payment that I can focus on paying quickly and in an organizing way."
+    ],
+    "stance_policy_ids": [
+      "policy_2.3",
+      "policy_6.3"
+    ],
+    "stance_rationale": "The statement is a general financial goal without specific details, aligning with the policy that such statements carry no narrative signal.",
+    "label": "#1832572 [low_conf] \"Need loan to consolidate high rate debts and other misc bill...\""
+  },
+  {
+    "loan_id": 1793183,
+    "desc_clean": "I realize it will be so much easier to pay one set amount to one account monthly. I hope to acquire this loan, consolidate and pay off my debt.",
+    "p_default": 0.29705357551574707,
+    "tabular_alone_decision": "decline",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I hope to acquire this loan, consolidate and pay off my debt."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant's intent to consolidate debts into a single lower-rate payment aligns with standard low-risk practices as stated in policy_1.3.",
+    "label": "#1793183 [disagree] \"I realize it will be so much easier to pay one set amount to...\""
+  },
+  {
+    "loan_id": 1857443,
+    "desc_clean": "Necessary test needed that's not covered by my insurance.",
+    "p_default": 0.1474468857049942,
+    "tabular_alone_decision": "approve",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Necessary test needed that's not covered by my insurance."
+    ],
+    "stance_policy_ids": [
+      "policy_3.2"
+    ],
+    "stance_rationale": "The statement indicates self-employed or 1099 income, which is a corroborating risk factor according to policy 3.2.",
+    "label": "#1857443 [disagree] \"Necessary test needed that's not covered by my insurance.\""
+  },
+  {
+    "loan_id": 1784930,
+    "desc_clean": "a used bassboat",
+    "p_default": 0.07655087113380432,
+    "tabular_alone_decision": "approve",
+    "stance": "neutral",
+    "confidence": 0.3,
+    "route": "low_conf",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "a used bassboat"
+    ],
+    "stance_policy_ids": [],
+    "stance_rationale": "The statement provides no information that corroborates or mitigates risk according to the provided policies.",
+    "label": "#1784930 [low_conf] \"a used bassboat\""
+  },
+  {
+    "loan_id": 1637669,
+    "desc_clean": "Loan to pay off debt from divorce Pay off credit card debt accrued from divorce",
+    "p_default": 0.1790735423564911,
+    "tabular_alone_decision": "decline",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Loan to pay off debt from divorce",
+      "Pay off credit card debt accrued from divorce"
+    ],
+    "stance_policy_ids": [
+      "policy_5.1"
+    ],
+    "stance_rationale": "The statement directly mentions using the loan to pay off existing debt, which aligns with a risk factor of avoiding prior defaults as stated in policy_5.1.",
+    "label": "#1637669 [agree] \"Loan to pay off debt from divorce Pay off credit card debt a...\""
+  },
+  {
+    "loan_id": 1849805,
+    "desc_clean": "To finish paying off all my credit card debt. I have paid off approx. $60,000 so far this year. This will finish it off!",
+    "p_default": 0.016132470220327377,
+    "tabular_alone_decision": "approve",
+    "stance": "neutral",
+    "confidence": 0.5,
+    "route": "low_conf",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "To finish paying off all my credit card debt."
+    ],
+    "stance_policy_ids": [],
+    "stance_rationale": "The statement focuses on paying off existing debt and does not mention any prior defaults, repossession, garnishment, or collections actions.",
+    "label": "#1849805 [low_conf] \"To finish paying off all my credit card debt. I have paid of...\""
+  },
+  {
+    "loan_id": 1646539,
+    "desc_clean": "552436 added on 10/07/09 > This loan will be used to pay off my credit card debt that banks have unfairly raised the interest rates on.",
+    "p_default": 0.1327260434627533,
+    "tabular_alone_decision": "approve",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "This loan will be used to pay off my credit card debt that banks have unfairly raised the interest rates on."
+    ],
+    "stance_policy_ids": [
+      "policy_5.1"
+    ],
+    "stance_rationale": "The statement indicates an intention to consolidate debts, which is noted as a strong corroborating risk factor when paired with unfair treatment from creditors.",
+    "label": "#1646539 [disagree] \"552436 added on 10/07/09 > This loan will be used to pay off...\""
+  },
+  {
+    "loan_id": 1855581,
+    "desc_clean": "The loan is for paid my credit cards",
+    "p_default": 0.047351736575365067,
+    "tabular_alone_decision": "approve",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "the loan is for paid my credit cards"
+    ],
+    "stance_policy_ids": [
+      "policy_6.2"
+    ],
+    "stance_rationale": "The statement indicates the loan purpose is to pay off credit cards, which creates an internal inconsistency with typical educational expenses as per policy_6.2.",
+    "label": "#1855581 [disagree] \"The loan is for paid my credit cards\""
+  },
+  {
+    "loan_id": 1927206,
+    "desc_clean": "Payoff small accounts and medical bills",
+    "p_default": 0.15323340892791748,
+    "tabular_alone_decision": "approve",
+    "stance": "neutral",
+    "confidence": 0.0,
+    "route": "low_conf",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [],
+    "stance_policy_ids": [
+      "policy_6.3"
+    ],
+    "stance_rationale": "The statement is boilerplate and does not contain any first-person financial detail.",
+    "label": "#1927206 [low_conf] \"Payoff small accounts and medical bills\""
+  },
+  {
+    "loan_id": 1637537,
+    "desc_clean": "Brewery Tours Business I am starting a brewery tours business where we take people on a round trip tour to several craft breweries in our local area. We have already purchased two 15 passenger busses, have spent the past 6 months developing relationships with the breweries, collecting surveys, doing test tours, and building to the point where we are ready to fully launch this business. We have hundreds of people on our mailing list who have expressed an interest in taking our tours. Right now we just have a few fees to pay, some maintenance costs for the busses, and to hire a driver that we already have interviewed. About me: I have worked as a Senior Business Consultant in the franchise restaurant industry for the past 2 1/2 years now. I help franchisees build their sales and improve operations. I also manage a team of 5 people who do the same. In my profession I have advised business owners big and small and I know what it takes to succeed and build a business such as this. Let me know if you have any questions, I would be happy to answer them. 9/21- We are really grateful for all the support so far! We have just 9 more days and $7,000 left to go. It would mean the world to me if you could refer a friend to this page here or if you could lend any additional amount to help get this business off the ground. My current job will fully cover the payments and we have hundreds of customers who want to take our tours. Just $100 more dollars per existing lender could bring us to our goal almost overnight and you would be that much closer to making great returns on your investment!",
+    "p_default": 0.26390722393989563,
+    "tabular_alone_decision": "decline",
+    "stance": "neutral",
+    "confidence": 0.5,
+    "route": "low_conf",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [],
+    "stance_policy_ids": [
+      "policy_4.1"
+    ],
+    "stance_rationale": "The statement describes a new business venture and startup costs, which aligns with policy_4.1 but does not explicitly state that the loan proceeds will fund these activities.",
+    "label": "#1637537 [low_conf] \"Brewery Tours Business I am starting a brewery tours busines...\""
+  },
+  {
+    "loan_id": 1918684,
+    "desc_clean": "Loan is needed for cashflow, payroll and tax payments. Loan is needed for cash-flow, payroll and pay taxes.",
+    "p_default": 0.25188204646110535,
+    "tabular_alone_decision": "decline",
+    "stance": "neutral",
+    "confidence": 0.5,
+    "route": "low_conf",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Loan is needed for cashflow, payroll and tax payments."
+    ],
+    "stance_policy_ids": [],
+    "stance_rationale": "The statement provides a clear purpose for the loan but does not indicate any internal inconsistency or mention of avoiding prior financial issues.",
+    "label": "#1918684 [low_conf] \"Loan is needed for cashflow, payroll and tax payments. Loan...\""
+  },
+  {
+    "loan_id": 1915561,
+    "desc_clean": "Consolidate certain credit card bills.",
+    "p_default": 0.03474051132798195,
+    "tabular_alone_decision": "approve",
+    "stance": "neutral",
+    "confidence": 0.2,
+    "route": "low_conf",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Consolidate certain credit card bills."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The statement is a general intent to consolidate debts, which does not provide specific financial details or indicate elevated risk according to the policy.",
+    "label": "#1915561 [low_conf] \"Consolidate certain credit card bills.\""
+  },
+  {
+    "loan_id": 1936947,
+    "desc_clean": "Credit Card refinancing Just looking to consolidate some credit card debt so we can make one payment instead of 3-5 and get rid of the debt within 3 years.",
+    "p_default": 0.1961277574300766,
+    "tabular_alone_decision": "decline",
+    "stance": "neutral",
+    "confidence": 0.8,
+    "route": "low_conf",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "A stated intent to consolidate multiple high-interest debts into a single lower-rate payment is a standard, low-risk loan purpose and does not itself indicate elevated risk."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The statement indicates the intent to consolidate debts, which according to policy_1.3 is a standard, low-risk purpose.",
+    "label": "#1936947 [low_conf] \"Credit Card refinancing Just looking to consolidate some cre...\""
+  },
+  {
+    "loan_id": 1938559,
+    "desc_clean": "I owe a person $2700 for a truck, and am going on a cruise. I would like to consolidate these plus other expenses so I can pay them off fully and combine into one payment per month. I am able to pay $600 per month minimum.",
+    "p_default": 0.15555819869041443,
+    "tabular_alone_decision": "approve",
+    "stance": "neutral",
+    "confidence": 0.7,
+    "route": "low_conf",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I am able to pay $600 per month minimum"
+    ],
+    "stance_policy_ids": [
+      "policy_1.3",
+      "policy_1.2"
+    ],
+    "stance_rationale": "The statement indicates the applicant can afford the monthly payment, which aligns with acceptable DTI levels as stated in policy 1.2 and supports a neutral stance on risk.",
+    "label": "#1938559 [low_conf] \"I owe a person $2700 for a truck, and am going on a cruise....\""
+  },
+  {
+    "loan_id": 1910255,
+    "desc_clean": "Buying baby stuff for the second baby and consolidate other credit card debts.",
+    "p_default": 0.05669545754790306,
+    "tabular_alone_decision": "approve",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Buying baby stuff for the second baby and consolidate other credit card debts."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3",
+      "policy_6.2"
+    ],
+    "stance_rationale": "The statement clearly indicates a purpose of consolidating high-interest debts, which is considered low-risk according to policy_1.3. The inconsistency between buying baby stuff and debt consolidation raises a fraud review flag as per policy_6.2, but the primary intent (debt consolidation) mitigates overall risk.",
+    "label": "#1910255 [agree] \"Buying baby stuff for the second baby and consolidate other...\""
+  },
+  {
+    "loan_id": 1817287,
+    "desc_clean": "I am tired of making multiple payments to multiple creditors. I have never defaulted on a loan and never missed a payment. I have been continuously employed in my industry for over 10 years and am very secure in my position. I just want a simple monthly payment to budget. Rest easy, Invest securely I have 4 credit accounts I want to merge into one rate and payment. Creating an easier budget in order to actually start putting money into something other than my 401k. I am tired of paying multiple payments. I simply want to consolidate debt to create a better budget. I have never defaulted on a loan or missed a payment. I have been continuously employed in my industry for over ten years and am very secure in my position. Rest easy and invest securely.",
+    "p_default": 0.11319532990455627,
+    "tabular_alone_decision": "approve",
+    "stance": "mitigates_risk",
+    "confidence": 0.9,
+    "route": "agree",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I have been continuously employed in my industry for over 10 years and am very secure in my position."
+    ],
+    "stance_policy_ids": [
+      "policy_2.3"
+    ],
+    "stance_rationale": "The applicant's long tenure at a single employer is explicitly stated as mitigating risk according to policy section 2.3.",
+    "label": "#1817287 [agree] \"I am tired of making multiple payments to multiple creditors...\""
+  },
+  {
+    "loan_id": 1915072,
+    "desc_clean": "It is simply to get out from under revolving debt. My son was very ill six years ago and his medical bills created a near impossible situation for me. I have been struggling since then to get my head above water and this gives me the chance to get away from only paying interest.",
+    "p_default": 0.24701128900051117,
+    "tabular_alone_decision": "decline",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "get out from under revolving debt",
+      "struggling since then to get my head above water"
+    ],
+    "stance_policy_ids": [
+      "policy_1.1",
+      "policy_5.1"
+    ],
+    "stance_rationale": "The applicant's struggle with revolving debt and the mention of avoiding a prior difficult situation corroborate elevated risk as per policy snippets.",
+    "label": "#1915072 [agree] \"It is simply to get out from under revolving debt. My son wa...\""
+  },
+  {
+    "loan_id": 1913252,
+    "desc_clean": "I am refinancing my existing loan with Lending Club. I will pay off the existing loan balance to benefit from a lower interest rate/APR.",
+    "p_default": 0.04410411790013313,
+    "tabular_alone_decision": "approve",
+    "stance": "neutral",
+    "confidence": 0.7,
+    "route": "low_conf",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I will pay off the existing loan balance to benefit from a lower interest rate/APR."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3",
+      "policy_4.3"
+    ],
+    "stance_rationale": "The statement is specific about refinancing purposes and does not indicate any medical hardship or vague reasons, aligning with low-risk criteria.",
+    "label": "#1913252 [low_conf] \"I am refinancing my existing loan with Lending Club. I will...\""
+  },
+  {
+    "loan_id": 1847046,
+    "desc_clean": "I will be using the money to pay off all of my credit cards and consolidating the payment into one papyment per month. I am paying the amount already per month just on minimum payments and i will be paying off 2 medical bills as well. I would close my credit cards out after approved and funded.",
+    "p_default": 0.17567427456378937,
+    "tabular_alone_decision": "decline",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I will be using the money to pay off all of my credit cards and consolidating the payment into one papyment per month.",
+      "I am paying the amount already per month just on minimum payments and i will be paying off 2 medical bills as well."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant's intent to consolidate multiple high-interest debts into a single lower-rate payment aligns with standard, low-risk loan purposes.",
+    "label": "#1847046 [disagree] \"I will be using the money to pay off all of my credit cards...\""
+  },
+  {
+    "loan_id": 1898492,
+    "desc_clean": "home improvement",
+    "p_default": 0.24056705832481384,
+    "tabular_alone_decision": "decline",
+    "stance": "neutral",
+    "confidence": 0.3,
+    "route": "low_conf",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "home improvement"
+    ],
+    "stance_policy_ids": [
+      "policy_4.2"
+    ],
+    "stance_rationale": "The statement 'home improvement' is too vague to indicate risk or mitigation, aligning with policy guidance that such statements carry no narrative signal.",
+    "label": "#1898492 [low_conf] \"home improvement\""
+  },
+  {
+    "loan_id": 1845627,
+    "desc_clean": "My 70-year-old house needs some repairs done, including windows and siding replaced and some dry rot removed and clean wood installed.",
+    "p_default": 0.06846509873867035,
+    "tabular_alone_decision": "approve",
+    "stance": "neutral",
+    "confidence": 0.2,
+    "route": "low_conf",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [],
+    "stance_policy_ids": [
+      "policy_6.3"
+    ],
+    "stance_rationale": "The statement is a general description of home repairs and does not contain any first-person financial details or specific triggering events, making it neutral according to policy.",
+    "label": "#1845627 [low_conf] \"My 70-year-old house needs some repairs done, including wind...\""
+  },
+  {
+    "loan_id": 1867618,
+    "desc_clean": "Right now, I'm paying over $1,000 every month to various credit cards. I am going to LOVE only paying ONE company AND saving thousands of dollars in interest. Thank you so much for allowing the opportunity for me to get my debt under control.",
+    "p_default": 0.0376383475959301,
+    "tabular_alone_decision": "approve",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Right now, I'm paying over $1,000 every month to various credit cards."
+    ],
+    "stance_policy_ids": [
+      "policy_1.1"
+    ],
+    "stance_rationale": "The statement indicates a high monthly debt payment, which aligns with a DTI ratio above 40%, requiring manual underwriting review according to policy_1.1.",
+    "label": "#1867618 [disagree] \"Right now, I'm paying over $1,000 every month to various cre...\""
+  },
+  {
+    "loan_id": 1899500,
+    "desc_clean": "pay off credit card debt",
+    "p_default": 0.11793281137943268,
+    "tabular_alone_decision": "approve",
+    "stance": "neutral",
+    "confidence": 0.0,
+    "route": "low_conf",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [],
+    "stance_policy_ids": [
+      "policy_6.3"
+    ],
+    "stance_rationale": "The statement is empty of first-person financial detail and does not provide any specific information that could corroborate or mitigate risk.",
+    "label": "#1899500 [low_conf] \"pay off credit card debt\""
+  },
+  {
+    "loan_id": 1766372,
+    "desc_clean": "I am consolidating my Capital One Visa, Bank of America Visa and US bank creditline utilizing these funds.",
+    "p_default": 0.036388009786605835,
+    "tabular_alone_decision": "approve",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 1,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "utilizing these funds"
+    ],
+    "stance_policy_ids": [
+      "policy_6.2"
+    ],
+    "stance_rationale": "The statement indicates the use of funds for debt consolidation, which could suggest potential financial stress and internal inconsistency with the loan purpose.",
+    "label": "#1766372 [disagree] \"I am consolidating my Capital One Visa, Bank of America Visa...\""
+  },
+  {
+    "loan_id": 1858087,
+    "desc_clean": "I am a proud home owner for the last two years. There are still a couple of things i want to fix around the house, including new floor tiles, new paint work and garden improvements. A loan that allows the flexibility to make prepayments without any additional fees would be excellent.",
+    "p_default": 0.3352200984954834,
+    "tabular_alone_decision": "decline",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "A loan that allows the flexibility to make prepayments without any additional fees would be excellent."
+    ],
+    "stance_policy_ids": [
+      "policy_4.2"
+    ],
+    "stance_rationale": "The applicant's desire for a flexible loan with no prepayment fees suggests they are responsible and can manage their finances, which aligns with the policy stating that home improvement purposes are neutral-to-mitigating.",
+    "label": "#1858087 [disagree] \"I am a proud home owner for the last two years. There are st...\""
+  },
+  {
+    "loan_id": 1631922,
+    "desc_clean": "I am a communications technician. I plan on using these funds to consolidate my debt into one loan and pay it off as fast as I am able. I am a good borrower by virtue of the fact that I have good credit, am responsible with my money, and have NEVER missed a payment on anything. My job is a contract job for at least the next five years, so it is very stable. My monthly budget will allow me to make the minimum payment and a bit more each month depending on other expenses. I have canceled all of my other credit accounts and just need this loan to get myself financially back on track, and I thank you for considering an investment in me. I will work very hard to justify it. God bless. :)",
+    "p_default": 0.2652377784252167,
+    "tabular_alone_decision": "decline",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I have good credit, am responsible with my money, and have NEVER missed a payment on anything.",
+      "My job is a contract job for at least the next five years, so it is very stable."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant's strong credit history and stable employment align with policy guidelines indicating low risk.",
+    "label": "#1631922 [disagree] \"I am a communications technician. I plan on using these fund...\""
+  },
+  {
+    "loan_id": 1751501,
+    "desc_clean": "i will be consolidating all of my smaller loans. this will allow me to have a smaller monthly payment and have only one payment to you. paying off capital one, SMFCU, lowes, wal-mart, h&amp;r block visa, GE money both accts, Northwest and credit one. this will save me monthly payments.",
+    "p_default": 0.30411389470100403,
+    "tabular_alone_decision": "decline",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "this will allow me to have a smaller monthly payment and have only one payment to you."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant's intent to consolidate multiple high-interest debts into a single lower-rate payment aligns with standard, low-risk loan purposes as stated in policy_1.3.",
+    "label": "#1751501 [disagree] \"i will be consolidating all of my smaller loans. this will a...\""
+  },
+  {
+    "loan_id": 1753304,
+    "desc_clean": "I'm looking to pay off two credit cards and a medical Bill and have only one payment.",
+    "p_default": 0.16343486309051514,
+    "tabular_alone_decision": "approve",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "have only one payment"
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant's intent to consolidate debts into a single lower-rate payment aligns with standard, low-risk loan purposes as stated in policy_1.3.",
+    "label": "#1753304 [agree] \"I'm looking to pay off two credit cards and a medical Bill a...\""
+  },
+  {
+    "loan_id": 1908925,
+    "desc_clean": "To pay medical expenses from surgery with no medical insurance, I have been making payment but now they want total due and I still owe loans to family due to surgery too.",
+    "p_default": 0.11289474368095398,
+    "tabular_alone_decision": "approve",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I have been making payment but now they want total due and I still owe loans to family due to surgery too"
+    ],
+    "stance_policy_ids": [
+      "policy_2.1"
+    ],
+    "stance_rationale": "The statement mentions medical expenses from surgery, which aligns with the policy's view of unexpected procedures as mitigating factors.",
+    "label": "#1908925 [agree] \"To pay medical expenses from surgery with no medical insuran...\""
+  },
+  {
+    "loan_id": 1840992,
+    "desc_clean": "I have alot of charges on credit cards, this will pay off some and most of another at a much lower interest.",
+    "p_default": 0.138920396566391,
+    "tabular_alone_decision": "approve",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 1,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "'this will pay off some and most of another at a much lower interest'"
+    ],
+    "stance_policy_ids": [
+      "policy_5.1"
+    ],
+    "stance_rationale": "The statement indicates the applicant is using the loan to pay off existing credit card debts, which aligns with policy 5.1's strong corroborating risk factor for using a loan to avoid prior defaults.",
+    "label": "#1840992 [disagree] \"I have alot of charges on credit cards, this will pay off so...\""
+  },
+  {
+    "loan_id": 1885152,
+    "desc_clean": "I lost my job when the market crashed. I was unemployed for 6 months &amp; racked up a lot of credit card debt that I haven't been able to get control of. I need help paying them off to get my credit score back up &amp; quality of life back. I always make my monthly payments above the minimum due.",
+    "p_default": 0.1520707905292511,
+    "tabular_alone_decision": "approve",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 1,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "racked up a lot of credit card debt that I haven't been able to get control of"
+    ],
+    "stance_policy_ids": [
+      "policy_1.1",
+      "policy_5.1"
+    ],
+    "stance_rationale": "The statement indicates the applicant has accumulated significant debt, which corroborates risk according to policy_1.1 and policy_5.1.",
+    "label": "#1885152 [disagree] \"I lost my job when the market crashed. I was unemployed for...\""
+  },
+  {
+    "loan_id": 1926381,
+    "desc_clean": "This loan helps buy a 1931 Ford Model A hot rod built buy a friend of mine. He is starting his own auto business and is selling his collection of cars to fund it. The full price is $20,000, I have only half that ($10k) on hand. Trying LendingClub as a borrower before I invest. Thanks!",
+    "p_default": 0.09315337240695953,
+    "tabular_alone_decision": "approve",
+    "stance": "neutral",
+    "confidence": 0.3,
+    "route": "low_conf",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [],
+    "stance_policy_ids": [],
+    "stance_rationale": "The statement does not mention any financial stress, business income, or using the loan to avoid a prior default, which are the key factors in the provided policies.",
+    "label": "#1926381 [low_conf] \"This loan helps buy a 1931 Ford Model A hot rod built buy a...\""
+  },
+  {
+    "loan_id": 1900500,
+    "desc_clean": "Eliminate my credit card debt, and save time and money. Paying minimum balances will not get it done, it just prolongs the situation I'm in. With the loan I'm able to get rid of the debt with lower interest rates and in less time. The payment plan is even lower than what I'm paying each month.",
+    "p_default": 0.23637248575687408,
+    "tabular_alone_decision": "decline",
+    "stance": "mitigates_risk",
+    "confidence": 0.9,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "With the loan I'm able to get rid of the debt with lower interest rates and in less time."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant's statement indicates a clear intent to consolidate high-interest debts, which is considered a standard, low-risk loan purpose according to policy_1.3.",
+    "label": "#1900500 [disagree] \"Eliminate my credit card debt, and save time and money. Payi...\""
+  },
+  {
+    "loan_id": 1794040,
+    "desc_clean": "Ernesty money for new buy. Update on existing residence for resale.",
+    "p_default": 0.06494306772947311,
+    "tabular_alone_decision": "approve",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "new buy",
+      "resale"
+    ],
+    "stance_policy_ids": [
+      "policy_4.1"
+    ],
+    "stance_rationale": "The statement mentions a 'new buy' and 'resale', which aligns with the policy that states loan proceeds funding a new business venture or startup costs are a corroborating risk factor.",
+    "label": "#1794040 [disagree] \"Ernesty money for new buy. Update on existing residence for...\""
+  },
+  {
+    "loan_id": 1904054,
+    "desc_clean": "I have started amy own repair facility. I am still currently and will continue to work full time for another company until fully off the ground. I work shift workat a dealership and have been taking appointments and have been working in my shop 4 days a week. Shop is fully equipt now.",
+    "p_default": 0.2996775805950165,
+    "tabular_alone_decision": "decline",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_decline",
+    "y": 1,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Shop is fully equipt now."
+    ],
+    "stance_policy_ids": [
+      "policy_3.2"
+    ],
+    "stance_rationale": "The statement that the shop is 'fully equipped now' suggests recent significant investment, which aligns with policy guidance that self-employed income without verification is a corroborating risk factor.",
+    "label": "#1904054 [agree] \"I have started amy own repair facility. I am still currently...\""
+  },
+  {
+    "loan_id": 1759697,
+    "desc_clean": "Aloha! We are using this loan to payoff our cc and loan debts. Our goal is to purchase another home and to put ourselves in a better financial situation",
+    "p_default": 0.12353023141622543,
+    "tabular_alone_decision": "approve",
+    "stance": "neutral",
+    "confidence": 0.5,
+    "route": "low_conf",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Our goal is to purchase another home and to put ourselves in a better financial situation"
+    ],
+    "stance_policy_ids": [
+      "policy_1.3",
+      "policy_4.2"
+    ],
+    "stance_rationale": "The statement mentions purchasing another home, which aligns with policy_1.3 regarding debt consolidation but does not specify the nature of the debts or provide a clear financial stressor as per policy_2.3.",
+    "label": "#1759697 [low_conf] \"Aloha! We are using this loan to payoff our cc and loan debt...\""
+  },
+  {
+    "loan_id": 1833063,
+    "desc_clean": "TO PAY OFF DEBT THAT I OWED FROM HELPING OUT MY DAUGHTER AND PAYING HER DENTIST BILL. ALSO TO GET A BETTER CAR INS. RATE BY PAYING FULL AMOUNT AT ONCE",
+    "p_default": 0.13190928101539612,
+    "tabular_alone_decision": "approve",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "TO PAY OFF DEBT THAT I OWED FROM HELPING OUT MY DAUGHTER AND PAYING HER DENTIST BILL"
+    ],
+    "stance_policy_ids": [
+      "policy_5.1"
+    ],
+    "stance_rationale": "The statement indicates using the loan to pay off a debt, which is flagged as a strong corroborating risk factor in policy_5.1.",
+    "label": "#1833063 [disagree] \"TO PAY OFF DEBT THAT I OWED FROM HELPING OUT MY DAUGHTER AND...\""
+  },
+  {
+    "loan_id": 1916706,
+    "desc_clean": "I had a medical emergency a few years ago when I was in college without health insurance. I lived on credit for awhile. Now I'm trying to pay it back but the interest rates are high-even though I've never once been late on a payment. This will help lower my monthly payments for a faster payback.",
+    "p_default": 0.09929930418729782,
+    "tabular_alone_decision": "approve",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "This will help lower my monthly payments for a faster payback."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant's intent to consolidate debts into a single, lower-interest loan is consistent with the policy that such an action does not indicate elevated risk.",
+    "label": "#1916706 [agree] \"I had a medical emergency a few years ago when I was in coll...\""
+  },
+  {
+    "loan_id": 1906187,
+    "desc_clean": "Looking to repair/do basic upgrades on my home. Looking to repair/do basic upgrades/improvements on my home.",
+    "p_default": 0.0750177875161171,
+    "tabular_alone_decision": "approve",
+    "stance": "neutral",
+    "confidence": 0.5,
+    "route": "low_conf",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Looking to repair/do basic upgrades on my home.",
+      "Looking to repair/do basic upgrades/improvements on my home."
+    ],
+    "stance_policy_ids": [
+      "policy_4.2",
+      "policy_4.3"
+    ],
+    "stance_rationale": "The statement is vague and does not provide specific details about the project, aligning with policy that such general statements should be treated as neutral.",
+    "label": "#1906187 [low_conf] \"Looking to repair/do basic upgrades on my home. Looking to r...\""
+  },
+  {
+    "loan_id": 1892686,
+    "desc_clean": "I will use this loan to consolidate mredit cards. I have been with my current employer for 11+ years and have had my own cleaning business for 13 months.",
+    "p_default": 0.39187222719192505,
+    "tabular_alone_decision": "decline",
+    "stance": "mitigates_risk",
+    "confidence": 0.9,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 1,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I have been with my current employer for 11+ years"
+    ],
+    "stance_policy_ids": [
+      "policy_3.3"
+    ],
+    "stance_rationale": "The applicant's long tenure at a single employer supports income stability as per policy [policy_3.3].",
+    "label": "#1892686 [disagree] \"I will use this loan to consolidate mredit cards. I have bee...\""
+  },
+  {
+    "loan_id": 1625149,
+    "desc_clean": "This loan will payoff a closed credit card that currently costs me 200+ a month in intrest. I pay 500 a month towards this closed credit card as a minimum payment, the 400 for this loan will be a nice way to us of our final credit card bill faster, since I will still apply the 500 to it. I have another loan through this club that will be paid off in 17 months, this club really works. Thanks for investing...if you have any other questions please contact me. I just wanted to add, that I am very serious about paying this debt off and being debt free, I had the chance to claim bankruptcy 3 years ago and decided to own up to my resposiblilty to pay this off on my own since I created it. This amount will finally free me of the final part of my obligation to the credit card companies. I am a very safe investment, I am not a typical dead beat, I have taken the resposiblity to take care of my debt the right way. I have paid down over 20k of debt in 3 years, I just wish I would have discovered this club 3 years ago!!!!",
+    "p_default": 0.12021292746067047,
+    "tabular_alone_decision": "approve",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I am very safe investment",
+      "I have taken the resposiblity to take care of my debt the right way",
+      "I have paid down over 20k of debt in 3 years"
+    ],
+    "stance_policy_ids": [],
+    "stance_rationale": "The applicant's statement emphasizes their commitment to paying off debts and taking responsibility, which mitigates risk according to the underwriting policies.",
+    "label": "#1625149 [agree] \"This loan will payoff a closed credit card that currently co...\""
+  },
+  {
+    "loan_id": 1889398,
+    "desc_clean": "starting over trying to get debt consolidation done and paid off would like to start my own rv repair business next year.",
+    "p_default": 0.2688334882259369,
+    "tabular_alone_decision": "decline",
+    "stance": "corroborates_risk",
+    "confidence": 0.9,
+    "route": "agree",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "starting over trying to get debt consolidation done and paid off"
+    ],
+    "stance_policy_ids": [
+      "policy_5.1"
+    ],
+    "stance_rationale": "The statement mentions starting over with debt consolidation, which is a strong corroborating risk factor according to policy_5.1.",
+    "label": "#1889398 [agree] \"starting over trying to get debt consolidation done and paid...\""
+  },
+  {
+    "loan_id": 1881634,
+    "desc_clean": "This loan would change my life. I would be able to pay off all credit cards, and repay the loan three years faster otherwise. Definitely a life changing moment that could put my family back on track and prepare for a home of our own and possibly a new baby.",
+    "p_default": 0.1881278157234192,
+    "tabular_alone_decision": "decline",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 1,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I would be able to pay off all credit cards, and repay the loan three years faster otherwise."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant's intent to consolidate high-interest debts into a single lower-rate payment aligns with standard low-risk loan purposes as stated in policy_1.3.",
+    "label": "#1881634 [disagree] \"This loan would change my life. I would be able to pay off a...\""
+  },
+  {
+    "loan_id": 1651227,
+    "desc_clean": "Discover credit card has gone bonkers and is charging way too much and I want to pay this off. I had an illness in the family awhile back and got behind. I am very well emplyed as a full-time salaried computer programmer for over 12 years now and will continue on as such. I just need some breathing space to pay down the debt that has mushroomed because of these credit card companies.",
+    "p_default": 0.12960191071033478,
+    "tabular_alone_decision": "approve",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I had an illness in the family awhile back and got behind."
+    ],
+    "stance_policy_ids": [
+      "policy_2.1"
+    ],
+    "stance_rationale": "The statement mentions a family illness that led to getting behind on payments, which aligns with policy_2.1 indicating medical hardship as a mitigating factor if consistent with the loan amount requested.",
+    "label": "#1651227 [disagree] \"Discover credit card has gone bonkers and is charging way to...\""
+  },
+  {
+    "loan_id": 1883998,
+    "desc_clean": "Too many accounts to keep track of and I am sick of thinking about how much I am paying on them each month with little change to the balances. Looking to consolidate a number of accounts to a much more effective payment plan and close them out. Thank you for your consideration!",
+    "p_default": 0.13072481751441956,
+    "tabular_alone_decision": "approve",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Looking to consolidate a number of accounts to a much more effective payment plan and close them out."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant's intent to consolidate multiple debts into a single, lower-rate payment aligns with the policy that such actions are standard and low-risk.",
+    "label": "#1883998 [agree] \"Too many accounts to keep track of and I am sick of thinking...\""
+  },
+  {
+    "loan_id": 1922935,
+    "desc_clean": "To consolidate debt, I was laid off for a while and needed credit to make it day to day but now want to get rid of it all to purchase a home in the next 5 years.",
+    "p_default": 0.20099987089633942,
+    "tabular_alone_decision": "decline",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 1,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "To consolidate debt, I was laid off for a while and needed credit to make it day to day but now want to get rid of it all to purchase a home in the next 5 years."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant's intent to consolidate debts into a single lower-rate payment aligns with standard, low-risk loan purposes as stated in policy_1.3.",
+    "label": "#1922935 [disagree] \"To consolidate debt, I was laid off for a while and needed c...\""
+  },
+  {
+    "loan_id": 1645909,
+    "desc_clean": "565557 added on 11/11/09 > I am borrowing these funds to support and grow my on line Business, I have 38yrs with Ford Motor Co. and with my on line business activity plan to create a better life for my wife and all of my children ! Thank you",
+    "p_default": 0.20595182478427887,
+    "tabular_alone_decision": "decline",
+    "stance": "corroborates_risk",
+    "confidence": 0.9,
+    "route": "agree",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I have 38yrs with Ford Motor Co. and with my on line business activity plan to create a better life for my wife and all of my children!"
+    ],
+    "stance_policy_ids": [
+      "policy_4.1"
+    ],
+    "stance_rationale": "The statement describes the loan proceeds funding an online business, which is a corroborating risk factor according to policy_4.1.",
+    "label": "#1645909 [agree] \"565557 added on 11/11/09 > I am borrowing these funds to sup...\""
+  },
+  {
+    "loan_id": 1918259,
+    "desc_clean": "A so called friend/contractor agreed to do a little work on my patio. Without my approval, he totally demolished everything, nothing is left but a pile/area of dirt, and he has left the state. This loan will cover cost of new patio, and also payoff my vehicle.",
+    "p_default": 0.14142414927482605,
+    "tabular_alone_decision": "approve",
+    "stance": "corroborates_risk",
+    "confidence": 0.9,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "This loan will cover cost of new patio, and also payoff my vehicle."
+    ],
+    "stance_policy_ids": [
+      "policy_5.1"
+    ],
+    "stance_rationale": "The statement indicates the loan is intended to pay off a vehicle, which aligns with policy_5.1 as it suggests using the loan to avoid a prior default or repossession.",
+    "label": "#1918259 [disagree] \"A so called friend/contractor agreed to do a little work on...\""
+  },
+  {
+    "loan_id": 1873785,
+    "desc_clean": "Paying off Credit card debt of 17% -plus... Honest payer",
+    "p_default": 0.0348859541118145,
+    "tabular_alone_decision": "approve",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "17% -plus"
+    ],
+    "stance_policy_ids": [
+      "policy_1.1"
+    ],
+    "stance_rationale": "The high interest rate of 17%-plus on the credit card debt suggests a potentially risky financial situation, aligning with policy_1.1 which requires manual underwriting review for DTI ratios above 40%.",
+    "label": "#1873785 [disagree] \"Paying off Credit card debt of 17% -plus... Honest payer\""
+  },
+  {
+    "loan_id": 1766876,
+    "desc_clean": "I need to get rid of my credit card debt and I see no way to pay these off without some kind of debt consolidation. Since I bought my house and with the economy my house is worth less so there is not enough equity to do a home equity line. I appreciate your consideration.",
+    "p_default": 0.25799596309661865,
+    "tabular_alone_decision": "decline",
+    "stance": "neutral",
+    "confidence": 0.6,
+    "route": "low_conf",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I need to get rid of my credit card debt and I see no way to pay these off without some kind of debt consolidation."
+    ],
+    "stance_policy_ids": [
+      "policy_4.3"
+    ],
+    "stance_rationale": "The statement is vague about the specific purpose, aligning with policy that treats generic statements as neutral.",
+    "label": "#1766876 [low_conf] \"I need to get rid of my credit card debt and I see no way to...\""
+  },
+  {
+    "loan_id": 1783755,
+    "desc_clean": "I would like the loan to consolidate credit card bills. I have been at my job for 4 and 1/2 years.",
+    "p_default": 0.10388968884944916,
+    "tabular_alone_decision": "approve",
+    "stance": "neutral",
+    "confidence": 0.5,
+    "route": "low_conf",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I have been at my job for 4 and 1/2 years."
+    ],
+    "stance_policy_ids": [
+      "policy_3.3"
+    ],
+    "stance_rationale": "The applicant's tenure of 4 and a half years is close to the mitigating factor threshold but does not fully meet it, hence neutral.",
+    "label": "#1783755 [low_conf] \"I would like the loan to consolidate credit card bills. I ha...\""
+  },
+  {
+    "loan_id": 1870365,
+    "desc_clean": "To have one monthly payment would be nice and to be out of debt in 3 years.",
+    "p_default": 0.2704911530017853,
+    "tabular_alone_decision": "decline",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "To have one monthly payment would be nice and to be out of debt in 3 years."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3",
+      "policy_3.2"
+    ],
+    "stance_rationale": "The applicant's statement indicates an intent to consolidate multiple debts, which is a standard low-risk purpose according to policy_1.3. However, the statement also implies self-employed or 1099 income without verification, as stated in policy_3.2, which corroborates risk.",
+    "label": "#1870365 [agree] \"To have one monthly payment would be nice and to be out of d...\""
+  },
+  {
+    "loan_id": 1623650,
+    "desc_clean": "For pool repairs. I make ontime monthly paments My employment is very stable, been employed at the City of Lufkin for 18 years.",
+    "p_default": 0.11585944890975952,
+    "tabular_alone_decision": "approve",
+    "stance": "mitigates_risk",
+    "confidence": 0.9,
+    "route": "agree",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "My employment is very stable, been employed at the City of Lufkin for 18 years."
+    ],
+    "stance_policy_ids": [
+      "policy_3.3"
+    ],
+    "stance_rationale": "The applicant's long tenure at a single employer aligns with policy_3.3, which states that such stability is a mitigating factor.",
+    "label": "#1623650 [agree] \"For pool repairs. I make ontime monthly paments My employmen...\""
+  },
+  {
+    "loan_id": 1864689,
+    "desc_clean": "to pay off some credit cards &amp; some home improvement",
+    "p_default": 0.3219839334487915,
+    "tabular_alone_decision": "decline",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "to pay off some credit cards &amp; some home improvement"
+    ],
+    "stance_policy_ids": [
+      "policy_5.1",
+      "policy_4.2"
+    ],
+    "stance_rationale": "The statement mentions paying off credit cards, which is a strong corroborating risk factor according to policy_5.1. While the home improvement purpose is neutral-to-mitigating as per policy_4.2, the debt associated with credit card payments likely increases the overall DTI ratio, thus corroborating risk.",
+    "label": "#1864689 [agree] \"to pay off some credit cards &amp; some home improvement\""
+  },
+  {
+    "loan_id": 1862030,
+    "desc_clean": "After a series of unfortunate incidents, I was left with significant debt in my name. I've never missed a payment but I'm getting nowhere in paying down the balance. That's why I need your help to get out of debt.",
+    "p_default": 0.08013003319501877,
+    "tabular_alone_decision": "approve",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "That's why I need your help to get out of debt."
+    ],
+    "stance_policy_ids": [
+      "policy_1.1",
+      "policy_3.2"
+    ],
+    "stance_rationale": "The statement indicates the applicant is in significant debt, corroborating risk as per policy_1.1 and suggests self-employed status without verification, which is a risk factor according to policy_3.2.",
+    "label": "#1862030 [disagree] \"After a series of unfortunate incidents, I was left with sig...\""
+  },
+  {
+    "loan_id": 1761045,
+    "desc_clean": "Credit card consolidation, and other pay downs to combine bills to one fixed monthly payment",
+    "p_default": 0.16288788616657257,
+    "tabular_alone_decision": "approve",
+    "stance": "neutral",
+    "confidence": 0.5,
+    "route": "low_conf",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Credit card consolidation, and other pay downs to combine bills to one fixed monthly payment"
+    ],
+    "stance_policy_ids": [
+      "policy_1.3",
+      "policy_7.1"
+    ],
+    "stance_rationale": "The statement describes a common debt consolidation purpose which is not inherently risky according to policy_1.3, and does not provide information about retirement income or other repayment sources as in policy_7.1.",
+    "label": "#1761045 [low_conf] \"Credit card consolidation, and other pay downs to combine bi...\""
+  },
+  {
+    "loan_id": 1819901,
+    "desc_clean": "This loan is about becoming debt free in a socially conscious manner. I believe in paying what I owe. This loan will simplify my monthly budget while allowing me to borrow according to my values. This loan will allow me to simplify my budget. What's more, this loan appeals to my sensibilities of social and fiscal responsibility.",
+    "p_default": 0.19082556664943695,
+    "tabular_alone_decision": "decline",
+    "stance": "neutral",
+    "confidence": 0.5,
+    "route": "low_conf",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "This loan will simplify my monthly budget while allowing me to borrow according to my values.",
+      "This loan will allow me to simplify my budget."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant's statement focuses on simplifying the budget and aligning with personal values, which does not indicate a risk of default according to policy.",
+    "label": "#1819901 [low_conf] \"This loan is about becoming debt free in a socially consciou...\""
+  },
+  {
+    "loan_id": 1649572,
+    "desc_clean": "It's now time to face my credit card debt problem. I've been using the credit card for film projects and rent when I was in school & during the time i was unemployed. With the economic crisis at hand the credit card companies have raised my APR AND the minimum balance I need to pay and it's snow balling. I tried my best managing them but I think it's time that i get help. And I heard about lending club on npr so I am giving a try.",
+    "p_default": 0.1042553037405014,
+    "tabular_alone_decision": "approve",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "With the economic crisis at hand the credit card companies have raised my APR AND the minimum balance I need to pay and it's snow balling."
+    ],
+    "stance_policy_ids": [
+      "policy_3.2"
+    ],
+    "stance_rationale": "The applicant mentions an increase in APR and minimum payments due to economic conditions, which corroborates risk as per policy 3.2.",
+    "label": "#1649572 [disagree] \"It's now time to face my credit card debt problem. I've been...\""
+  },
+  {
+    "loan_id": 1647078,
+    "desc_clean": "I just bought my first home two weeks ago, I must replace the roof within 1 year, it is currently 4 layers and is beginning to look really bad with nails from the lower levels bulging up there are no visible leaks but I do not want to take the chance and i would like to replace it before winter, the overall structure of the house is in perfect shape. we have already moved in! I was able to purchase this house at half the price it's valued at and stand to gain $80,000 in equity",
+    "p_default": 0.19711609184741974,
+    "tabular_alone_decision": "decline",
+    "stance": "neutral",
+    "confidence": 0.5,
+    "route": "low_conf",
+    "agent_decision": "auto_decline",
+    "y": 1,
+    "stance_source": "parsed",
+    "stance_evidence": [],
+    "stance_policy_ids": [
+      "policy_6.3",
+      "policy_6.2"
+    ],
+    "stance_rationale": "The statement is not empty or purely templated, but it does not contain any first-person financial details that could be used to assess risk.",
+    "label": "#1647078 [low_conf] \"I just bought my first home two weeks ago, I must replace th...\""
+  },
+  {
+    "loan_id": 1758317,
+    "desc_clean": "I have several debts created after recent wedding of my daughter. Totals about $35,000. It is cumbersom having several debts payable and may result in omission.So I just want to consolidate all into one single payment. Therefore, this loan. Thank you for your help",
+    "p_default": 0.04657725989818573,
+    "tabular_alone_decision": "approve",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Therefore, this loan."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant's intent to consolidate debts into a single payment aligns with the policy that views such consolidation as a standard, low-risk purpose.",
+    "label": "#1758317 [agree] \"I have several debts created after recent wedding of my daug...\""
+  },
+  {
+    "loan_id": 1639022,
+    "desc_clean": "Fisher Production is a specialized lighting company in the Hollywood film industry. I work on feature films, episodic's and commercials.",
+    "p_default": 0.2019082009792328,
+    "tabular_alone_decision": "decline",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Fisher Production is a specialized lighting company in the Hollywood film industry."
+    ],
+    "stance_policy_ids": [
+      "policy_3.2"
+    ],
+    "stance_rationale": "The statement provides self-reported employment details without verification, which policy_3.2 identifies as a corroborating risk factor.",
+    "label": "#1639022 [agree] \"Fisher Production is a specialized lighting company in the H...\""
+  },
+  {
+    "loan_id": 1831970,
+    "desc_clean": "Requesting Loan for Home Improvement, Debt Consolidation. Plan to replace furniture &amp; pay off high APR credit card. I have never ever missed a payment till date &amp; all my credit reports (TransUnion Equifax Experian) say Payment History as &quot;Excellent&quot;. Thank you very much for your funding.",
+    "p_default": 0.06529897451400757,
+    "tabular_alone_decision": "approve",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I have never ever missed a payment till date & all my credit reports (TransUnion Equifax Experian) say Payment History as \"Excellent\"."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3",
+      "policy_4.2"
+    ],
+    "stance_rationale": "The applicant's excellent payment history and the stated purpose of home improvement, which is neutral-to-mitigating according to policy, support a lower risk profile.",
+    "label": "#1831970 [agree] \"Requesting Loan for Home Improvement, Debt Consolidation. Pl...\""
+  },
+  {
+    "loan_id": 1781252,
+    "desc_clean": "Combine payments on credit cards and loans",
+    "p_default": 0.18311689794063568,
+    "tabular_alone_decision": "decline",
+    "stance": "neutral",
+    "confidence": 0.5,
+    "route": "low_conf",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Combine payments on credit cards and loans"
+    ],
+    "stance_policy_ids": [
+      "policy_6.2"
+    ],
+    "stance_rationale": "The statement combines loan purposes without specifying a clear use of funds, which could indicate internal inconsistency.",
+    "label": "#1781252 [low_conf] \"Combine payments on credit cards and loans\""
+  },
+  {
+    "loan_id": 1651463,
+    "desc_clean": "I want to consolidate all my credit cards into one payment and cut up all but one card! I am paying 5 different credit bills and I would love to make just one payment and get rid of the remaining cards. None of the cards have exorbitant amounts on them but they add up to $10,000! Thank you!",
+    "p_default": 0.18552300333976746,
+    "tabular_alone_decision": "decline",
+    "stance": "mitigates_risk",
+    "confidence": 0.9,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 1,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I want to consolidate all my credit cards into one payment and cut up all but one card!"
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant's intent to consolidate debts indicates a desire for financial simplification, which is treated as a standard, low-risk purpose according to policy_1.3.",
+    "label": "#1651463 [disagree] \"I want to consolidate all my credit cards into one payment a...\""
+  },
+  {
+    "loan_id": 1793007,
+    "desc_clean": "debt consolidation of 3 credit cards",
+    "p_default": 0.1692729890346527,
+    "tabular_alone_decision": "approve",
+    "stance": "corroborates_risk",
+    "confidence": 1.0,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "debt consolidation of 3 credit cards"
+    ],
+    "stance_policy_ids": [
+      "policy_6.2"
+    ],
+    "stance_rationale": "The statement indicates multiple credit card debts, which could suggest financial strain and internal inconsistency with the stated loan purpose.",
+    "label": "#1793007 [disagree] \"debt consolidation of 3 credit cards\""
+  },
+  {
+    "loan_id": 1650430,
+    "desc_clean": "I worked through school, buying furniture for apartments, studying abroad, and generally making sure I had the best and most robust education I possibly could. However, because studying and traveling took up a great deal of my time, I was never able to completely overcome my credit card bills, and eventually I reached the point where I was far deeper in debt than I had ever planned to be. Now, in a mediocre job market and with a low-paying entry level job, I'm trying to avoid starting my independent life by getting deeper into debt. As such, I'm hoping to consolidate my debt and turn my credit around. I'm able to make well more than my monthly payments, but rates are poor and I'm hoping to get everything together quickly and effectively. Thank you for considering my loan.",
+    "p_default": 0.2232723832130432,
+    "tabular_alone_decision": "decline",
+    "stance": "neutral",
+    "confidence": 0.7,
+    "route": "low_conf",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Now, in a mediocre job market and with a low-paying entry level job, I'm trying to avoid starting my independent life by getting deeper into debt."
+    ],
+    "stance_policy_ids": [],
+    "stance_rationale": "The applicant's statement indicates an intention to manage their finances prudently, which is neutral in terms of risk according to the policies provided.",
+    "label": "#1650430 [low_conf] \"I worked through school, buying furniture for apartments, st...\""
+  },
+  {
+    "loan_id": 1851296,
+    "desc_clean": "Need to consolidate various accounts into one payment.",
+    "p_default": 0.11695800721645355,
+    "tabular_alone_decision": "approve",
+    "stance": "neutral",
+    "confidence": 0.7,
+    "route": "low_conf",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Need to consolidate various accounts into one payment."
+    ],
+    "stance_policy_ids": [
+      "policy_4.3"
+    ],
+    "stance_rationale": "The statement is vague and does not provide specific details, aligning with policy_4.3 which treats such generic statements as neutral.",
+    "label": "#1851296 [low_conf] \"Need to consolidate various accounts into one payment.\""
+  },
+  {
+    "loan_id": 1789948,
+    "desc_clean": "Debt Consolidation",
+    "p_default": 0.2586154639720917,
+    "tabular_alone_decision": "decline",
+    "stance": "neutral",
+    "confidence": 0.0,
+    "route": "low_conf",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [],
+    "stance_policy_ids": [
+      "policy_6.3"
+    ],
+    "stance_rationale": "The statement 'Debt Consolidation' is boilerplate and contains no first-person financial detail.",
+    "label": "#1789948 [low_conf] \"Debt Consolidation\""
+  },
+  {
+    "loan_id": 1912692,
+    "desc_clean": "Unfortunately I fell into the habit of helping family before helping myself, and have gotten in way over my head. My credit utilization is through the roof, and there was no ending in sight.. I will use this loan to pay off credit card companies as well as small loans. I have never defaulted on any payments i have been responsible for, and have always been responsible enough to insure bills are paid first. My first statement painted the picture that I was rash in my spending habits, so I wanted to clarify because this is not the case. I am not a substantial risk.",
+    "p_default": 0.3878115713596344,
+    "tabular_alone_decision": "decline",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I have never defaulted on any payments i have been responsible for, and have always been responsible enough to insure bills are paid first."
+    ],
+    "stance_policy_ids": [
+      "policy_6.3"
+    ],
+    "stance_rationale": "The applicant explicitly states they have a history of paying bills on time, which mitigates the risk highlighted by policy_6.3.",
+    "label": "#1912692 [disagree] \"Unfortunately I fell into the habit of helping family before...\""
+  },
+  {
+    "loan_id": 1877358,
+    "desc_clean": "I created my business 4 years ago &amp; I am still going strong but I accumulated debt while I was starting. I finally have huge opportunities rolling in that will wipe my debt clean by the end of 2013 but I don't want to worry about finances while I am completing the first jobs in the series.",
+    "p_default": 0.1899305284023285,
+    "tabular_alone_decision": "decline",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I accumulated debt while I was starting",
+      "I don't want to worry about finances while I am completing the first jobs in the series"
+    ],
+    "stance_policy_ids": [
+      "policy_1.1",
+      "policy_4.1"
+    ],
+    "stance_rationale": "The statement indicates ongoing debt and a desire not to manage finances, which aligns with policy_1.1's requirement for manual underwriting due to high DTI and policy_4.1's risk factor of starting a business.",
+    "label": "#1877358 [agree] \"I created my business 4 years ago &amp; I am still going str...\""
+  },
+  {
+    "loan_id": 1855456,
+    "desc_clean": "Loan is to consolidate debts so i can make one monthly payment and become debt free. please help.",
+    "p_default": 0.1677575409412384,
+    "tabular_alone_decision": "approve",
+    "stance": "mitigates_risk",
+    "confidence": 0.9,
+    "route": "agree",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Loan is to consolidate debts so i can make one monthly payment and become debt free."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The statement aligns with a standard, low-risk loan purpose as per policy_1.3.",
+    "label": "#1855456 [agree] \"Loan is to consolidate debts so i can make one monthly payme...\""
+  },
+  {
+    "loan_id": 1860771,
+    "desc_clean": "I used my savings to attend grad school full time and work abroad. Great experiences, and now I'm in my first year earning a steady income. So I'm trying to consolidate my remaining student and personal debt for a lower rate, and get it off my plate for good!",
+    "p_default": 0.1818123459815979,
+    "tabular_alone_decision": "decline",
+    "stance": "neutral",
+    "confidence": 0.0,
+    "route": "low_conf",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [],
+    "stance_policy_ids": [
+      "policy_6.3"
+    ],
+    "stance_rationale": "The statement is boilerplate and contains no first-person financial detail, making it uninformative.",
+    "label": "#1860771 [low_conf] \"I used my savings to attend grad school full time and work a...\""
+  },
+  {
+    "loan_id": 1850067,
+    "desc_clean": "I would like to get out of (C.C.) dept",
+    "p_default": 0.028840653598308563,
+    "tabular_alone_decision": "approve",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I would like to get out of (C.C.) dept"
+    ],
+    "stance_policy_ids": [
+      "policy_5.1"
+    ],
+    "stance_rationale": "The statement indicates an attempt to avoid a prior default, which is a strong corroborating risk factor according to policy_5.1.",
+    "label": "#1850067 [disagree] \"I would like to get out of (C.C.) dept\""
+  },
+  {
+    "loan_id": 1626213,
+    "desc_clean": "Purchase equipment to be used around the house. Lawn Mower, Line Trimmer, Edger, Blower and a trailer.",
+    "p_default": 0.15123026072978973,
+    "tabular_alone_decision": "approve",
+    "stance": "neutral",
+    "confidence": 0.2,
+    "route": "low_conf",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Purchase equipment to be used around the house. Lawn Mower, Line Trimmer, Edger, Blower and a trailer."
+    ],
+    "stance_policy_ids": [
+      "policy_6.3"
+    ],
+    "stance_rationale": "The statement is specific about the intended use of funds but lacks first-person financial detail or context, making it neutral.",
+    "label": "#1626213 [low_conf] \"Purchase equipment to be used around the house. Lawn Mower,...\""
+  },
+  {
+    "loan_id": 1880499,
+    "desc_clean": "to consolidat high interst loans that would take a lot longer than 3yrs to pay off thank you for your offer to help",
+    "p_default": 0.17088912427425385,
+    "tabular_alone_decision": "decline",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 1,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "to consolidate high interst loans that would take a lot longer than 3yrs to pay off"
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The statement indicates an intent to consolidate multiple high-interest debts, which is considered a standard, low-risk loan purpose according to policy.",
+    "label": "#1880499 [disagree] \"to consolidat high interst loans that would take a lot longe...\""
+  },
+  {
+    "loan_id": 1647564,
+    "desc_clean": "Please note that I have recieved a new job that requires me to move across country. As soon as I start my new job I will receive a $5,000 signing bonus ensuring that the loan will be paid in full. This loan is to helo with relocation and I will appreciate anything that you can do. Thank you so much, Erika Roldan",
+    "p_default": 0.18518032133579254,
+    "tabular_alone_decision": "decline",
+    "stance": "neutral",
+    "confidence": 0.2,
+    "route": "low_conf",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "This loan is to helo with relocation and I will appreciate anything that you can do."
+    ],
+    "stance_policy_ids": [
+      "policy_6.3"
+    ],
+    "stance_rationale": "The statement is boilerplate and does not provide any first-person financial details or specific risk-related information.",
+    "label": "#1647564 [low_conf] \"Please note that I have recieved a new job that requires me...\""
+  },
+  {
+    "loan_id": 1857670,
+    "desc_clean": "Refinancing other credit. refinacing and pay off other credit.",
+    "p_default": 0.027752796187996864,
+    "tabular_alone_decision": "approve",
+    "stance": "corroborates_risk",
+    "confidence": 1.0,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "refinancing other credit. refinacing and pay off other credit."
+    ],
+    "stance_policy_ids": [
+      "policy_6.2"
+    ],
+    "stance_rationale": "The statement internally inconsistent as it suggests using the loan to refinance another credit, which is flagged by policy_6.2.",
+    "label": "#1857670 [disagree] \"Refinancing other credit. refinacing and pay off other credi...\""
+  },
+  {
+    "loan_id": 1643949,
+    "desc_clean": "This loan will be used to make me completely debt free in 3 years. I have worked for the past 10 years at MetLife in compliance.",
+    "p_default": 0.11955159157514572,
+    "tabular_alone_decision": "approve",
+    "stance": "mitigates_risk",
+    "confidence": 1.0,
+    "route": "agree",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I have worked for the past 10 years at MetLife in compliance."
+    ],
+    "stance_policy_ids": [
+      "policy_3.3"
+    ],
+    "stance_rationale": "The applicant's long tenure at a single employer is explicitly stated as a mitigating factor for income stability according to policy_3.3.",
+    "label": "#1643949 [agree] \"This loan will be used to make me completely debt free in 3...\""
+  },
+  {
+    "loan_id": 1645288,
+    "desc_clean": "591967 added on 12/16/09 > THIS LOAN IS FOR A FRANCHISED SANDWICH SHOP IN THE MOST BUSIEST CITY IN THE WORLD,NEW YORK CITY.BUSINESS HAS ALREADY BEEN ESTABLISHED FOR YEARS.ALL I HAVE TO DO IS TO PUT MY 6 YEARS OF FOOD MANAGEMENT EXPERIENCE IN THIS BUSINESS AND MAKE TH SALES GO UP.VERY GOOOD OPPURTUNITY FOR LENDERS TO MAKE MONEY OUT OF IT.",
+    "p_default": 0.43952882289886475,
+    "tabular_alone_decision": "decline",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_decline",
+    "y": 1,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "VERY GOOOD OPPURTUNITY FOR LENDERS TO MAKE MONEY OUT OF IT"
+    ],
+    "stance_policy_ids": [
+      "policy_4.1"
+    ],
+    "stance_rationale": "The statement emphasizes the business's potential for high sales and profitability, which aligns with policy_4.1 indicating that such statements are a corroborating risk factor.",
+    "label": "#1645288 [agree] \"591967 added on 12/16/09 > THIS LOAN IS FOR A FRANCHISED SAN...\""
+  },
+  {
+    "loan_id": 1885380,
+    "desc_clean": "To payoff all credit cards",
+    "p_default": 0.22078736126422882,
+    "tabular_alone_decision": "decline",
+    "stance": "neutral",
+    "confidence": 0.3,
+    "route": "low_conf",
+    "agent_decision": "auto_decline",
+    "y": 1,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "To payoff all credit cards"
+    ],
+    "stance_policy_ids": [],
+    "stance_rationale": "The statement does not provide specific context or reasons for paying off credit cards, which do not align with the provided policies.",
+    "label": "#1885380 [low_conf] \"To payoff all credit cards\""
+  },
+  {
+    "loan_id": 1623756,
+    "desc_clean": "I have been in transportation for 32 years Buses and trucks, I'm self-employed and I will use this loan for equipment repair and dept consolidation. Been driving 18 wheelers for 18 years and now I own my own truck and trailer. Credit Card $2,895 = $80 Monthly Credit Card $750 = $40 Credit Card $600 = $40 Credit Card $900 = $40 Credit Card $1,000 = $76 Credit Card $320 = $40 Credit Card $379 = $40 Credit Card $1048 = $40 =$7,892 = $396 ---------------------------------- Credit Union $4,000 =$131 Monthly ---------------------------------- Trailer Payment $500 Monthly Truck Insurance $679 Monthly =$1,179 ---------------------------------- Telephone $339 Monthly Lights $156 Monthly Gas $65 Monthly Water $40 Month House $995 Monthly Lawn $25 twice Monthly $50 =$1,620 Total = $3,326.00 ------------------------------------------- 18 Wheeler Equipment Repair $2,400 - 8 Trailer Tires $3,000.00 - Tubo Blower $700.00 - Fuel Injecter $468.00 - Bumper = $6,568 ------------------------------------------- On Invoice of $4,100 (1) Week $3,245 (2) Week $3,678 (3) Week $2,836 (4) Week = $13,859 Each Month is 10,000 to 14,000",
+    "p_default": 0.4228195548057556,
+    "tabular_alone_decision": "decline",
+    "stance": "corroborates_risk",
+    "confidence": 1.0,
+    "route": "agree",
+    "agent_decision": "auto_decline",
+    "y": 1,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Self-employed and I will use this loan for equipment repair and dept consolidation.",
+      "18 Wheeler Equipment Repair $2,400 - 8 Trailer Tires $3,000.00 - Tubo Blower $700.00 - Fuel Injecter $468.00 - Bumper = $6,568"
+    ],
+    "stance_policy_ids": [
+      "policy_3.2"
+    ],
+    "stance_rationale": "The statement explicitly mentions self-employment and details significant equipment repair costs, which corroborates the risk as per policy 3.2.",
+    "label": "#1623756 [agree] \"I have been in transportation for 32 years Buses and trucks,...\""
+  },
+  {
+    "loan_id": 1847651,
+    "desc_clean": "Swamped with credit cars...auto loan, I want to consolidate..and reduce my debts.",
+    "p_default": 0.25861310958862305,
+    "tabular_alone_decision": "decline",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Swamped with credit cars...auto loan, I want to consolidate..and reduce my debts."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant's intent to consolidate multiple high-interest debts into a single lower-rate payment is consistent with standard, low-risk loan purposes as per policy_1.3.",
+    "label": "#1847651 [disagree] \"Swamped with credit cars...auto loan, I want to consolidate....\""
+  },
+  {
+    "loan_id": 1616888,
+    "desc_clean": "I work for a very stable institution and have always paid my bills on time. With this loan i plan on expanding my current business and hire more wrokers to assist in the process.. In addition this loan has the potential to grow the surrounding area my business is in. We do tons of delievery service and the customers love our product. I would just like to add that i work for one of the top two financial institutions in the country and i am comitted to the investors who invest in my loan. Thank you..",
+    "p_default": 0.2823490798473358,
+    "tabular_alone_decision": "decline",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I work for a very stable institution and have always paid my bills on time.",
+      "In addition this loan has the potential to grow the surrounding area my business is in. We do tons of delievery service and the customers love our product."
+    ],
+    "stance_policy_ids": [
+      "policy_4.1"
+    ],
+    "stance_rationale": "The statement indicates a stable employment history and plans for business expansion, which aligns with policy_4.1 and suggests potential growth.",
+    "label": "#1616888 [disagree] \"I work for a very stable institution and have always paid my...\""
+  },
+  {
+    "loan_id": 1899068,
+    "desc_clean": "Pay off Best Buy and PayPal credit cards",
+    "p_default": 0.09228209406137466,
+    "tabular_alone_decision": "approve",
+    "stance": "corroborates_risk",
+    "confidence": 1.0,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "pay off Best Buy and PayPal credit cards"
+    ],
+    "stance_policy_ids": [
+      "policy_6.2"
+    ],
+    "stance_rationale": "The statement indicates the loan purpose is inconsistent with typical use, triggering a fraud-review flag.",
+    "label": "#1899068 [disagree] \"Pay off Best Buy and PayPal credit cards\""
+  },
+  {
+    "loan_id": 1823628,
+    "desc_clean": "I can have everything paid off in 3 yrs, as it is going it will take forever, plus as a consolidation it will save me money in the long run. Thank You.",
+    "p_default": 0.21257801353931427,
+    "tabular_alone_decision": "decline",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "as it is going it will take forever",
+      "plus as a consolidation it will save me money in the long run"
+    ],
+    "stance_policy_ids": [
+      "policy_3.2"
+    ],
+    "stance_rationale": "The applicant's statement indicates uncertainty about their ability to repay, which aligns with policy guidance that self-reported income without verification is a risk factor.",
+    "label": "#1823628 [agree] \"I can have everything paid off in 3 yrs, as it is going it w...\""
+  },
+  {
+    "loan_id": 1838446,
+    "desc_clean": "&nbsp;Plan on using the funds to pay off higher credit card balances and one personal loan to free up cash flow and save money in the process, I am a good borrower because I care about my credit and honoring my obligations. I have been at my same job for almost a decade and have job security",
+    "p_default": 0.35125380754470825,
+    "tabular_alone_decision": "decline",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Plan on using the funds to pay off higher credit card balances and one personal loan"
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant's intent to consolidate high-interest debts into a single lower-rate payment aligns with standard, low-risk loan purposes as per policy_1.3.",
+    "label": "#1838446 [disagree] \"&nbsp;Plan on using the funds to pay off higher credit card...\""
+  },
+  {
+    "loan_id": 1650417,
+    "desc_clean": "Loan Request is to pay off remaining credit cards.",
+    "p_default": 0.11994500458240509,
+    "tabular_alone_decision": "approve",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_approve",
+    "y": 1,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Loan Request is to pay off remaining credit cards."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The statement indicates a clear intent to consolidate debts, which the policy states does not itself indicate elevated risk.",
+    "label": "#1650417 [agree] \"Loan Request is to pay off remaining credit cards.\""
+  },
+  {
+    "loan_id": 1639870,
+    "desc_clean": "Fund a Motorcycle purchase I always pay I had $300 budgeted for this purpose I am in IT. Been doing this for ~10 years. Our company is still growing and hiring, despite the economy. I feel my job is very stable. I plan to use the funds pay debt on CC's used to fund a motorcycle. I am a good borrower because I always pay back my debts without hassle. My monthly budget for this purpose was $300. Our company is growing and hiring, despite the economic climite, with no slowdown. I am in IT and am good at what I do. If feel my job is stable.",
+    "p_default": 0.04985353723168373,
+    "tabular_alone_decision": "approve",
+    "stance": "neutral",
+    "confidence": 0.7,
+    "route": "low_conf",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [],
+    "stance_policy_ids": [
+      "policy_3.3"
+    ],
+    "stance_rationale": "The applicant's statement indicates a long tenure at their job, which is cited as a mitigating factor for income stability in policy_3.3.",
+    "label": "#1639870 [low_conf] \"Fund a Motorcycle purchase I always pay I had $300 budgeted...\""
+  },
+  {
+    "loan_id": 1642295,
+    "desc_clean": "Shamrock Paving has been open for twenty-three years. I have been with Shamrock for seven and my postion and the company is secure. I'm looking to do home improvements.",
+    "p_default": 0.11512690782546997,
+    "tabular_alone_decision": "approve",
+    "stance": "mitigates_risk",
+    "confidence": 0.9,
+    "route": "agree",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I have been with Shamrock for seven and the company is secure."
+    ],
+    "stance_policy_ids": [
+      "policy_3.3"
+    ],
+    "stance_rationale": "The applicant's long tenure at a single employer, as stated in their statement, supports policy_3.3 which considers this a mitigating factor for income stability.",
+    "label": "#1642295 [agree] \"Shamrock Paving has been open for twenty-three years. I have...\""
+  },
+  {
+    "loan_id": 1801312,
+    "desc_clean": "Relocating for employment. Will be utilized to cover first month's rent and security deposit until sublet is found for current apartment.",
+    "p_default": 0.2037552297115326,
+    "tabular_alone_decision": "decline",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Relocating for employment."
+    ],
+    "stance_policy_ids": [
+      "policy_3.1"
+    ],
+    "stance_rationale": "The statement indicates a recent job change, which is flagged as a corroborating risk factor according to policy_3.1.",
+    "label": "#1801312 [agree] \"Relocating for employment. Will be utilized to cover first m...\""
+  },
+  {
+    "loan_id": 1817349,
+    "desc_clean": "Lower interest rate and pmt on other lending club loan and credit cards",
+    "p_default": 0.04228393733501434,
+    "tabular_alone_decision": "approve",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Lower interest rate and pmt on other lending club loan and credit cards"
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The statement indicates an intent to consolidate debts, which is a standard, low-risk purpose according to policy_1.3.",
+    "label": "#1817349 [agree] \"Lower interest rate and pmt on other lending club loan and c...\""
+  },
+  {
+    "loan_id": 1875763,
+    "desc_clean": "For paying off credit cards and working towards financial freedom again. A consolidation loan will allow us to execute a plan to be free of credit card debt. It will allow us to pay the debt down faster giving us a light at the end of the tunnel. And we can save cash to have on hand for incidental expenses.",
+    "p_default": 0.06963856518268585,
+    "tabular_alone_decision": "approve",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "A consolidation loan will allow us to execute a plan to be free of credit card debt.",
+      "It will allow us to pay the debt down faster giving us a light at the end of the tunnel."
+    ],
+    "stance_policy_ids": [
+      "policy_5.1"
+    ],
+    "stance_rationale": "The applicant's statement indicates a clear plan to use the loan for debt consolidation and repayment, which mitigates risk by showing intent to avoid future defaults.",
+    "label": "#1875763 [agree] \"For paying off credit cards and working towards financial fr...\""
+  },
+  {
+    "loan_id": 1615665,
+    "desc_clean": "I plan on using the entire amount to payoff my current credit card balance. I have never missed a single payment with a creditor. I have never gone into any type of collections or been delinquent in any of my accounts. Besides my rent share and my car payment, I have no other major financial obligations. I have been in my current job since mid 2008.",
+    "p_default": 0.35291117429733276,
+    "tabular_alone_decision": "decline",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I have never missed a single payment with a creditor.",
+      "I have never gone into any type of collections or been delinquent in any of my accounts."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant's history of on-time payments and lack of delinquency supports a low-risk profile, as per policy_1.3.",
+    "label": "#1615665 [disagree] \"I plan on using the entire amount to payoff my current credi...\""
+  },
+  {
+    "loan_id": 1615253,
+    "desc_clean": "Wanted to consolidation all my debt and pay off within three years. Loaned money to children and they were suppose to pay back. Has not happened. Clossing all credit and no more dedt.",
+    "p_default": 0.05821914225816727,
+    "tabular_alone_decision": "approve",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "loaned money to children and they were suppose to pay back. Has not happened."
+    ],
+    "stance_policy_ids": [
+      "policy_5.1"
+    ],
+    "stance_rationale": "The statement indicates that the applicant loaned money to their children, who have not repaid it, which aligns with policy_5.1's mention of avoiding prior defaults.",
+    "label": "#1615253 [disagree] \"Wanted to consolidation all my debt and pay off within three...\""
+  },
+  {
+    "loan_id": 1815817,
+    "desc_clean": "To pay off high-interest credit cards.",
+    "p_default": 0.051758889108896255,
+    "tabular_alone_decision": "approve",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "To pay off high-interest credit cards."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The statement indicates an intent to consolidate debts, which is a standard, low-risk loan purpose according to policy_1.3.",
+    "label": "#1815817 [agree] \"To pay off high-interest credit cards.\""
+  },
+  {
+    "loan_id": 1827991,
+    "desc_clean": "Debt Consolidation",
+    "p_default": 0.2781396210193634,
+    "tabular_alone_decision": "decline",
+    "stance": "neutral",
+    "confidence": 0.0,
+    "route": "low_conf",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [],
+    "stance_policy_ids": [
+      "policy_6.3"
+    ],
+    "stance_rationale": "The statement 'Debt Consolidation' is boilerplate and contains no first-person financial detail.",
+    "label": "#1827991 [low_conf] \"Debt Consolidation\""
+  },
+  {
+    "loan_id": 1786027,
+    "desc_clean": "Booked our wedding and put all expenses on my credit card. Looking to move to this card to help with interest rate and payment plan",
+    "p_default": 0.030168944969773293,
+    "tabular_alone_decision": "approve",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Looking to move to this card to help with interest rate and payment plan"
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant's intent to consolidate high-interest debts into a lower-rate card aligns with the policy, indicating a mitigating factor.",
+    "label": "#1786027 [agree] \"Booked our wedding and put all expenses on my credit card. L...\""
+  },
+  {
+    "loan_id": 1907831,
+    "desc_clean": "The loan will be for a consolidation of debts, pay credit cards and cancel all cards with high interest. I am a responsible person I always do all my payments on time. My credit record shows that I have always paid all my bills. The loan will be used to consolidate all debts and pay off credit cards. I also will cancel the credit cards that have high interest. I work in a company with great stability.",
+    "p_default": 0.2717200517654419,
+    "tabular_alone_decision": "decline",
+    "stance": "neutral",
+    "confidence": 0.2,
+    "route": "low_conf",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [],
+    "stance_policy_ids": [
+      "policy_6.3"
+    ],
+    "stance_rationale": "The statement is largely boilerplate and does not contain any first-person financial details.",
+    "label": "#1907831 [low_conf] \"The loan will be for a consolidation of debts, pay credit ca...\""
+  },
+  {
+    "loan_id": 1871986,
+    "desc_clean": "I want to pay off debt consonlidation.",
+    "p_default": 0.2234555184841156,
+    "tabular_alone_decision": "decline",
+    "stance": "neutral",
+    "confidence": 0.5,
+    "route": "low_conf",
+    "agent_decision": "auto_decline",
+    "y": 1,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "\"I want to pay off debt consolidation.\""
+    ],
+    "stance_policy_ids": [],
+    "stance_rationale": "The statement does not provide enough detail about the nature of the debt or its impact on the applicant's financial situation.",
+    "label": "#1871986 [low_conf] \"I want to pay off debt consonlidation.\""
+  },
+  {
+    "loan_id": 1873140,
+    "desc_clean": "My plan is complete debt elimination within the next three years. This consolidation will help me to lower the extreme interest rates on my (now cut-up) credit cards.",
+    "p_default": 0.03649617359042168,
+    "tabular_alone_decision": "approve",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "My plan is complete debt elimination within the next three years."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant's statement aligns with a standard, low-risk loan purpose as per policy_1.3.",
+    "label": "#1873140 [agree] \"My plan is complete debt elimination within the next three y...\""
+  },
+  {
+    "loan_id": 1773492,
+    "desc_clean": "Consolidating debt and repairing Heater and AC in house.",
+    "p_default": 0.2885110080242157,
+    "tabular_alone_decision": "decline",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Consolidating debt"
+    ],
+    "stance_policy_ids": [
+      "policy_1.1",
+      "policy_6.2"
+    ],
+    "stance_rationale": "The statement mentions consolidating debt, which could indicate a high DTI ratio and internal inconsistency with the repair purposes.",
+    "label": "#1773492 [agree] \"Consolidating debt and repairing Heater and AC in house.\""
+  },
+  {
+    "loan_id": 1617497,
+    "desc_clean": "This is to pay off credit cards and 2 other high interest loans sunbelt credit, 29%, i owe about 1200.00, citi financial 30%, I owe 4200.00, citicard, 15.6% i owe 6200, applied card bank 23% i owe 1900. creditone bank, i owe 1000. ford credit i owe 9000.00 I plan on closing all credit card accounts except for one to keep for emergency situations",
+    "p_default": 0.4350666403770447,
+    "tabular_alone_decision": "decline",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 1,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "applied card bank, i owe 1900. creditone bank, i owe 1000. ford credit i owe 9000.00 I plan on closing all credit card accounts except for one to keep for emergency situations"
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant plans to consolidate high-interest debts, which aligns with the policy stating that such intentions are a standard, low-risk loan purpose.",
+    "label": "#1617497 [disagree] \"This is to pay off credit cards and 2 other high interest lo...\""
+  },
+  {
+    "loan_id": 1630987,
+    "desc_clean": "Home improvement 15-year full-time employee Will pay off higher interest credit cards primarily and finish small home improvement project",
+    "p_default": 0.3240974247455597,
+    "tabular_alone_decision": "decline",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "pay off higher interest credit cards"
+    ],
+    "stance_policy_ids": [
+      "policy_5.1"
+    ],
+    "stance_rationale": "The statement indicates the intent to pay off higher-interest credit cards, which is a mitigating factor according to policy_5.1.",
+    "label": "#1630987 [disagree] \"Home improvement 15-year full-time employee Will pay off hig...\""
+  },
+  {
+    "loan_id": 1852437,
+    "desc_clean": "this is a debt consolidation",
+    "p_default": 0.1762937307357788,
+    "tabular_alone_decision": "decline",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "this is a debt consolidation"
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The statement indicates the loan purpose is to consolidate debts, which according to policy_1.3 does not itself indicate elevated risk.",
+    "label": "#1852437 [disagree] \"this is a debt consolidation\""
+  },
+  {
+    "loan_id": 1918835,
+    "desc_clean": "I plan to use half for wedding expenses and the other half to pay off a few credit cards. This loan with be very helpful as I will be able to make one lump payment towards wedding and debt consolidation.",
+    "p_default": 0.16167958080768585,
+    "tabular_alone_decision": "approve",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_approve",
+    "y": 1,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "This loan with be very helpful as I will be able to make one lump payment towards wedding and debt consolidation."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant's intent to consolidate multiple high-interest debts into a single lower-rate payment aligns with standard, low-risk loan purposes as stated in policy_1.3.",
+    "label": "#1918835 [agree] \"I plan to use half for wedding expenses and the other half t...\""
+  },
+  {
+    "loan_id": 1646487,
+    "desc_clean": "553731 added on 10/09/09 > Loan to be used to pay off and consolidate all debt.",
+    "p_default": 0.18344177305698395,
+    "tabular_alone_decision": "decline",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Loan to be used to pay off and consolidate all debt."
+    ],
+    "stance_policy_ids": [
+      "policy_5.1"
+    ],
+    "stance_rationale": "The statement indicates the loan is intended to consolidate multiple debts, which aligns with policy 5.1 as a strong corroborating risk factor.",
+    "label": "#1646487 [agree] \"553731 added on 10/09/09 > Loan to be used to pay off and co...\""
+  },
+  {
+    "loan_id": 1830318,
+    "desc_clean": "The current sunroom is all single pane glass with a worn-out sliding door, is unsafe, and out-dated. The sunroom will be remodeled with french doors, solid walls, and new windows. The home also needs to be repainted. Prior to repainting all other doors and some wood will be replaced.",
+    "p_default": 0.23773497343063354,
+    "tabular_alone_decision": "decline",
+    "stance": "neutral",
+    "confidence": 0.2,
+    "route": "low_conf",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [],
+    "stance_policy_ids": [
+      "policy_6.3"
+    ],
+    "stance_rationale": "The statement does not contain any first-person financial details or explicit risk indicators, aligning with policy guidance.",
+    "label": "#1830318 [low_conf] \"The current sunroom is all single pane glass with a worn-out...\""
+  },
+  {
+    "loan_id": 1617541,
+    "desc_clean": "Debt consolidation, and a few home improvments",
+    "p_default": 0.3206719160079956,
+    "tabular_alone_decision": "decline",
+    "stance": "neutral",
+    "confidence": 0.7,
+    "route": "low_conf",
+    "agent_decision": "auto_decline",
+    "y": 1,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Debt consolidation, and a few home improvments"
+    ],
+    "stance_policy_ids": [
+      "policy_1.3",
+      "policy_4.2"
+    ],
+    "stance_rationale": "The statement mentions debt consolidation and home improvements, which align with standard low-risk loan purposes as per policy snippets.",
+    "label": "#1617541 [low_conf] \"Debt consolidation, and a few home improvments\""
+  },
+  {
+    "loan_id": 1913462,
+    "desc_clean": "Pay off credit card bills &amp; personal loans. also need so money to fall back on for unexpected expenences,",
+    "p_default": 0.36826881766319275,
+    "tabular_alone_decision": "decline",
+    "stance": "neutral",
+    "confidence": 0.5,
+    "route": "low_conf",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "also need so money to fall back on for unexpected expenences,"
+    ],
+    "stance_policy_ids": [
+      "policy_4.3"
+    ],
+    "stance_rationale": "The statement is vague and does not provide specific details, aligning with policy_4.3.",
+    "label": "#1913462 [low_conf] \"Pay off credit card bills &amp; personal loans. also need so...\""
+  },
+  {
+    "loan_id": 1834025,
+    "desc_clean": "My loan would be for debt consolidation. My loan is to be for debt consolidation My loan is for debt consolidation.",
+    "p_default": 0.2531402111053467,
+    "tabular_alone_decision": "decline",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_decline",
+    "y": 1,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "My loan would be for debt consolidation."
+    ],
+    "stance_policy_ids": [
+      "policy_5.1"
+    ],
+    "stance_rationale": "The statement indicates the loan is for debt consolidation, which aligns with policy 5.1 that such purposes are a strong corroborating risk factor.",
+    "label": "#1834025 [agree] \"My loan would be for debt consolidation. My loan is to be fo...\""
+  },
+  {
+    "loan_id": 1789943,
+    "desc_clean": "I want to consolidate debts, winterize existing balcony enclosure and buyout my leased car that I have been paying on almost three years.",
+    "p_default": 0.15183885395526886,
+    "tabular_alone_decision": "approve",
+    "stance": "neutral",
+    "confidence": 0.3,
+    "route": "low_conf",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "winterize existing balcony enclosure and buyout my leased car that I have been paying on almost three years"
+    ],
+    "stance_policy_ids": [],
+    "stance_rationale": "The statement includes personal financial details but does not provide specific information about income stability or financial stress, making it neutral.",
+    "label": "#1789943 [low_conf] \"I want to consolidate debts, winterize existing balcony encl...\""
+  },
+  {
+    "loan_id": 1612320,
+    "desc_clean": "Taking basic Financial Peace University course and working to get out of debt. Consolidating three high interest credit cards with this loan. Looking forward to the day when I will be able to invest funds to help others do the same.",
+    "p_default": 0.02952481620013714,
+    "tabular_alone_decision": "approve",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Consolidating three high interest credit cards with this loan."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant's stated intent to consolidate multiple high-interest debts into a single lower-rate payment aligns with the policy, indicating standard, low-risk behavior.",
+    "label": "#1612320 [agree] \"Taking basic Financial Peace University course and working t...\""
+  },
+  {
+    "loan_id": 1887047,
+    "desc_clean": "Re-power existing 35 foot boat with new 5.7 liter V-8 gasoline engines.",
+    "p_default": 0.14389847218990326,
+    "tabular_alone_decision": "approve",
+    "stance": "corroborates_risk",
+    "confidence": 0.9,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Re-power existing 35 foot boat with new 5.7 liter V-8 gasoline engines."
+    ],
+    "stance_policy_ids": [
+      "policy_4.1"
+    ],
+    "stance_rationale": "The statement describes a loan for a business venture, which is a corroborating risk factor according to policy_4.1.",
+    "label": "#1887047 [disagree] \"Re-power existing 35 foot boat with new 5.7 liter V-8 gasoli...\""
+  },
+  {
+    "loan_id": 1618677,
+    "desc_clean": "The loan will fund the amount to finance a business acquisition. I have a good credit score and with stable job.",
+    "p_default": 0.38362085819244385,
+    "tabular_alone_decision": "decline",
+    "stance": "corroborates_risk",
+    "confidence": 0.7,
+    "route": "agree",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I have a good credit score and with stable job"
+    ],
+    "stance_policy_ids": [
+      "policy_2.2"
+    ],
+    "stance_rationale": "The statement mentions a 'stable job,' which aligns with policy_2.2, indicating that the absence of disclosed risk factors (like job loss) supports a corroborating stance.",
+    "label": "#1618677 [agree] \"The loan will fund the amount to finance a business acquisit...\""
+  },
+  {
+    "loan_id": 1917550,
+    "desc_clean": "My loan is to pay off auto loan and remodel deck. This loan will save me hundreds of dollars each month. Thanks I am taking care of my Grandson and need to cut some of my monthly expenses and remodel my deck. These funds will allow me to pay off my car note, pay off some closed accounts and remodel my deck. I pay my bills on time all of the time. I would like to thank those of you whom have invested into my loan request. It means a lot to me. Thank you,",
+    "p_default": 0.16544049978256226,
+    "tabular_alone_decision": "approve",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_approve",
+    "y": 1,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "These funds will allow me to pay off my car note, pay off some closed accounts and remodel my deck."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant's intent to consolidate multiple high-interest debts into a single lower-rate payment aligns with standard low-risk loan purposes as stated in policy_1.3.",
+    "label": "#1917550 [agree] \"My loan is to pay off auto loan and remodel deck. This loan...\""
+  },
+  {
+    "loan_id": 1791170,
+    "desc_clean": "REMODEL BATHROOM",
+    "p_default": 0.11181758344173431,
+    "tabular_alone_decision": "approve",
+    "stance": "neutral",
+    "confidence": 0.0,
+    "route": "low_conf",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "REMODEL BATHROOM"
+    ],
+    "stance_policy_ids": [
+      "policy_6.3"
+    ],
+    "stance_rationale": "The statement 'REMODEL BATHROOM' is empty and purely templated, carrying no narrative signal.",
+    "label": "#1791170 [low_conf] \"REMODEL BATHROOM\""
+  },
+  {
+    "loan_id": 1760799,
+    "desc_clean": "I want to use money to have the grand vacation of my life.",
+    "p_default": 0.1863659769296646,
+    "tabular_alone_decision": "decline",
+    "stance": "neutral",
+    "confidence": 0.3,
+    "route": "low_conf",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [],
+    "stance_policy_ids": [
+      "policy_7.2"
+    ],
+    "stance_rationale": "The statement does not specify the purpose of the loan, and there is no mention of educational expenses or home improvements.",
+    "label": "#1760799 [low_conf] \"I want to use money to have the grand vacation of my life.\""
+  },
+  {
+    "loan_id": 1895055,
+    "desc_clean": "I have a number of medical bills which I am currently am having difficulty paying. This loan would be very helpful in resolving my situation. I have a number od medical bills I am currently having a difficult time paying. This loan will help resolve my situation.",
+    "p_default": 0.18172921240329742,
+    "tabular_alone_decision": "decline",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 1,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I have a number of medical bills which I am currently am having difficulty paying. This loan would be very helpful in resolving my situation."
+    ],
+    "stance_policy_ids": [
+      "policy_2.1"
+    ],
+    "stance_rationale": "The applicant's statement about medical bills aligns with policy_2.1, which treats such disclosures as a mitigating factor.",
+    "label": "#1895055 [disagree] \"I have a number of medical bills which I am currently am hav...\""
+  },
+  {
+    "loan_id": 1856988,
+    "desc_clean": "This loan will be used to consolidate some debt. Doing it this way gives me one payment and a set time to get it paid off. Thank you for your time.",
+    "p_default": 0.09991034120321274,
+    "tabular_alone_decision": "approve",
+    "stance": "neutral",
+    "confidence": 0.5,
+    "route": "low_conf",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Doing it this way gives me one payment and a set time to get it paid off."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The statement indicates the applicant's intention to consolidate debts, which is standard and does not inherently indicate elevated risk according to policy.",
+    "label": "#1856988 [low_conf] \"This loan will be used to consolidate some debt. Doing it th...\""
+  },
+  {
+    "loan_id": 1649485,
+    "desc_clean": "When I was 18 I opened a lot of credit cards and bought everything I ever wanted. Of course, now that I'm 22, I've realized this was a terrible, terrible idea. Over the years I've lived paycheck to paycheck, just paying off my credit cards. I am fortunate that I never lost my job, and never paid a bill late. In the past year, I've been promoted to Systems Administrator at my company, earning a much better living that I previously had. I've been able to pay all of my bills early every month and, generally, make over $500 of over-payments. This has been great, but I'm hoping to improve on it by consolidating all of my bills into a loan with an overall lower interest rate. Here is an overview of my income and living expenses: Salary Income: $2,750.00/mo (net) Monthly Bills: Rent: $395 (The remaining $500 is paid by my roommate and girlfriend of over 5 years.) Electric: $60 - $120 Internet Access: $49 Auto Insurance: $166 Cell Phone (Family Plan): $175 *Personal Loan: $271 (This was used to consolidate even higher interest debt!) Auto Loan: $239 *Amazon Visa: $16 *Chase Visa: $18 *Best Buy Card: $50 Bank Visa: $10 *WaMu Visa: $99 *CapitalOne Visa: $16 * = Eliminated by new loan. Overall, $1584 in expenses each month. This leaves me with $1,166 each month for gas, food, entertainment, etc. I try to live minimally to maximize over-payments and savings. Each month $470 goes to unsecured debt. Here is a breakdown of the approximate balances and interest rates of the debt I would be paying off with this loan: Personal Loan $6,600 18.2% Amazon Visa $940 12.4% Chase Visa $1,100 19.4% Best Buy Card $1,700 19.0% WaMu Visa $2,600 19.9% CapitalOne Visa $440 12.0% Total: $13,380 As you can see, not all of the interest rates are terrible, but I would like to eliminate all of my revolving, unsecured debt into one loan which can be paid automatically. I do have an additional credit card with a balance of $460, but I will not be consolidating it, as it has a rate of 7.2%. Please help me accelerate my dreams of living a debt-free life! Thank you for your time.",
+    "p_default": 0.22280536592006683,
+    "tabular_alone_decision": "decline",
+    "stance": "neutral",
+    "confidence": 0.8,
+    "route": "low_conf",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I've been able to pay all of my bills early every month and, generally, make over $500 of over-payments.",
+      "Each month $470 goes to unsecured debt."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant's statement shows a history of managing multiple debts and making over-payments, which aligns with the policy stating that consolidating high-interest debts is a standard, low-risk purpose.",
+    "label": "#1649485 [low_conf] \"When I was 18 I opened a lot of credit cards and bought ever...\""
+  },
+  {
+    "loan_id": 1929951,
+    "desc_clean": "Using funds for a juice/cleanse business!",
+    "p_default": 0.19837608933448792,
+    "tabular_alone_decision": "decline",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Using funds for a juice/cleanse business!"
+    ],
+    "stance_policy_ids": [
+      "policy_4.1",
+      "policy_6.2"
+    ],
+    "stance_rationale": "The statement describes an unverified new business venture, which is a corroborating risk factor according to policy_4.1. The inconsistency between the stated loan purpose and potential fraudulent use of funds also raises a fraud-review flag as per policy_6.2.",
+    "label": "#1929951 [agree] \"Using funds for a juice/cleanse business!\""
+  },
+  {
+    "loan_id": 1638946,
+    "desc_clean": "Proceeds from this loan will be used to pay off 2 credit cards. This loan will replace these two credit cards within a fixed 3 year period. I will close both accounts to never be used again. When possible, I plan to send extra funds to pay off this loan as soon as possible. Professionally, I have been working in the Information Systems industry for over 10 years and have been working in the Health Care business for over 5 years. Credit cards to payoff with this loan. Discover Card - $6300 Bank of America Visa - $1700 The interest rates for these 2 credit cards ranges from 25-29.99%, due to recent rate increases (I have requested rate decreases numerous times only being declined every time, even though I have never been late on a payment). I'd rather pay individuals like yourself instead. Please feel free to contact me should you have any questions. Thank you in advance for your consideration and for funding my loan.",
+    "p_default": 0.14054562151432037,
+    "tabular_alone_decision": "approve",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "When possible, I plan to send extra funds to pay off this loan as soon as possible."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant's intention to make additional payments towards the loan mitigates risk by showing a commitment to paying down debt quickly.",
+    "label": "#1638946 [agree] \"Proceeds from this loan will be used to pay off 2 credit car...\""
+  },
+  {
+    "loan_id": 1817154,
+    "desc_clean": "I need this money for business expenses and to hire new employees. Previous loan (26K) which I took from Lending Club paid of successfully without any default",
+    "p_default": 0.3625824749469757,
+    "tabular_alone_decision": "decline",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Previous loan (26K) which I took from Lending Club paid of successfully without any default"
+    ],
+    "stance_policy_ids": [
+      "policy_5.1"
+    ],
+    "stance_rationale": "The applicant's successful repayment of a previous loan indicates they can manage their finances, mitigating risk according to policy_5.1.",
+    "label": "#1817154 [disagree] \"I need this money for business expenses and to hire new empl...\""
+  },
+  {
+    "loan_id": 1904597,
+    "desc_clean": "I need to stabalize my debt. I need to pay off accumulated medical bills and old CC debt. This will be a blessing for me, my wife and our future family. This will put me in an excellent place financialy and a chance to learn from previous bad choices. I greatly appreciate all of those who have trusted investing in me. This loan will allow my future to be brighter due to the elimination of high interest credit cards, auto loans and medical bills. I have never nor will I ever default on a payment, thanks for your help.",
+    "p_default": 0.20633092522621155,
+    "tabular_alone_decision": "decline",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 1,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "This will put me in an excellent place financially and a chance to learn from previous bad choices.",
+      "I have never nor will I ever default on a payment"
+    ],
+    "stance_policy_ids": [
+      "policy_1.3",
+      "policy_2.1"
+    ],
+    "stance_rationale": "The applicant expresses a clear intention to improve their financial situation and avoid future defaults, which aligns with the policy's view that consolidating high-interest debts is low-risk. Additionally, mentioning past bad choices suggests they are aware of their mistakes and intend to correct them.",
+    "label": "#1904597 [disagree] \"I need to stabalize my debt. I need to pay off accumulated m...\""
+  },
+  {
+    "loan_id": 1787913,
+    "desc_clean": "To pay all my credit cards",
+    "p_default": 0.15827372670173645,
+    "tabular_alone_decision": "approve",
+    "stance": "neutral",
+    "confidence": 0.3,
+    "route": "low_conf",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "To pay all my credit cards"
+    ],
+    "stance_policy_ids": [],
+    "stance_rationale": "The statement does not provide specific details that align with any of the cited policies.",
+    "label": "#1787913 [low_conf] \"To pay all my credit cards\""
+  },
+  {
+    "loan_id": 1618271,
+    "desc_clean": "This loan is to consolidate several outstanding but mostly paid-off debts (auto, student loan, credit cards) as well as to finish payment on recent home renovations.",
+    "p_default": 0.13076123595237732,
+    "tabular_alone_decision": "approve",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "to finish payment on recent home renovations"
+    ],
+    "stance_policy_ids": [
+      "policy_4.2"
+    ],
+    "stance_rationale": "The statement mentions home renovations, which is treated as neutral-to-mitigating under policy_4.2.",
+    "label": "#1618271 [agree] \"This loan is to consolidate several outstanding but mostly p...\""
+  },
+  {
+    "loan_id": 1755758,
+    "desc_clean": "Consolidating credit cards, medical bills, and last two car payments",
+    "p_default": 0.17526672780513763,
+    "tabular_alone_decision": "decline",
+    "stance": "neutral",
+    "confidence": 0.5,
+    "route": "low_conf",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "Consolidating credit cards, medical bills, and last two car payments"
+    ],
+    "stance_policy_ids": [],
+    "stance_rationale": "The statement provides a clear purpose for the loan but does not indicate any internal inconsistency or specific hardship.",
+    "label": "#1755758 [low_conf] \"Consolidating credit cards, medical bills, and last two car...\""
+  },
+  {
+    "loan_id": 1641344,
+    "desc_clean": "I am an experienced certified elementary school teacher who will use the funds to open up a Drama Kids International Franchise in NW Phoenix, AZ; it will be the first in the state. I will offer after-school drama classes to students from K-12th grade in the local schools and community centers. The program will be tuition based, open to any student, no auditions required. The program teaches students how to think creatively, it promotes good speech/communication skills necessary for the boardroom or on stage. The students will participate in improvisational lessons as well as voice and creative movement. The lessons are also geared to help students build their self-confidence levels. I have an excellent credit rating and have never had any late payments or slow pays. I anticipate a monthly operating budget of $5,000.00-$8,000.00, which equates to 100-150 students at tuition of $600.00 per year to be paid in 3 installments of $200.00 each plus registration fees, to begin with once the program is underway in August 2010. Students will be able to enroll throughout the year at a prorated rate and therefore I anticipate the enrollment numbers to increase and likewise the monthly operating budget. My goal is to have 200 students within the first year of operations. I will be granted 20 sites (schools/community centers of my choosing) within my Northwest Phoenix territory, where I can deliver services. The business will be run out of my home office saving overhead costs. I will be required to pay 9% in royalty fees and a 1% national advertising fee from all of my profits to the franchise headquarters.",
+    "p_default": 0.10371305048465729,
+    "tabular_alone_decision": "approve",
+    "stance": "neutral",
+    "confidence": 0.8,
+    "route": "low_conf",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "The program will be tuition based, open to any student, no auditions required.",
+      "I have an excellent credit rating and have never had any late payments or slow pays."
+    ],
+    "stance_policy_ids": [
+      "policy_7.2"
+    ],
+    "stance_rationale": "The statement mentions educational expenses for students but does not indicate any use of the loan to pay off a prior default, which is neutral according to policy.",
+    "label": "#1641344 [low_conf] \"I am an experienced certified elementary school teacher who...\""
+  },
+  {
+    "loan_id": 1915518,
+    "desc_clean": "This is my second loan through LendingClub, and I will be using these monies to complete the debt consolidation and pay-off work I began with I paid off the first loan. Without your help it would have taken me many more years to get completely out of debt, so thank you so much! In addition, I think it is important for you to know that I have a stable, well-paying job, I take a great deal of pride in having a clean financial record, and I have never defaulted or been forced to skip payments on any loan or other financing I've ever had, including my last loan through here. The end of the funding period is approaching and I'm becoming concerned. Please don't hesitate to invest in me! My debt may look daunting, but it will be completely manageable with your help. And I will not let you down. I've never defaulted on a loan and I never will. Thank you again for your help!",
+    "p_default": 0.09956485778093338,
+    "tabular_alone_decision": "approve",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I have never defaulted or been forced to skip payments on any loan or other financing I've ever had, including my last loan through here."
+    ],
+    "stance_policy_ids": [
+      "policy_5.1"
+    ],
+    "stance_rationale": "The applicant's statement explicitly mentions a history of never defaulting, which mitigates the risk as per policy_5.1.",
+    "label": "#1915518 [agree] \"This is my second loan through LendingClub, and I will be us...\""
+  },
+  {
+    "loan_id": 1811763,
+    "desc_clean": "Loan is to finish all my home improvements to my home and to payoff Discover Loan of $8,911.00.",
+    "p_default": 0.25015023350715637,
+    "tabular_alone_decision": "decline",
+    "stance": "corroborates_risk",
+    "confidence": 1.0,
+    "route": "agree",
+    "agent_decision": "auto_decline",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "to payoff Discover Loan of $8,911.00"
+    ],
+    "stance_policy_ids": [
+      "policy_5.1"
+    ],
+    "stance_rationale": "The statement mentions using the loan to pay off a prior debt, which is a strong corroborating risk factor according to policy_5.1.",
+    "label": "#1811763 [agree] \"Loan is to finish all my home improvements to my home and to...\""
+  },
+  {
+    "loan_id": 1880866,
+    "desc_clean": "Thank you for giving me a opportunity to pay off all my credit cards, making payments at different dates was hard for me,with this at least its one payment a month, I have been employed at my current job for almost 15 years,very dependable, and you wont let you down,thank you for giving me a chance.",
+    "p_default": 0.3021753132343292,
+    "tabular_alone_decision": "decline",
+    "stance": "mitigates_risk",
+    "confidence": 0.9,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 1,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I have been employed at my current job for almost 15 years, very dependable"
+    ],
+    "stance_policy_ids": [
+      "policy_3.3"
+    ],
+    "stance_rationale": "The applicant's long tenure of 15 years at the same employer aligns with policy_3.3, which states that a stated long tenure (5+ years) is a mitigating factor for income stability.",
+    "label": "#1880866 [disagree] \"Thank you for giving me a opportunity to pay off all my cred...\""
+  },
+  {
+    "loan_id": 1756344,
+    "desc_clean": "I intend to pay off a couple of credit cards.",
+    "p_default": 0.18691614270210266,
+    "tabular_alone_decision": "decline",
+    "stance": "neutral",
+    "confidence": 0.5,
+    "route": "low_conf",
+    "agent_decision": "auto_decline",
+    "y": 1,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I intend to pay off a couple of credit cards."
+    ],
+    "stance_policy_ids": [],
+    "stance_rationale": "The statement does not provide specific information that corroborates or mitigates risk according to the provided policies.",
+    "label": "#1756344 [low_conf] \"I intend to pay off a couple of credit cards.\""
+  },
+  {
+    "loan_id": 1617694,
+    "desc_clean": "This will be used to pay off remaining debt and consolidate to one monthly payment. Thank you for your consideration",
+    "p_default": 0.1605706363916397,
+    "tabular_alone_decision": "approve",
+    "stance": "neutral",
+    "confidence": 0.7,
+    "route": "low_conf",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "This will be used to pay off remaining debt and consolidate to one monthly payment."
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The statement indicates a standard purpose for consolidation, which does not inherently indicate elevated risk according to policy.",
+    "label": "#1617694 [low_conf] \"This will be used to pay off remaining debt and consolidate...\""
+  },
+  {
+    "loan_id": 1931667,
+    "desc_clean": "This is a loan for my startup company. The funds will be used to get the business up and running (development, hosting, marketing, and other expenses). I have excellent credit and a stable full time job for 10+ years.",
+    "p_default": 0.09284479171037674,
+    "tabular_alone_decision": "approve",
+    "stance": "corroborates_risk",
+    "confidence": 0.9,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "The funds will be used to get the business up and running (development, hosting, marketing, and other expenses)."
+    ],
+    "stance_policy_ids": [
+      "policy_4.1"
+    ],
+    "stance_rationale": "The statement corroborates risk by explicitly stating that the loan proceeds will fund a new business venture or startup costs.",
+    "label": "#1931667 [disagree] \"This is a loan for my startup company. The funds will be use...\""
+  },
+  {
+    "loan_id": 1630739,
+    "desc_clean": "I wish to pay my credit cards to lower interest, and pay my mother back for a loan. A personal emergency has arisen and she needs the money as soon as I possibly can.",
+    "p_default": 0.2834584712982178,
+    "tabular_alone_decision": "decline",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I wish to pay my credit cards to lower interest"
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The applicant's stated intent to consolidate high-interest debts aligns with a standard, low-risk loan purpose as per policy_1.3.",
+    "label": "#1630739 [disagree] \"I wish to pay my credit cards to lower interest, and pay my...\""
+  },
+  {
+    "loan_id": 1629478,
+    "desc_clean": "needed to pay for credit card bills with the largest balances payment for credit card debt",
+    "p_default": 0.424169659614563,
+    "tabular_alone_decision": "decline",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_decline",
+    "y": 1,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "needed to pay for credit card bills with the largest balances payment for credit card debt"
+    ],
+    "stance_policy_ids": [
+      "policy_1.1",
+      "policy_5.1"
+    ],
+    "stance_rationale": "The statement indicates using the loan to pay off existing credit card debt, which aligns with policy_5.1 and suggests a risk of default.",
+    "label": "#1629478 [agree] \"needed to pay for credit card bills with the largest balance...\""
+  },
+  {
+    "loan_id": 1827264,
+    "desc_clean": "Hello! I am a hard worker who is paying for mistakes I made when I was young. I am dedicated to getting out of debt and this loan will make that possible for me! I will be able to consolidate all of my debt and make one low monthly payment and eliminate tons of interest! Thank you for helping!!",
+    "p_default": 0.0934106633067131,
+    "tabular_alone_decision": "approve",
+    "stance": "corroborates_risk",
+    "confidence": 0.8,
+    "route": "disagree",
+    "agent_decision": "human_review",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "I am paying for mistakes I made when I was young."
+    ],
+    "stance_policy_ids": [
+      "policy_5.1"
+    ],
+    "stance_rationale": "The statement mentions paying for past mistakes, which aligns with the policy that using a loan to avoid or pay off prior defaults is a strong corroborating risk factor.",
+    "label": "#1827264 [disagree] \"Hello! I am a hard worker who is paying for mistakes I made...\""
+  },
+  {
+    "loan_id": 1793770,
+    "desc_clean": "Pay off credit cards and car repairs",
+    "p_default": 0.15296117961406708,
+    "tabular_alone_decision": "approve",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "pay off credit cards and car repairs"
+    ],
+    "stance_policy_ids": [
+      "policy_6.2"
+    ],
+    "stance_rationale": "The statement clearly outlines the intended use of funds, which mitigates any internal inconsistency flagged by policy_6.2.",
+    "label": "#1793770 [agree] \"Pay off credit cards and car repairs\""
+  },
+  {
+    "loan_id": 1850386,
+    "desc_clean": "Debt consolidation loan, improves my monthly cash flow, improves utilization of credit, provides cash infusion which allows not having to tap into either retirement or investment accounts.",
+    "p_default": 0.08927751332521439,
+    "tabular_alone_decision": "approve",
+    "stance": "mitigates_risk",
+    "confidence": 0.8,
+    "route": "agree",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "provides cash infusion which allows not having to tap into either retirement or investment accounts"
+    ],
+    "stance_policy_ids": [
+      "policy_7.1"
+    ],
+    "stance_rationale": "The statement indicates the loan will prevent tapping into retirement funds, which aligns with policy that treats such disclosures as neutral unless stability is questioned.",
+    "label": "#1850386 [agree] \"Debt consolidation loan, improves my monthly cash flow, impr...\""
+  },
+  {
+    "loan_id": 1872627,
+    "desc_clean": "The loan is intended to consolidate 4 of our high interest credit card debt in order to pay less in interest pay off our debt in the next six months",
+    "p_default": 0.0675632581114769,
+    "tabular_alone_decision": "approve",
+    "stance": "neutral",
+    "confidence": 0.7,
+    "route": "low_conf",
+    "agent_decision": "auto_approve",
+    "y": 0,
+    "stance_source": "parsed",
+    "stance_evidence": [
+      "The loan is intended to consolidate 4 of our high interest credit card debt in order to pay less in interest pay off our debt in the next six months"
+    ],
+    "stance_policy_ids": [
+      "policy_1.3"
+    ],
+    "stance_rationale": "The statement indicates a standard, low-risk loan purpose as per policy_1.3.",
+    "label": "#1872627 [low_conf] \"The loan is intended to consolidate 4 of our high interest c...\""
+  }
+]

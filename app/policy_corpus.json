@@ -1,0 +1,78 @@
+[
+  {
+    "id": "policy_1.1",
+    "text": "Debt-to-income (DTI) ratio above 40% requires manual underwriting review regardless of grade."
+  },
+  {
+    "id": "policy_1.2",
+    "text": "DTI between 35% and 40% is acceptable for grades A-C without additional documentation."
+  },
+  {
+    "id": "policy_1.3",
+    "text": "A stated intent to consolidate multiple high-interest debts into a single lower-rate payment is a standard, low-risk loan purpose and does not itself indicate elevated risk."
+  },
+  {
+    "id": "policy_2.1",
+    "text": "Medical hardship disclosed in the applicant's statement (unexpected procedure, uninsured treatment, family illness) should be treated as a mitigating factor if consistent with the loan amount requested."
+  },
+  {
+    "id": "policy_2.2",
+    "text": "Job loss or reduced hours disclosed by the applicant is a corroborating risk factor unless the applicant also states verified re-employment or a stable alternative income source."
+  },
+  {
+    "id": "policy_2.3",
+    "text": "General statements of financial 'stress' or 'struggle' without a specific triggering event are neutral and should not be treated as corroborating or mitigating on their own."
+  },
+  {
+    "id": "policy_3.1",
+    "text": "Applicants reporting under 1 year at current employer combined with a stated recent job change should be flagged as a corroborating risk factor pending employment verification."
+  },
+  {
+    "id": "policy_3.2",
+    "text": "Self-employed or 1099 income disclosed in the applicant's own words, without a stated verification path, is a corroborating risk factor per underwriting guidance section 3."
+  },
+  {
+    "id": "policy_3.3",
+    "text": "A stated long tenure (5+ years) at a single employer is a mitigating factor for income stability."
+  },
+  {
+    "id": "policy_4.1",
+    "text": "Statements describing the loan proceeds funding a new business venture or startup costs are a corroborating risk factor; business income is not underwritten income."
+  },
+  {
+    "id": "policy_4.2",
+    "text": "Home improvement or repair purposes tied to a specific, itemized project are treated as neutral-to-mitigating, since they represent asset-preserving spend."
+  },
+  {
+    "id": "policy_4.3",
+    "text": "Vague or generic purpose statements ('need money', 'personal reasons') with no specific detail should be treated as neutral; do not infer risk from vagueness alone."
+  },
+  {
+    "id": "policy_5.1",
+    "text": "Any mention of using this loan to pay off or avoid a prior default, repossession, garnishment, or collections action is a strong corroborating risk factor."
+  },
+  {
+    "id": "policy_5.2",
+    "text": "Any mention of a co-signer, secondary applicant, or shared household income not reflected in the tabular application data should be flagged for manual verification; do not treat it as automatically mitigating."
+  },
+  {
+    "id": "policy_6.1",
+    "text": "Statements that closely match known solicitation or advertising boilerplate (e.g. promotional phrasing copied from marketing material) rather than a first-person account are a fraud-review flag, not a risk-mitigating narrative."
+  },
+  {
+    "id": "policy_6.2",
+    "text": "Internal inconsistency between the stated loan purpose and the stated use of funds within the same statement is a fraud-review flag."
+  },
+  {
+    "id": "policy_6.3",
+    "text": "A statement that is empty, purely templated, or contains no first-person financial detail carries no narrative signal and must be scored neutral with low confidence."
+  },
+  {
+    "id": "policy_7.1",
+    "text": "Retirement income disclosed as the primary repayment source should be treated as neutral unless the applicant also states its amount or stability relative to the requested payment."
+  },
+  {
+    "id": "policy_7.2",
+    "text": "Educational expenses (tuition, college costs) disclosed for the applicant or a dependent are treated as neutral; education borrowing is a standard, expected use of consumer credit."
+  }
+]
