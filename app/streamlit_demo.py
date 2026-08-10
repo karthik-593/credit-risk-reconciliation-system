@@ -216,27 +216,46 @@ def run_explore_mode():
     selected_routes = st.multiselect("Filter by route", routes_present, default=routes_present)
     filtered = [s for s in samples if s["route"] in selected_routes] or samples
 
-    if "picked_loan_id" not in st.session_state:
-        st.session_state.picked_loan_id = filtered[0]["loan_id"]
-
     labels_by_id = {s["loan_id"]: s["label"] for s in filtered}
     ids_in_order = [s["loan_id"] for s in filtered]
 
+    # picked_loan_id is OUR OWN tracking variable -- it is never passed as a
+    # widget's key=, so code is always free to assign to it. The selectbox
+    # below owns a SEPARATE key ("loan_selectbox") that we never write to
+    # directly; Streamlit forbids reassigning a key a widget already owns
+    # (StreamlitAPIException), which is exactly what broke here before.
+    if "picked_loan_id" not in st.session_state:
+        st.session_state.picked_loan_id = ids_in_order[0]
+    if st.session_state.picked_loan_id not in ids_in_order:
+        # Filter changed and dropped the previous pick -- reset, and drop
+        # the widget's own persisted value so it re-initializes from the
+        # new index= below instead of keeping a now-invalid selection.
+        st.session_state.picked_loan_id = ids_in_order[0]
+        st.session_state.pop("loan_selectbox", None)
+
+    default_index = ids_in_order.index(st.session_state.picked_loan_id)
+
     col_a, col_b = st.columns([4, 1])
     with col_a:
-        if st.session_state.picked_loan_id not in ids_in_order:
-            st.session_state.picked_loan_id = ids_in_order[0]
         picked = st.selectbox(
             "Pick a loan", options=ids_in_order,
             format_func=lambda i: labels_by_id[i],
-            key="picked_loan_id",
+            index=default_index,
+            key="loan_selectbox",
         )
     with col_b:
         st.write("")
         st.write("")
         if st.button("\U0001f3b2 Surprise me"):
             st.session_state.picked_loan_id = random.choice(ids_in_order)
+            # A widget's persisted value otherwise wins over a new index= on
+            # rerun -- drop it so the selectbox visibly jumps to the new pick.
+            st.session_state.pop("loan_selectbox", None)
             st.rerun()
+
+    # Sync FROM the widget when the user interacts with the dropdown
+    # directly (picked is the widget's current value in that case).
+    st.session_state.picked_loan_id = picked
 
     row = next(s for s in filtered if s["loan_id"] == st.session_state.picked_loan_id)
     render_loan(row, policy_corpus)
