@@ -1,0 +1,46 @@
+{
+  "n_records": 21616,
+  "total_defaults": 3299,
+  "base_rate": 0.15261843079200593,
+  "auc": {
+    "random": 0.5,
+    "tabular": 0.6627145820492897,
+    "agent": 0.6219412020981169,
+    "theoretical_max": 0.923690784603997,
+    "agent_minus_tabular": -0.040773379951172806
+  },
+  "per_budget_pct": {
+    "5": {
+      "tabular_capture": 0.12033949681721734,
+      "agent_capture": 0.09487723552591694,
+      "gap": -0.0254622612913004
+    },
+    "10": {
+      "tabular_capture": 0.22097605334949985,
+      "agent_capture": 0.15459230069718097,
+      "gap": -0.06638375265231888
+    },
+    "15": {
+      "tabular_capture": 0.30615337981206425,
+      "agent_capture": 0.2476508032737193,
+      "gap": -0.05850257653834495
+    },
+    "20": {
+      "tabular_capture": 0.383146408002425,
+      "agent_capture": 0.3455592603819339,
+      "gap": -0.03758714762049109
+    }
+  },
+  "actual_review_rate_pct": 11.565507031828275,
+  "actual_review_n_disagree": 2500,
+  "at_actual_review_rate": {
+    "agent_capture": 0.16459533191876327,
+    "tabular_capture": 0.2476508032737193,
+    "gap": -0.08305547135495603
+  },
+  "complementary_single_point_build7": {
+    "fp_catch_pct": 24.05286343612335,
+    "fn_catch_pct": 5.904059040590406
+  },
+  "verdict": "WORSE than tabular-alone by AUC (-0.0408) -- at this operating point, ranking by the tabular score alone front-loads real defaults faster than the agent's disagree-first queue does."
+}

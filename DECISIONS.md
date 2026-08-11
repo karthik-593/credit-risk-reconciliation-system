@@ -538,6 +538,41 @@ rate, within budget) without yet being provably predictive. Reported as inconclu
 rounded either way — a bigger population, a different comparison design, or accepting a wider
 CI are the only paths to resolving it further, none of which are committed next steps here.
 
+## Build 8 — selective-prediction / review efficiency — COMPLETE
+
+**Question:** Reframe the routing as a review-budgeting problem: if a reviewer can only look
+at a fixed % of loans, does the agent's queue (disagree → low_conf → agree, each ranked by
+p_default) front-load real defaults better than simply ranking every loan by p_default alone?
+scripts/review_efficiency.py — read-only over results/agent_eval_fullpower.json's 21,616
+cached records, no re-run of the model or the LLM, no changes to reconciler_agent.py.
+
+**Result (base rate 15.26%, 3,299 real defaults):**
+
+| Budget | Tabular baseline | Agent routing | Gap |
+|---|---|---|---|
+| 5% | 12.03% | 9.49% | −2.55pp |
+| 10% | 22.10% | 15.46% | −6.64pp |
+| 15% | 30.62% | 24.77% | −5.85pp |
+| 20% | 38.31% | 34.56% | −3.76pp |
+
+AUC: random floor 0.5000, **tabular baseline 0.6627**, **agent routing 0.6219** (gap
+**−0.0408**), theoretical max 0.9237 given the base rate. At the agent's actual review rate
+(11.57%, n=2,500 disagree-routed loans): agent captures 16.46% of all real defaults vs. 24.77%
+for tabular-alone at the same budget (gap −8.31pp).
+
+**HONEST VERDICT: WORSE than the tabular baseline, not competitive.** The gap is not small
+(−2.6 to −6.6pp across the reported budgets, −0.041 AUC) and does not favor the agent at any
+tested budget — reported plainly rather than searching for a budget where it looks better.
+
+**Why, in one line:** the `disagree` bucket mixes both directions (risky-tabular+text-mitigates
+AND safe-tabular+text-corroborates) by construction, so it is not itself sorted by p_default
+the way a pure risk-ranked queue is — it front-loads DISAGREEMENT, not raw predicted risk, and
+those are different objectives. This does not contradict Build 7's finding that disagreement
+routing catches 24% of false approvals vs. 6% of false declines (kept as the complementary
+single-point framing) — that is a statement about which ERROR TYPE gets caught, not about
+review-budget efficiency overall, and the two can honestly point different directions.
+Figure: results/review_efficiency.png. Data: results/review_efficiency.json.
+
 ## Pending
 
 - Commit discipline: requirements.txt bump (langgraph, shap, rank_bm25, optuna,
