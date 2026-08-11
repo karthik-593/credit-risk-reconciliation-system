@@ -34,7 +34,7 @@ The content lift survives both controls, holds sign across all seeds, and the to
 - The two readers **disagree on 11.6%** of loans; those go to human review — **within a 15% review budget**.
 - On ~70% of loans the note says nothing decision-relevant (short, plain 2007-era text) — so the word-reader correctly stays silent rather than inventing an opinion.
 - **Whether disagreement produces *better* decisions is inconclusive** even at full sample — the effect leans the right direction but the confidence intervals overlap. Reported as inconclusive, not rounded into a claim.
-- **One thing it clearly does:** disagreements catch **24% of the tabular model's false approvals** vs only **6% of its false declines** — it preferentially pulls back loans that looked fine on paper but weren't. Stable across sample sizes.
+- **One thing it clearly does:** disagreements catch **24% of the tabular model's wrongful declines** (good borrowers it would have rejected) vs only **6% of its bad approvals** (defaulters it let through) — it's much better at pulling back over-cautious declines than at catching missed bad loans. Stable across sample sizes.
 - **Fair** (approval shifts ≤~3pp across groups) and **calibrated** (auto-decided subset slightly better than the whole).
 
 The full statistical record — including three evaluation-harness bugs that were caught and corrected — is in [`DECISIONS.md`](DECISIONS.md).

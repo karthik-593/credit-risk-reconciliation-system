@@ -47,6 +47,7 @@ import reconciler_agent as ra  # noqa: E402
 FRAME_PATH = ROOT / "data" / "interim" / "feasibility_frame.pkl"
 SPLIT_PATH = ROOT / "data" / "interim" / "split_indices.pkl"
 CACHE_PATH = ROOT / "results" / "eval_stance_cache.pkl"
+VERIFIER_CACHE_PATH = ROOT / "results" / "eval_verifier_cache.pkl"
 # Output path is chosen in main() by mode: agent_eval.json (stub/real) or
 # agent_eval_fullpower.json (--full) -- --full must never overwrite the other.
 
@@ -112,22 +113,36 @@ def base_rate_sample(frame: pd.DataFrame, n: int, seed: int) -> pd.DataFrame:
 
 
 # ---------------------------------------------------------------------------
-# Running one loan through the same node sequence build_graph() wires.
+# Running one loan through the same node sequence build_graph() wires:
+# tabular_score -> text_stance -> verifier -> reconciler -> route -> ...
 # ---------------------------------------------------------------------------
-def run_one(row: pd.Series, loan_id, cache: dict | None = None) -> dict:
+def run_one(row: pd.Series, loan_id, stance_cache: dict | None = None,
+            verifier_cache: dict | None = None) -> dict:
     tabular_features = {c: row[c] for c in RAW_TABULAR_COLS}
     application = {"tabular_features": tabular_features, "desc_clean": row["desc_clean"]}
     state = {"application": application}
 
     state.update(ra.tabular_score(state))
 
-    if cache is not None and loan_id in cache:
-        stance_out = cache[loan_id]
+    if stance_cache is not None and loan_id in stance_cache:
+        stance_out = stance_cache[loan_id]
     else:
         stance_out = ra.text_stance(state)
-        if cache is not None:
-            cache[loan_id] = stance_out
+        if stance_cache is not None:
+            stance_cache[loan_id] = stance_out
     state.update(stance_out)
+
+    # Verifier reads the (possibly cached) stance and may downgrade it --
+    # cached separately from the stance itself since it's a distinct LLM
+    # call (or no call at all, for neutral/mechanical-fail cases) keyed by
+    # the same loan_id.
+    if verifier_cache is not None and loan_id in verifier_cache:
+        verifier_out = verifier_cache[loan_id]
+    else:
+        verifier_out = ra.verifier(state)
+        if verifier_cache is not None:
+            verifier_cache[loan_id] = verifier_out
+    state.update(verifier_out)
 
     state.update(ra.reconciler(state))
     next_node = ra._route(state)
@@ -160,10 +175,13 @@ def run_validate(sample: pd.DataFrame) -> None:
     from llm_client import configure_from_config
     configure_from_config()
 
-    print(f"=== VALIDATE: {len(sample)} real LLM calls ===")
+    print(f"=== VALIDATE: {len(sample)} real LLM calls (stance, + verifier where applicable) ===")
 
     source_counts = {"parsed": 0, "parse_error": 0, "api_error": 0, "empty": 0}
     stance_counts = {"corroborates_risk": 0, "mitigates_risk": 0, "neutral": 0}
+    verifier_counts = {"supported": 0, "unsupported": 0, "unclear": 0, "skipped_neutral": 0}
+    verifier_source_counts = {"mechanical": 0, "llm": 0, "skipped": 0}
+    n_downgraded = 0
     n_evidence_provided = 0
     n_evidence_grounded = 0
 
@@ -190,6 +208,17 @@ def run_validate(sample: pd.DataFrame) -> None:
             n_evidence_provided += 1
             if all(_is_grounded(span, row["desc_clean"]) for span in spans):
                 n_evidence_grounded += 1
+
+        state.update(out)
+        verifier_out = ra.verifier(state)
+        verifier_counts[verifier_out["verifier_verdict"]] = (
+            verifier_counts.get(verifier_out["verifier_verdict"], 0) + 1
+        )
+        verifier_source_counts[verifier_out["verifier_source"]] = (
+            verifier_source_counts.get(verifier_out["verifier_source"], 0) + 1
+        )
+        if "stance" in verifier_out:  # verifier only includes this key when it downgraded
+            n_downgraded += 1
 
     n = len(sample)
     n_no_stance = source_counts["api_error"] + source_counts["empty"]
@@ -225,6 +254,15 @@ def run_validate(sample: pd.DataFrame) -> None:
     else:
         print("Evidence grounding rate: n/a (no evidence provided by any scored call)")
 
+    print(f"\nVerifier verdict (of {n_scored} scored calls):")
+    for v, c in verifier_counts.items():
+        print(f"  {v:16s}: {c} ({100 * c / n_scored:.1f}%)")
+    print("Verifier source (where the verdict came from):")
+    for s, c in verifier_source_counts.items():
+        print(f"  {s:16s}: {c} ({100 * c / n_scored:.1f}%)")
+    print(f"Downgraded to neutral by the verifier: {n_downgraded}/{n_scored} "
+          f"({100 * n_downgraded / n_scored:.1f}%)")
+
     print("\nGate check: review the above before running --real.")
 
 
@@ -233,30 +271,46 @@ def run_validate(sample: pd.DataFrame) -> None:
 # ---------------------------------------------------------------------------
 def run_full(sample: pd.DataFrame, mode: str) -> pd.DataFrame:
     uses_real_adapter = mode in ("real", "full")
-    cache = {}
+    stance_cache: dict = {}
+    verifier_cache: dict = {}
     if uses_real_adapter:
         from llm_client import configure_from_config
         configure_from_config()
         if CACHE_PATH.exists():
             with open(CACHE_PATH, "rb") as f:
-                cache = pickle.load(f)
-            print(f"Loaded {len(cache)} cached stances from {CACHE_PATH}")
+                stance_cache = pickle.load(f)
+            print(f"Loaded {len(stance_cache)} cached stances from {CACHE_PATH}")
+        if VERIFIER_CACHE_PATH.exists():
+            with open(VERIFIER_CACHE_PATH, "rb") as f:
+                verifier_cache = pickle.load(f)
+            print(f"Loaded {len(verifier_cache)} cached verifier verdicts from {VERIFIER_CACHE_PATH}")
     else:
         ra.configure_llm_client(StubLLMClient())
 
     checkpoint_interval = 500 if len(sample) > 5000 else 100
 
     records = []
-    n_cache_hit = 0
-    n_new_calls = 0
+    n_stance_cache_hit = 0
+    n_stance_new_calls = 0
+    n_verifier_cache_hit = 0
+    n_verifier_new_calls = 0
     for i, (loan_id, row) in enumerate(sample.iterrows()):
-        was_cached = uses_real_adapter and (loan_id in cache)
-        state = run_one(row, loan_id, cache=cache if uses_real_adapter else None)
+        stance_was_cached = uses_real_adapter and (loan_id in stance_cache)
+        verifier_was_cached = uses_real_adapter and (loan_id in verifier_cache)
+        state = run_one(
+            row, loan_id,
+            stance_cache=stance_cache if uses_real_adapter else None,
+            verifier_cache=verifier_cache if uses_real_adapter else None,
+        )
         if uses_real_adapter:
-            if was_cached:
-                n_cache_hit += 1
+            if stance_was_cached:
+                n_stance_cache_hit += 1
             else:
-                n_new_calls += 1
+                n_stance_new_calls += 1
+            if verifier_was_cached:
+                n_verifier_cache_hit += 1
+            else:
+                n_verifier_new_calls += 1
         records.append({
             "loan_id": loan_id,
             "p_default": state["p_default"],
@@ -267,19 +321,28 @@ def run_full(sample: pd.DataFrame, mode: str) -> pd.DataFrame:
             "tabular_alone_decision": tabular_alone_decision(state["p_default"]),
             "y": int(row["default"]),
             "stance_source": state.get("stance_source", "parsed"),
+            "verifier_verdict": state.get("verifier_verdict", "skipped_neutral"),
+            "verifier_source": state.get("verifier_source", "skipped"),
         })
         if uses_real_adapter and (i + 1) % checkpoint_interval == 0:
             with open(CACHE_PATH, "wb") as f:
-                pickle.dump(cache, f)
-            print(f"  ... {i + 1}/{len(sample)} (cache checkpointed; "
-                  f"hits={n_cache_hit} new_calls={n_new_calls})")
+                pickle.dump(stance_cache, f)
+            with open(VERIFIER_CACHE_PATH, "wb") as f:
+                pickle.dump(verifier_cache, f)
+            print(f"  ... {i + 1}/{len(sample)} (caches checkpointed; "
+                  f"stance hits={n_stance_cache_hit} new={n_stance_new_calls}; "
+                  f"verifier hits={n_verifier_cache_hit} new={n_verifier_new_calls})")
 
     if uses_real_adapter:
         CACHE_PATH.parent.mkdir(parents=True, exist_ok=True)
         with open(CACHE_PATH, "wb") as f:
-            pickle.dump(cache, f)
-        print(f"\nCache-hit vs new-call totals: {n_cache_hit} cache hits, "
-              f"{n_new_calls} new LLM calls ({len(cache)} stances now cached total)")
+            pickle.dump(stance_cache, f)
+        with open(VERIFIER_CACHE_PATH, "wb") as f:
+            pickle.dump(verifier_cache, f)
+        print(f"\nStance cache:   {n_stance_cache_hit} hits, {n_stance_new_calls} new calls "
+              f"({len(stance_cache)} cached total)")
+        print(f"Verifier cache: {n_verifier_cache_hit} hits, {n_verifier_new_calls} new calls "
+              f"({len(verifier_cache)} cached total)")
 
     return pd.DataFrame(records)
 
@@ -579,6 +642,17 @@ def main():
     print(f"\nAnalyzed rows (all sections below use this population): {n_analyzed}/{n_total} "
           f"({100 * n_analyzed / n_total:.2f}%)")
 
+    verifier_counts = analyzed_df["verifier_verdict"].value_counts()
+    print("\n=== 0b. Verifier verdict breakdown (grounding check on the stance, "
+          "not a risk re-judgment) ===")
+    for v in ["supported", "unsupported", "unclear", "skipped_neutral"]:
+        c = int(verifier_counts.get(v, 0))
+        print(f"  {v:16s}: {c:6d} ({100 * c / n_analyzed:.2f}%)")
+    n_downgraded_total = int((analyzed_df["verifier_verdict"] == "unsupported").sum())
+    print(f"Downgraded to neutral by the verifier: {n_downgraded_total}/{n_analyzed} "
+          f"({100 * n_downgraded_total / n_analyzed:.2f}%) -- these rows' route/decision "
+          f"below reflect the DOWNGRADED stance, not the original one.")
+
     underpowered_log: list = []
     report = {
         "mode": mode,
@@ -591,6 +665,9 @@ def main():
         "sample_default_rate": float(sample_rate),
         "stance_source_breakdown": {
             src: int(source_counts.get(src, 0)) for src in ["parsed", "parse_error", "api_error", "empty"]
+        },
+        "verifier_verdict_breakdown": {
+            v: int(verifier_counts.get(v, 0)) for v in ["supported", "unsupported", "unclear", "skipped_neutral"]
         },
         "route_distribution": section_route_distribution(analyzed_df),
         "decisions_changed": section_decisions_changed(analyzed_df),

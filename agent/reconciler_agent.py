@@ -2,8 +2,8 @@
 Credit-Risk Reconciliation Agent â 4-node LangGraph skeleton.
 
 Flow:
-    START -> tabular_score -> text_stance -> reconciler
-                                                |
+    START -> tabular_score -> text_stance -> VERIFIER -> reconciler
+                                                             |
                      agree/low-conf (text silent or agrees) -> auto_decision --\
                      disagree (text actively conflicts)      -> human_review ---> explanation -> END
 
@@ -15,6 +15,13 @@ Design invariants (do not break these â they are the whole point):
      It does not invent a "narrative risk probability" to weigh against the
      calibrated tabular one.
   3. Retrieval is a TOOL the stance node calls, not a separate "agent".
+  4. The verifier is a SECOND agent that critiques the first, but only on
+     GROUNDING -- does the stance's own quoted evidence and cited policy
+     actually support it -- never on whether the risk call itself is right.
+     It is falsifiable (mechanical substring/membership check first, cheap
+     LLM check second) and safe-direction only: an unsupported stance is
+     downgraded to neutral before the reconciler ever sees it, never
+     blocked or overturned into a different stance.
 
 Fill in the three TODO stubs (model load, LLM call, retriever) and it runs.
 """
@@ -74,6 +81,43 @@ Retrieved policy snippets:
 
 
 # --------------------------------------------------------------------------
+# The verifier prompt â a second, independent agent that critiques the
+# stance's GROUNDING only. It never re-judges risk or proposes a different
+# stance; it only says whether the quoted evidence + cited policy actually
+# support the stance the first agent already reached.
+# --------------------------------------------------------------------------
+VERIFIER_SYSTEM_PROMPT = """You are a grounding auditor for an underwriting narrative analyst.
+
+You are shown a stance another analyst reached, the exact quotes they cited as evidence
+from the applicant's statement, and the underwriting policy they cited to justify it. You
+are NOT judging whether the stance is the RIGHT risk call -- only whether the quoted
+evidence, read against the cited policy, actually supports the stance as claimed.
+
+Rules:
+- Judge grounding only. Do not re-assess risk, and do not propose a different stance.
+- "supported": the quotes plausibly show what's claimed, and the cited policy actually
+  applies to what the quotes say.
+- "unsupported": the quotes don't show what's claimed, or the cited policy doesn't apply.
+- "unclear": genuinely ambiguous either way.
+
+Respond with ONLY this JSON, no prose:
+{
+  "verdict": "supported | unsupported | unclear",
+  "reason": "one sentence"
+}"""
+
+VERIFIER_USER_TEMPLATE = """Stance reached: {stance}
+
+Quoted evidence:
+{evidence_block}
+
+Cited policy:
+{policy_block}
+
+Analyst's rationale: {rationale}"""
+
+
+# --------------------------------------------------------------------------
 # State â one object threaded through every node.
 # --------------------------------------------------------------------------
 class AppState(TypedDict, total=False):
@@ -90,6 +134,11 @@ class AppState(TypedDict, total=False):
     stance_rationale: str
     stance_source: Literal["parsed", "parse_error", "api_error", "empty"]
     stance_error_detail: str
+    # verification (checks grounding of the narrative channel only -- never
+    # re-judges risk; see verifier() and design invariant 4 above)
+    verifier_verdict: Literal["supported", "unsupported", "unclear", "skipped_neutral"]
+    verifier_reason: str
+    verifier_source: Literal["mechanical", "llm", "skipped"]
     # reconciliation
     route: Literal["agree", "disagree", "low_conf"]
     decision: Literal["auto_approve", "auto_decline", "human_review"]
@@ -209,6 +258,8 @@ POLICY_CORPUS = [
     {"id": "policy_7.1", "text": "Retirement income disclosed as the primary repayment source should be treated as neutral unless the applicant also states its amount or stability relative to the requested payment."},
     {"id": "policy_7.2", "text": "Educational expenses (tuition, college costs) disclosed for the applicant or a dependent are treated as neutral; education borrowing is a standard, expected use of consumer credit."},
 ]
+
+POLICY_CORPUS_BY_ID = {p["id"]: p["text"] for p in POLICY_CORPUS}
 
 _TOKEN_RE = re.compile(r"[a-z0-9]+")
 
@@ -346,6 +397,34 @@ def _call_llm_json(system: str, user: str) -> dict:
     return parsed
 
 
+_VALID_VERIFIER_VERDICTS = {"supported", "unsupported", "unclear"}
+
+
+def _call_verifier_llm(system: str, user: str) -> dict:
+    """Separate from _call_llm_json on purpose -- the verifier's schema
+    (verdict/reason) differs from the stance schema, and keeping this
+    isolated means the stance node's parsing/fallback logic is untouched by
+    adding the verifier. Same reason-code discipline: an infra failure
+    becomes verdict="unclear" with the failure detail in "reason", never
+    silently treated as a real judgment. Uses the same configured
+    _llm_client (same provider, same temperature=0 set at the adapter)."""
+    if _llm_client is None:
+        return {"verdict": "unclear", "reason": "no LLM client configured"}
+    try:
+        raw = _llm_client.complete(system, user)
+    except Exception as exc:
+        return {"verdict": "unclear", "reason": f"verifier LLM call failed: {type(exc).__name__}: {exc}"}
+    if not raw or not raw.strip():
+        return {"verdict": "unclear", "reason": "verifier LLM returned an empty response"}
+    try:
+        parsed = json.loads(_strip_code_fence(raw))
+        if parsed.get("verdict") not in _VALID_VERIFIER_VERDICTS:
+            raise ValueError(f"invalid verifier verdict: {parsed.get('verdict')!r}")
+    except Exception as exc:
+        return {"verdict": "unclear", "reason": f"verifier response did not parse: {type(exc).__name__}: {exc}"}
+    return {"verdict": parsed["verdict"], "reason": parsed.get("reason", "")}
+
+
 # --------------------------------------------------------------------------
 # Nodes.
 # --------------------------------------------------------------------------
@@ -371,6 +450,90 @@ def text_stance(state: AppState) -> dict:
         "stance_rationale": out.get("rationale", ""),
         "stance_source": out.get("stance_source", "parsed"),
         "stance_error_detail": out.get("stance_error_detail", ""),
+    }
+
+
+def verifier(state: AppState) -> dict:
+    """Second agent: checks whether text_stance's own quoted evidence and
+    cited policy actually support the stance it reached. FALSIFIABLE ONLY --
+    never re-judges risk, never proposes a different stance. Two layers:
+      1. Mechanical (free, no LLM): every evidence span must be a real
+         substring of the applicant's statement, and every cited policy id
+         must be one that was actually retrieved for it. This alone catches
+         the failure mode where a model quotes the POLICY text as if it
+         were applicant evidence.
+      2. LLM check (only if mechanical passes and stance != "neutral"): a
+         small, separate call asking whether the quotes, under the cited
+         policy, justify the claimed stance.
+    neutral stances are auto-"supported" -- there's nothing to over-claim --
+    and skip the LLM call entirely.
+
+    Safe direction: an "unsupported" verdict downgrades stance to "neutral"
+    and stance_confidence to 0.0 in THIS return dict, so reconciler() -- run
+    next -- sees the downgraded values and can't route a disagree off an
+    ungrounded claim; it falls to low_conf and takes the tabular decision
+    instead. "unclear" (including any infra failure during the LLM check)
+    does NOT downgrade -- weak verification evidence is not evidence the
+    stance is wrong, so the original stance passes through unchanged."""
+    stance = state["stance"]
+    evidence = state.get("stance_evidence") or []
+    policy_ids = state.get("stance_policy_ids") or []
+    rationale = state.get("stance_rationale", "")
+    desc = state["application"].get("desc_clean", "").strip()
+
+    if stance == "neutral":
+        return {
+            "verifier_verdict": "skipped_neutral",
+            "verifier_reason": "Neutral stance makes no claim to over-support; nothing to verify.",
+            "verifier_source": "skipped",
+        }
+
+    # Layer 1 -- mechanical, free.
+    bad_span = next((span for span in evidence if span not in desc), None)
+    if bad_span is not None:
+        return {
+            "verifier_verdict": "unsupported",
+            "verifier_reason": f"Evidence span is not an exact substring of the applicant's statement: {bad_span!r}",
+            "verifier_source": "mechanical",
+            "stance": "neutral",
+            "stance_confidence": 0.0,
+        }
+
+    retrieved_ids = {p["id"] for p in (_retrieve_policy(desc) if desc else [])}
+    bad_policy = next((pid for pid in policy_ids if pid not in retrieved_ids), None)
+    if bad_policy is not None:
+        return {
+            "verifier_verdict": "unsupported",
+            "verifier_reason": f"Cited policy {bad_policy!r} was not among the retrieved snippets for this statement.",
+            "verifier_source": "mechanical",
+            "stance": "neutral",
+            "stance_confidence": 0.0,
+        }
+
+    # Layer 2 -- LLM check, only reached once mechanical checks pass.
+    evidence_block = "\n".join(f'- "{e}"' for e in evidence) or "(none quoted)"
+    policy_block = "\n".join(
+        f'[{pid}] {POLICY_CORPUS_BY_ID.get(pid, "(policy text not found)")}' for pid in policy_ids
+    ) or "(none cited)"
+    out = _call_verifier_llm(
+        VERIFIER_SYSTEM_PROMPT,
+        VERIFIER_USER_TEMPLATE.format(
+            stance=stance, evidence_block=evidence_block, policy_block=policy_block, rationale=rationale,
+        ),
+    )
+
+    if out["verdict"] == "unsupported":
+        return {
+            "verifier_verdict": "unsupported",
+            "verifier_reason": out["reason"],
+            "verifier_source": "llm",
+            "stance": "neutral",
+            "stance_confidence": 0.0,
+        }
+    return {
+        "verifier_verdict": out["verdict"],  # "supported" or "unclear"
+        "verifier_reason": out["reason"],
+        "verifier_source": "llm",
     }
 
 
@@ -409,7 +572,9 @@ def explanation(state: AppState) -> dict:
         f"Narrative stance: {state['stance']} (conf {state['stance_confidence']:.2f})\n"
         f"Evidence: {state.get('stance_evidence')}\n"
         f"Policy cited: {state.get('stance_policy_ids')}\n"
-        f"Rationale: {state.get('stance_rationale')}"
+        f"Rationale: {state.get('stance_rationale')}\n"
+        f"Verifier: {state.get('verifier_verdict')} (source: {state.get('verifier_source')}) "
+        f"-- {state.get('verifier_reason')}"
     )
     # A disagreement memo can be LLM-written here for readability â but the
     # DECISION above was already made by rules, not by the LLM.
@@ -434,6 +599,7 @@ def build_graph():
     g = StateGraph(AppState)
     g.add_node("tabular_score", tabular_score)
     g.add_node("text_stance", text_stance)
+    g.add_node("verifier", verifier)
     g.add_node("reconciler", reconciler)
     g.add_node("auto_decision", auto_decision)
     g.add_node("human_review", human_review)
@@ -441,7 +607,8 @@ def build_graph():
 
     g.add_edge(START, "tabular_score")
     g.add_edge("tabular_score", "text_stance")
-    g.add_edge("text_stance", "reconciler")
+    g.add_edge("text_stance", "verifier")
+    g.add_edge("verifier", "reconciler")
     g.add_conditional_edges("reconciler", _route,
                             {"auto_decision": "auto_decision",
                              "human_review": "human_review"})

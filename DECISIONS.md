@@ -568,10 +568,91 @@ tested budget — reported plainly rather than searching for a budget where it l
 AND safe-tabular+text-corroborates) by construction, so it is not itself sorted by p_default
 the way a pure risk-ranked queue is — it front-loads DISAGREEMENT, not raw predicted risk, and
 those are different objectives. This does not contradict Build 7's finding that disagreement
-routing catches 24% of false approvals vs. 6% of false declines (kept as the complementary
+routing catches 24% of wrongful declines (good borrowers the model would have rejected) vs.
+6% of bad approvals (defaulters let through) (kept as the complementary
 single-point framing) — that is a statement about which ERROR TYPE gets caught, not about
 review-budget efficiency overall, and the two can honestly point different directions.
 Figure: results/review_efficiency.png. Data: results/review_efficiency.json.
+
+**Label-swap bug:** the 24%/6% catch figures were correct numerically but described with
+inverted plain-English labels (wrongful-decline vs bad-approval) in this Build, the README,
+and the demo. Caught during the Build 9 verifier analysis by reading raw rows; corrected. The
+numbers and the code were always right — only the English was swapped.
+
+## Build 9 — verifier impact (n=2,500) — COMPLETE
+
+**Question:** The verifier node (added after Build 8, agent/reconciler_agent.py) checks whether
+the word-reader's own quoted evidence and cited policy actually support its stance, downgrading
+to neutral when they don't. What does this do to the disagree rate, and — the real question —
+does it make the resulting review queue CLEANER (higher precision on fewer flags), or just
+smaller? scripts/eval_verifier.py measures this on a fast, cache-reusing n=2,500 sample (not the
+full 21,616-loan population); scripts/eval_agent.py --real (n=2,000, cached stances, fresh
+verifier calls) independently confirms the same shift at a second sample size.
+
+**Cache-shape check (required first step):** results/eval_stance_cache.pkl's 21,616 entries
+each already store stance, stance_evidence, stance_policy_ids, stance_confidence, and
+stance_rationale — everything the verifier needs. Zero stance LLM re-calls were needed; only
+723 NEW verifier LLM calls for the n=2,500 sample (the other 1,777 loans were neutral-skip,
+free) plus 64 mechanical-only rejections (also free, no LLM).
+
+**Verifier verdict breakdown (n=2,500):** supported 465 (18.60%), unsupported 287 (11.48%),
+unclear 35 (1.40%), skipped_neutral 1,713 (68.52%). By source: mechanical 64 (2.56%), llm 723
+(28.92%), skipped 1,713 (68.52%). **11.48% of ALL loans, and ~41% of the loans that would have
+routed disagree, get downgraded.**
+
+**Route distribution, PRE- vs POST-verifier (same n=2,500 sample):**
+
+| Route | PRE | POST |
+|---|---|---|
+| agree | 19.48% | 12.92% |
+| disagree | 11.96% | 7.08% |
+| low_conf | 68.56% | 80.00% |
+
+**Disagree rate: 11.96% [10.75%, 13.29%] → 7.08% [6.14%, 8.15%] — 95% CIs do NOT overlap. This
+is a statistically significant shrink (−4.88pp, 40.8% relative), not sampling noise.** PRE-verifier
+value (11.96%) closely replicates Build 7's population-level 11.57%, confirming the sample is
+representative. The independent n=2,000 confirmatory run (eval_agent.py --real) shows the same
+pattern at a second scale: 12.20% (Build 6, pre-verifier) → **7.10%** (post-verifier).
+
+**Decisions changed:** of 299 pre-verifier disagree loans in the sample, **122 (40.80% [35.38%,
+46.46%]) flip to low_conf** once downgraded — the verifier is not a rare edge case, it materially
+reshapes routing.
+
+**Catch rate on tabular errors, PRE vs POST (n=2,500):**
+
+| Metric | PRE | POST | Build 7 reference (n=21,616) |
+|---|---|---|---|
+| Wrongful-decline catch | 24.89% [21.81%, 28.25%] | 16.93% [14.32%, 19.91%] | 24.05% |
+| Bad-approval catch | 2.96% [1.27%, 6.74%] | 0.00% [0.00%, 2.22%] | 5.90% |
+| Disagree-queue precision | 59.20% [53.54%, 64.62%] | 66.10% [58.85%, 72.67%] | — |
+
+- **Wrongful-decline catch rate drops significantly (CIs do not overlap)** — mechanical
+  consequence of the smaller queue: fewer disagreements, so fewer wrongful declines caught in
+  absolute terms, even though each surviving flag is more scrutinized.
+- **Bad-approval catch rate falls to literally zero** in this sample (was already small and
+  low-powered pre-verifier — Build 7's population value of 5.90% was itself thin). Reported as
+  measured, not softened: post-verifier, this sample's review queue caught none of its 169
+  bad approvals. CIs overlap (not statistically distinguishable from the pre-verifier rate
+  given how few bad approvals get flagged at all), but the point value is stark enough to log.
+- **THE key question — precision of the queue (does grounding make it CLEANER, not just
+  smaller) — moved the right direction (59.2% → 66.1%, +6.9pp) but the 95% CIs OVERLAP.**
+  Not statistically significant at this n. Directionally encouraging, not proven.
+
+**HONEST VERDICT:** The verifier does real, substantial, statistically confirmed work — it
+is not a rubber stamp (11.48% downgrade rate, 40.8% of would-be disagreements walked back,
+both significant at this n). But it has NOT been shown to make the review queue significantly
+*cleaner* — the precision improvement is directionally positive but not distinguishable from
+noise at n=2,500. What IS proven: the queue gets smaller and more conservative, and in doing
+so it also catches fewer of the tabular model's actual errors in absolute terms. Whether the
+loans it still catches are meaningfully better-targeted remains an open question, same
+discipline as Builds 6/7's INCONCLUSIVE calls — not rounded up because the point estimate
+leans the right way.
+
+Scripts: scripts/eval_verifier.py (n=2,500, dedicated measurement). Data:
+results/eval_verifier.json. Confirmatory run: results/agent_eval.json (n=2,000, --real,
+verifier now integrated into scripts/eval_agent.py's run_one()/run_full(), separate verifier
+cache at results/eval_verifier_cache.pkl so it never collides with eval_verifier.py's own
+results/eval_verifier_sample_cache.pkl).
 
 ## Pending
 

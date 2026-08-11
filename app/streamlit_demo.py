@@ -190,8 +190,8 @@ def main():
     budget_note = "within" if stats["within_budget"] else "OVER"
     c3.metric("Review rate", f"{stats['review_rate_pct']:.1f}%",
               help=f"{budget_note} the ~{stats['review_budget_pct']:.0f}% budget")
-    c4.metric("Bad-approval catch rate", f"{stats['fp_catch_pct']:.0f}%",
-              help=f"vs {stats['fn_catch_pct']:.0f}% for bad declines — an asymmetry, "
+    c4.metric("Wrongful-decline catch rate", f"{stats['fp_catch_pct']:.0f}%",
+              help=f"vs {stats['fn_catch_pct']:.0f}% for bad approvals — an asymmetry, "
                    f"not a symmetric safety net")
     st.caption(
         "Historical 2007–2013 loans. Whether disagreement genuinely improves decisions is "
