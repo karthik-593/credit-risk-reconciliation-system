@@ -278,13 +278,35 @@ def _get_bm25_index() -> BM25Okapi:
     return _bm25_index
 
 
-def _retrieve_policy(desc_clean: str, k: int = 4) -> list[dict]:
+def _retrieve_policy_inprocess(desc_clean: str, k: int = 4) -> list[dict]:
     if not desc_clean.strip():
         return []
     bm25 = _get_bm25_index()
     scores = bm25.get_scores(_tokenize(desc_clean))
     top_idx = np.argsort(scores)[::-1][:k]
     return [POLICY_CORPUS[i] for i in top_idx]
+
+
+_RETRIEVAL_CONFIG_PATH = _REPO_ROOT / "config" / "retrieval.json"
+
+
+def _load_retrieval_mode() -> str:
+    """Retrieval defaults to in-process BM25 (the original, always-on path).
+    MCP is opt-in only, via config/retrieval.json -- flipping that file's
+    "mode" to "mcp" routes _retrieve_policy through a subprocess MCP server
+    exposing the SAME BM25 logic, with no change to callers."""
+    if not _RETRIEVAL_CONFIG_PATH.exists():
+        return "inprocess"
+    with open(_RETRIEVAL_CONFIG_PATH) as f:
+        return json.load(f).get("mode", "inprocess")
+
+
+def _retrieve_policy(desc_clean: str, k: int = 4) -> list[dict]:
+    mode = _load_retrieval_mode()
+    if mode == "mcp":
+        from mcp_policy_client import retrieve_policy_via_mcp
+        return retrieve_policy_via_mcp(desc_clean, k)
+    return _retrieve_policy_inprocess(desc_clean, k)
 
 
 # ==========================================================================

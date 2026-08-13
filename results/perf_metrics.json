@@ -1,0 +1,90 @@
+{
+  "sample_n": 200,
+  "seed": 42,
+  "test_population_n": 21616,
+  "sample_default_rate": 0.155,
+  "model": {
+    "provider": "ollama",
+    "model": "qwen2.5:latest",
+    "parameter_size": "7.6B",
+    "quantization_level": "Q4_K_M",
+    "base_url": "http://localhost:11434/v1/chat/completions"
+  },
+  "token_field_verification": {
+    "endpoint": "http://localhost:11434/v1/chat/completions",
+    "verified_fields": [
+      "usage.prompt_tokens",
+      "usage.completion_tokens",
+      "usage.total_tokens"
+    ],
+    "note": "Verified live against a real POST to this exact endpoint before writing this script (see module docstring); Ollama-native prompt_eval_count/eval_count were also checked on /api/chat but are not used since the production adapter never calls that endpoint."
+  },
+  "n_stance_infra_fail": 0,
+  "n_verifier_fired": 54,
+  "n_verifier_infra_fail": 0,
+  "latency_s": {
+    "tabular_score": {
+      "n": 200,
+      "mean": 0.012962261503562332,
+      "p50": 0.011689000064507127,
+      "p95": 0.015147325070574879
+    },
+    "stance_llm_call": {
+      "n": 200,
+      "mean": 5.114891060496448,
+      "p50": 5.022073449916206,
+      "p95": 5.960982335009612
+    },
+    "verifier_llm_call": {
+      "n": 54,
+      "mean": 3.902592727789414,
+      "p50": 3.9282907999586314,
+      "p95": 4.116239204921294
+    },
+    "end_to_end_decision": {
+      "n": 200,
+      "mean": 6.183811828503385,
+      "p50": 5.178270449978299,
+      "p95": 9.508713949937373
+    }
+  },
+  "tokens": {
+    "stance_call": {
+      "n": 200,
+      "avg_input_tokens": 503.965,
+      "avg_output_tokens": 90.425,
+      "avg_total_tokens": 594.39
+    },
+    "verifier_call": {
+      "n": 54,
+      "avg_input_tokens": 321.5925925925926,
+      "avg_output_tokens": 37.74074074074074,
+      "avg_total_tokens": 359.3333333333333
+    },
+    "avg_total_tokens_per_decision": 691.41,
+    "decision_composition": {
+      "tabular_only_pct": 0.0,
+      "stance_only_pct": 73.0,
+      "stance_plus_verifier_pct": 27.0
+    }
+  },
+  "faithfulness": {
+    "non_neutral_n": 61,
+    "neutral_n": 139,
+    "mechanical_grounding_rate": 0.8852459016393442,
+    "mechanical_grounding_note": "% of non-neutral stances where every stance_evidence span is a real substring of desc_clean AND every stance_policy_ids entry was actually retrieved for that desc -- the same check verifier()'s Layer 1 makes, computed directly here from the raw data.",
+    "verifier_verdict_breakdown_n": {
+      "supported": 33,
+      "unsupported": 24,
+      "unclear": 4
+    },
+    "verifier_verdict_breakdown_pct": {
+      "supported": 54.09836065573771,
+      "unsupported": 39.34426229508197,
+      "unclear": 6.557377049180328
+    },
+    "stance_source_breakdown": {
+      "parsed": 200
+    }
+  }
+}

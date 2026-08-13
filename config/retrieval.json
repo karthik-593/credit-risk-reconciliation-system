@@ -1,0 +1,5 @@
+{
+  "mode": "inprocess",
+  "mode_note": "Default is in-process BM25 (reconciler_agent._retrieve_policy_inprocess) -- the original, always-on path. MCP is an additive, opt-in alternative: flip mode to 'mcp' to route _retrieve_policy through agent/mcp_policy_client.py, which spawns mcp/policy_server.py over stdio and calls its retrieve_policy tool. Both paths run the exact same BM25 logic over the exact same POLICY_CORPUS -- MCP is a transport wrapper, not a different retriever. See agent/test_mcp_retrieval_equivalence.py.",
+  "mcp_server_script": "mcp/policy_server.py"
+}

@@ -8,3 +8,13 @@ shap>=0.52
 rank_bm25>=0.2
 python-dotenv>=1.2
 requests>=2.34
+mcp==2.0.0
+streamlit>=1.61
+matplotlib>=3.10
+pytest>=9.1
+sentence-transformers==5.7.0
+# experiments/retrieval_stack.py pins these two HF models by revision (verified
+# live against huggingface.co/api/models/... before pinning, not from memory):
+#   bi-encoder:    BAAI/bge-small-en-v1.5              rev 5c38ec7c405ec4b44b94cc5a9bb96e735b38267a
+#   cross-encoder: cross-encoder/ms-marco-MiniLM-L6-v2 rev 233902d25c440f23af6f7d6e94d2946bac0bee0a
+# (downloaded from the HF Hub on first run, not installed via pip)
