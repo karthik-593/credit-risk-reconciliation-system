@@ -654,6 +654,134 @@ verifier now integrated into scripts/eval_agent.py's run_one()/run_full(), separ
 cache at results/eval_verifier_cache.pkl so it never collides with eval_verifier.py's own
 results/eval_verifier_sample_cache.pkl).
 
+## Build 11 — agentic ablation (n=5,000) — COMPLETE
+
+**Question:** agent/bounded_reconciler.py extends the fixed reconciler with ONE bounded
+evidence step on high-confidence conflicts (Case C: tabular and narrative actively disagree)
+— it calls a new similar-loan tool (agent/similar_loan_tool.py: bucket-by-grade,
+nearest-neighbor on 8 standardized origination features, TRAIN-only, leakage-tested) once,
+and may resolve the conflict to the tabular decision instead of always deferring to human
+review. Does this actually improve decisions, or just move work off a human without
+improving the calls being made? experiments/ablation_agentic.py runs the FIXED and AGENTIC
+pipelines side by side on identical loans (same tabular score, same possibly
+verifier-downgraded stance) — the only thing that differs is what happens after a Case C
+conflict is identified.
+
+**Sample:** 5,000 loans, base-rate-preserved, seed=42, locked TEST split — not the full
+21,616. results/eval_stance_cache.pkl already covers the entire TEST population, so every
+stance was free (0 new LLM calls). The existing 2,000-loan and 2,500-loan verifier caches
+(both seed=42) were confirmed to NEST inside a fresh n=5,000 draw, so only ~2,500 of the
+5,000 verifier verdicts needed a fresh call — and most of those resolved without an LLM
+call at all (neutral-skip or mechanical rejection): the whole run took 59 seconds for 2,500
+new verifier() calls, only a fraction real LLM invocations.
+
+**Review rate:** FIXED 8.76% [8.01%, 9.58%] → AGENTIC 2.42% [2.03%, 2.88%] (438 vs 121 of
+5,000 loans sent to human review). **95% CIs do not overlap — a statistically significant,
+~3.6x reduction in review load.**
+
+**THE key number — of the 317 conflicts the agent resolved on its own (that the fixed
+pipeline would have sent to a human):**
+
+| Metric | Value |
+|---|---|
+| Actual default rate on these 317 loans | 23.97% [19.60%, 28.97%] |
+| Agent's decision matches the actual outcome | 40.38% [35.12%, 45.86%] |
+| Naive "always approve" baseline accuracy (whole-sample reference) | 84.74% |
+| Beats the naive baseline? | **NO** |
+| Beats a coin flip? | **NO** |
+
+Internal consistency check (not a separate measurement, just confirms no bug): 438 total
+Case C conflicts − 317 auto-resolved = 121, exactly matching AGENTIC's human-review count;
+FIXED's human-review count (438) exactly matches the total Case C count, confirming Case
+A/B never reach human review under either pipeline, only Case C does.
+
+**Similar-loan tool firing rate on Case C conflicts:** sufficient=True 97.26% [95.27%,
+98.43%] (426/438) — the tool almost never abstains. This is not a case of the evidence path
+being overly conservative; when it fires, it is confidently wrong more often than it is
+right.
+
+**HONEST VERDICT: TRADEOFF, not a win.** The agentic layer significantly cuts review load
+but does NOT decide better on the cases it takes over — its decisions are worse than a coin
+flip on the loans it resolves without a human. Likely mechanism: HIGH_RISK (0.1703) is a
+deliberately low bar, tuned for the overall ~15% base rate; reusing that same threshold to
+judge whether a neighbor default rate "contradicts" the narrative is a weak test — a ~20%
+neighbor rate is still a minority outcome, not strong evidence the loan will actually
+default. The bounded evidence step, as specified, resolves conflicts confidently but not
+correctly. Reported as measured, not softened into a win because the review-rate number
+looks good in isolation.
+
+Scripts: agent/similar_loan_tool.py (leakage-tested first, agent/test_similar_loan_tool.py),
+agent/bounded_reconciler.py (regression-tested against the fixed reconciler on Case A/B,
+agent/test_bounded_reconciler.py), experiments/ablation_agentic.py. Data:
+experiments/ablation_results.json (Build 11's original copy, before Build 12 re-ran and
+overwrote this path, is preserved at experiments/ablation_results_build11.json). Tracked in
+MLflow (local ./mlruns, experiment "ablation_agentic", 2 runs: fixed, agentic) via
+experiments/tracking.py. Does not change the shipped agent's default reconciler —
+bounded_reconciler.py is additive and not wired into the graph.
+
+## Build 12 — agentic tiebreaker fix (strong-evidence only) — COMPLETE
+
+**Question:** Build 11's tiebreaker in agent/bounded_reconciler.py's `_resolve_case_c`
+compared the neighbor default_rate directly against HIGH_RISK (0.1703) — a deliberately LOW
+bar, tuned for the ~15.3% population base rate, that fires on most loans above it. A neighbor
+rate of, say, 0.20 is technically "above HIGH_RISK" but is still a MINORITY outcome (80% of
+those neighbors repaid) — weak evidence, not strong evidence. Treating "above a low bar" as
+"contradicts the narrative" was the bug behind Build 11's 40.4% decision-match rate (worse
+than chance). The fix: only treat the neighbor rate as strong evidence when it is FAR from
+the base rate — far enough that it says something real about this specific loan, not just
+that it cleared a low population-wide bar.
+
+**The fix:** `base_rate` is read from config/decision_threshold.json's `val_default_rate`
+(~0.1527 — the SAME val-slice base rate HIGH_RISK itself was picked against, reused not
+redefined). Two symmetric bands, each a stated constant with its reasoning in a comment:
+`STRONG_LOW = base_rate * 0.5` (~0.076 — similar loans default far LESS than average),
+`STRONG_HIGH = base_rate * 2.0` (~0.306 — similar loans default far MORE than average).
+Anything between is WEAK and now **defers to human review**, exactly like the fixed pipeline
+— the agent only auto-resolves a conflict when the evidence is genuinely extreme. All Build
+11 invariants kept: the neighbor rate never becomes p_default, the tool is still called at
+most once, no loop. Regression-tested: a 0.20 neighbor rate (the exact value that broke
+Build 11) is asserted WEAK and must defer — agent/test_bounded_reconciler.py's
+`test_case_c_weak_evidence_defers_to_human_review`.
+
+**Re-ran experiments/ablation_agentic.py unchanged (same n=5,000, same seed=42, same fully
+cached loans — 0 new LLM calls, 56 seconds total) — only the tiebreaker inside
+bounded_reconciler.py differs:**
+
+| Metric | Build 11 (buggy) | Build 12 (fixed) |
+|---|---|---|
+| Review rate, FIXED | 8.76% [8.01%, 9.58%] | 8.76% [8.01%, 9.58%] (unchanged) |
+| Review rate, AGENTIC | 2.42% [2.03%, 2.88%] | 6.62% [5.96%, 7.34%] |
+| Conflicts auto-resolved (of 438 Case C) | 317 | 107 |
+| Actual default rate on those loans | 23.97% [19.60%, 28.97%] | 28.97% [21.22%, 38.18%] |
+| Agent's decision matches actual outcome | 40.38% [35.12%, 45.86%] | 47.66% [38.45%, 57.04%] |
+| Beats naive always-approve baseline (84.74%)? | NO | NO |
+| Beats a coin flip? | NO (CI entirely below 50%) | INCONCLUSIVE (CI straddles 50%) |
+| Similar-loan tool sufficient=True | 97.26% [95.27%, 98.43%] | 97.26% [95.27%, 98.43%] (unchanged, as expected — the fix only touches the tiebreaker, not the tool itself) |
+
+Review rate is still significantly lower under agentic than fixed (95% CIs do not overlap),
+just a much smaller reduction than Build 11's — expected and correct, since weak-evidence
+conflicts that Build 11 wrongly auto-resolved now correctly defer.
+
+**HONEST VERDICT: still a TRADEOFF, not a win — but a materially less bad one.** Restricting
+to extreme evidence cut auto-resolved conflicts from 317 to 107 and moved the decision-match
+rate from *confidently worse than chance* (Build 11: CI entirely below 50%) to *no longer
+distinguishable from chance* (Build 12: CI straddles 50%) — real progress, the agent stopped
+confidently deciding badly on ambiguous evidence. But even restricted to its most extreme
+cases, the agent's auto-decisions still do NOT clearly beat the naive always-approve
+baseline — the CI upper bound (57.04%) is nowhere near 84.74%. Reported as measured: a
+second honest non-win, not softened into a win because the failure mode became less severe.
+What this suggests, not yet tested: the neighbor-evidence tiebreaker may need a materially
+higher bar than 2x/0.5x base_rate to actually add decision value, or the similar-loan
+signal itself may be too noisy at k=50 neighbors to safely override "send to human" at all.
+
+Scripts: agent/bounded_reconciler.py (BASE_RATE/STRONG_LOW/STRONG_HIGH constants + updated
+`_resolve_case_c`), agent/test_bounded_reconciler.py (new WEAK-evidence regression test),
+experiments/ablation_agentic.py (unchanged — re-run only). Data: experiments/ablation_results.json
+(overwritten with Build 12's numbers; Build 11's original preserved at
+experiments/ablation_results_build11.json). Tracked in MLflow (same experiment
+"ablation_agentic", runs overwritten with Build 12's metrics). Does not change the shipped
+agent's default reconciler.
+
 ## Pending
 
 - Commit discipline: requirements.txt bump (langgraph, shap, rank_bm25, optuna,
