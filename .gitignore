@@ -1,6 +1,7 @@
 data/
 models/
 .venv/
+mlruns/
 *.zip
 *.csv
 *.csv.gz

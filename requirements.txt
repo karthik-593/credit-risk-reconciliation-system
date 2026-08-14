@@ -12,6 +12,12 @@ mcp==2.0.0
 streamlit>=1.61
 matplotlib>=3.10
 pytest>=9.1
+mlflow-skinny==3.15.1  # NOT `mlflow` -- full mlflow==3.15.1 requires pandas<3, which conflicts with
+# this project's pandas>=3.0 and silently downgrades an already-installed pandas 3.0.5 (breaks reading
+# any .pkl written under 3.0's StringDtype format -- discovered live, not theoretical). mlflow-skinny has
+# no pandas dependency at all and includes the full tracking client (start_run/log_params/log_metrics/
+# log_artifact) -- everything experiments/tracking.py uses. It does NOT include the `mlflow ui` server;
+# viewing results locally needs a one-off `pip install mlflow` in a SEPARATE/disposable environment.
 sentence-transformers==5.7.0
 # experiments/retrieval_stack.py pins these two HF models by revision (verified
 # live against huggingface.co/api/models/... before pinning, not from memory):

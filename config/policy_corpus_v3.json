@@ -1,0 +1,672 @@
+{
+  "_meta": {
+    "total": 110,
+    "real_from_sec_filing": 31,
+    "synthetic": 65,
+    "real_sources": "LendingClub/WebBank Person-to-Person Credit Policy, Loan Agreement, and Program Compliance Manual (SEC EX-10.11, filing 1409970/000095012309014424)",
+    "note": "Real chunks are extracted (via OCR) from the actual SEC-filed documents and are faithful to the source. Synthetic chunks cover narrative-interpretation signals the rule documents do not state in rule form, aligned to the model's features. v3 adds descriptive, borrower-language chunks that name the risk DIMENSION the real policy cares about (employment stability, delinquency, debt burden, purpose, verification) WITHOUT stating the risk verdict \u2014 the model connects a note to the dimension and forms the stance itself, so the finding is not hand-coded.",
+    "adapted_from_real_policy": 14
+  },
+  "chunks": [
+    {
+      "theme": "credit_score",
+      "text": "The primary credit score model is FICO (from TransUnion, Experian, or Equifax). It is used to categorize loans into Base Risk Grades from lowest risk (A) to highest risk (D).",
+      "source": "lendingclub_credit_policy_sec_2009",
+      "id": "real_01"
+    },
+    {
+      "theme": "credit_score",
+      "text": "Any borrower whose credit score is below the minimum acceptable score is denied and cannot list a loan.",
+      "source": "lendingclub_credit_policy_sec_2009",
+      "id": "real_02"
+    },
+    {
+      "theme": "credit_score",
+      "text": "Base Risk Grade is set from FICO bands: below 640 is below minimum; 640-659, 660-679, 679-713, and 714 or above map to progressively lower risk grades.",
+      "source": "lendingclub_credit_policy_sec_2009",
+      "id": "real_03"
+    },
+    {
+      "theme": "credit_score",
+      "text": "Within each Base Risk Grade, sub-grades A1 to D5 further define risk. Additional sub-grades E1 to G5 exist as risk-grade modifiers and are used only for special credit rules.",
+      "source": "lendingclub_credit_policy_sec_2009",
+      "id": "real_04"
+    },
+    {
+      "theme": "bankruptcy",
+      "text": "A loan request is not accepted if the credit file shows a bankruptcy record within the past seven (7) years. Responsible financial management is treated as a prerequisite for listing.",
+      "source": "lendingclub_credit_policy_sec_2009",
+      "id": "real_05"
+    },
+    {
+      "theme": "derogatory_record",
+      "text": "A loan request is excluded if the borrower's credit file has an unpaid government tax lien or other unpaid derogatory public record, because an unpaid lien supersedes unsecured creditor claims and signals rising risk.",
+      "source": "lendingclub_credit_policy_sec_2009",
+      "id": "real_06"
+    },
+    {
+      "theme": "delinquency",
+      "text": "A loan request is excluded if the borrower has any current delinquency.",
+      "source": "lendingclub_credit_policy_sec_2009",
+      "id": "real_07"
+    },
+    {
+      "theme": "collections",
+      "text": "A loan request is excluded if the borrower has a current or recent collection or write-off account within the past 12 months. Medical collections are exempt from this exclusion.",
+      "source": "lendingclub_credit_policy_sec_2009",
+      "id": "real_08"
+    },
+    {
+      "theme": "fraud",
+      "text": "A loan request is excluded if the borrower's credit file has an active fraud alert or an extended fraud alert.",
+      "source": "lendingclub_credit_policy_sec_2009",
+      "id": "real_09"
+    },
+    {
+      "theme": "manual_review",
+      "text": "Certain information in the credit profile or application triggers a manual override of the normal risk grading and can cause immediate exclusion; the credit committee or its delegates may also manually review and decline requests.",
+      "source": "lendingclub_credit_policy_sec_2009",
+      "id": "real_10"
+    },
+    {
+      "theme": "special_rule",
+      "text": "A special rule set applied to borrowers referred through Facebook, who tend to have shorter credit history: accepted with FICO 610-639 (sub-grades E1-G3), no current delinquencies, fewer than 3 delinquencies in the past 24 months, and oldest credit account age between 12 and 60 months.",
+      "source": "lendingclub_credit_policy_sec_2009",
+      "id": "real_11"
+    },
+    {
+      "theme": "income",
+      "text": "Income is based solely on the borrower's own gross monthly income and does not include a spouse's or other household members' income.",
+      "source": "lendingclub_credit_policy_sec_2009",
+      "id": "real_12"
+    },
+    {
+      "theme": "income",
+      "text": "Beyond salary, only recurring income of other types is accepted as income. Alimony or child support paid to the borrower need not be disclosed unless the borrower wants it counted toward income.",
+      "source": "lendingclub_credit_policy_sec_2009",
+      "id": "real_13"
+    },
+    {
+      "theme": "income_verification",
+      "text": "Lending Club may require income verification for any borrower: recent pay stubs covering the past 28 days, or for the self-employed the last two years of signed 1040 tax returns with schedules; a signed 4506-T authorizing tax-return retrieval; or CPA-audited financial statements.",
+      "source": "lendingclub_credit_policy_sec_2009",
+      "id": "real_14"
+    },
+    {
+      "theme": "dti",
+      "text": "Pre-loan debt payment is the sum of monthly revolving and installment payments (including any existing Lending Club loan), excluding mortgages. DTI is that payment as a percentage of gross monthly income.",
+      "source": "lendingclub_credit_policy_sec_2009",
+      "id": "real_15"
+    },
+    {
+      "theme": "dti",
+      "text": "The maximum acceptable pre-loan DTI (DTI-1) is 30%. A loan request with a pre-loan DTI above this limit is declined.",
+      "source": "lendingclub_credit_policy_sec_2009",
+      "id": "real_16"
+    },
+    {
+      "theme": "dti",
+      "text": "The maximum acceptable post-loan non-mortgage DTI (DTI-3) is 48%. A loan request above this limit is declined.",
+      "source": "lendingclub_credit_policy_sec_2009",
+      "id": "real_17"
+    },
+    {
+      "theme": "dti",
+      "text": "A borrower's capacity to repay is a primary factor in default risk; the sub-grade is adjusted up or down according to the DTI ratio.",
+      "source": "lendingclub_credit_policy_sec_2009",
+      "id": "real_18"
+    },
+    {
+      "theme": "loan_amount",
+      "text": "Each risk grade has a guidance limit on loan amount: A up to 15,000; B 12,500; C 10,000; D 7,000 (E-G limits apply only to special credit rules). The sub-grade is adjusted by the ratio of requested loan amount to guidance limit.",
+      "source": "lendingclub_credit_policy_sec_2009",
+      "id": "real_19"
+    },
+    {
+      "theme": "verification",
+      "text": "Lending Club reserves the right to verify any submitted information at any time. Failure to comply is grounds for declining the listing, and for a funded loan may trigger a False Information Penalty or immediate call of the loan.",
+      "source": "lendingclub_credit_policy_sec_2009",
+      "id": "real_20"
+    },
+    {
+      "theme": "verification",
+      "text": "A valid bank account with ACH transfer capability is required to authenticate a borrower; account ownership is validated by a deposit challenge or bank account validation.",
+      "source": "lendingclub_credit_policy_sec_2009",
+      "id": "real_21"
+    },
+    {
+      "theme": "prohibited_use",
+      "text": "Loan proceeds may not be used to purchase or carry securities, or to fund any illegal activity.",
+      "source": "lendingclub_credit_policy_sec_2009",
+      "id": "real_22"
+    },
+    {
+      "theme": "prohibited_use",
+      "text": "Loan proceeds may not be used to fund any post-secondary education expenses, including tuition, fees, books, supplies, or room and board.",
+      "source": "lendingclub_credit_policy_sec_2009",
+      "id": "real_23"
+    },
+    {
+      "theme": "misrepresentation",
+      "text": "Making any false, misleading, or deceptive statement or omission in the loan listing, title, or description is prohibited and is grounds for concern about the request.",
+      "source": "lendingclub_credit_policy_sec_2009",
+      "id": "real_24"
+    },
+    {
+      "theme": "misrepresentation",
+      "text": "A borrower must not misrepresent their identity or present themselves as another person.",
+      "source": "lendingclub_credit_policy_sec_2009",
+      "id": "real_25"
+    },
+    {
+      "theme": "discrimination",
+      "text": "A borrower must not provide information on which a discriminatory lending decision could be made (race, color, religion, national origin, sex, marital status, age); such information is not used in the credit decision.",
+      "source": "lendingclub_credit_policy_sec_2009",
+      "id": "real_26"
+    },
+    {
+      "theme": "default_definition",
+      "text": "A loan is in default if the borrower fails to pay any amount when due, files or has instituted bankruptcy or insolvency proceedings, dies, commits fraud or material misrepresentation, or fails to abide by the agreement terms.",
+      "source": "lendingclub_credit_policy_sec_2009",
+      "id": "real_27"
+    },
+    {
+      "theme": "delinquency_reporting",
+      "text": "Loan payment delinquencies of 30 days or more may be reported to consumer reporting agencies.",
+      "source": "lendingclub_credit_policy_sec_2009",
+      "id": "real_28"
+    },
+    {
+      "theme": "ofac",
+      "text": "Lending Club will not provide services to any person or entity on the OFAC blocked-persons list or located in or a national of a sanctioned country; positive matches are referred to the fraud/compliance team.",
+      "source": "lendingclub_credit_policy_sec_2009",
+      "id": "real_29"
+    },
+    {
+      "theme": "kyc",
+      "text": "Know Your Customer requires that borrowers be domiciled in the U.S., that funding and disbursement be electronic, that bank account ownership be validated, and that identity be verified via a credit check and knowledge-based authentication.",
+      "source": "lendingclub_credit_policy_sec_2009",
+      "id": "real_30"
+    },
+    {
+      "theme": "aml",
+      "text": "A Suspicious Activity Report (SAR) is filed for any lender transaction of $6,000 or greater, within 30 days of initial detection.",
+      "source": "lendingclub_credit_policy_sec_2009",
+      "id": "real_31"
+    },
+    {
+      "theme": "purpose_consolidation",
+      "text": "A stated intent to consolidate multiple high-interest debts into a single lower-rate payment is a standard, low-risk purpose and does not by itself indicate elevated risk.",
+      "source": "synthetic",
+      "id": "syn_01"
+    },
+    {
+      "theme": "purpose_consolidation",
+      "text": "A consolidation note that also describes a concrete payoff plan and lower monthly payments supports a lower-risk reading.",
+      "source": "synthetic",
+      "id": "syn_02"
+    },
+    {
+      "theme": "purpose_consolidation",
+      "text": "A consolidation request where the new loan does not clearly reduce total monthly obligations is treated as neutral, not risk-reducing.",
+      "source": "synthetic",
+      "id": "syn_03"
+    },
+    {
+      "theme": "purpose_medical",
+      "text": "A loan to cover medical or dental bills is a common hardship purpose; medical collections are treated leniently under the exclusion rules.",
+      "source": "synthetic",
+      "id": "syn_04"
+    },
+    {
+      "theme": "purpose_medical",
+      "text": "A medical-expense note describing a one-time, resolved event reads lower-risk than one describing ongoing or recurring costs.",
+      "source": "synthetic",
+      "id": "syn_05"
+    },
+    {
+      "theme": "purpose_business",
+      "text": "A loan to fund an existing, revenue-generating business is a moderate-risk purpose; the note should indicate the business is established, not speculative.",
+      "source": "synthetic",
+      "id": "syn_06"
+    },
+    {
+      "theme": "purpose_business",
+      "text": "A business note describing a brand-new venture with no revenue history is higher risk than one describing an established business.",
+      "source": "synthetic",
+      "id": "syn_07"
+    },
+    {
+      "theme": "purpose_home",
+      "text": "A home-improvement purpose is generally low risk when it describes maintenance or value-adding work on a primary residence.",
+      "source": "synthetic",
+      "id": "syn_08"
+    },
+    {
+      "theme": "purpose_auto",
+      "text": "An auto-purchase or auto-repair purpose is a common, low-risk consumer purpose.",
+      "source": "synthetic",
+      "id": "syn_09"
+    },
+    {
+      "theme": "purpose_wedding",
+      "text": "A wedding or event purpose is a discretionary, one-time expense; it is treated as neutral risk, not a hardship signal.",
+      "source": "synthetic",
+      "id": "syn_10"
+    },
+    {
+      "theme": "purpose_moving",
+      "text": "A relocation or moving-expense purpose is a common one-time purpose and reads as neutral risk.",
+      "source": "synthetic",
+      "id": "syn_11"
+    },
+    {
+      "theme": "purpose_vacation",
+      "text": "A vacation or travel purpose is discretionary spending and reads as neutral to mildly elevated risk depending on the borrower's debt load.",
+      "source": "synthetic",
+      "id": "syn_12"
+    },
+    {
+      "theme": "purpose_education",
+      "text": "A note stating the loan will fund post-secondary tuition, fees, or books is a prohibited use and is grounds for concern.",
+      "source": "synthetic",
+      "id": "syn_13"
+    },
+    {
+      "theme": "purpose_investment",
+      "text": "A note stating the loan will be used to buy stocks, securities, or investments is a prohibited use and grounds for concern.",
+      "source": "synthetic",
+      "id": "syn_14"
+    },
+    {
+      "theme": "purpose_rent",
+      "text": "Using the loan to pay ongoing rent or basic living expenses can indicate cash-flow stress and reads as a mild risk signal.",
+      "source": "synthetic",
+      "id": "syn_15"
+    },
+    {
+      "theme": "purpose_debt_payoff",
+      "text": "A note describing paying off a single specific debt with a clear balance reads lower-risk than a vague 'need money' request.",
+      "source": "synthetic",
+      "id": "syn_16"
+    },
+    {
+      "theme": "purpose_taxes",
+      "text": "A loan to pay a tax bill can indicate a lien risk; an unpaid tax lien on the credit file is an exclusion.",
+      "source": "synthetic",
+      "id": "syn_17"
+    },
+    {
+      "theme": "purpose_relocation_job",
+      "text": "A relocation tied to a confirmed new job with stated income reads lower-risk than an open-ended move.",
+      "source": "synthetic",
+      "id": "syn_18"
+    },
+    {
+      "theme": "employment",
+      "text": "A note describing long, stable employment with one employer supports a lower-risk reading of repayment capacity.",
+      "source": "synthetic",
+      "id": "syn_19"
+    },
+    {
+      "theme": "employment",
+      "text": "A note describing recent job loss, reduced hours, or unstable work is a risk signal for repayment capacity.",
+      "source": "synthetic",
+      "id": "syn_20"
+    },
+    {
+      "theme": "employment",
+      "text": "A note describing self-employment should be read with the income-verification rules in mind; self-employed income requires stronger documentation.",
+      "source": "synthetic",
+      "id": "syn_21"
+    },
+    {
+      "theme": "employment",
+      "text": "A note describing a recent promotion or raise with higher income supports a lower-risk reading.",
+      "source": "synthetic",
+      "id": "syn_22"
+    },
+    {
+      "theme": "employment",
+      "text": "A note describing seasonal or gig income that is irregular reads as a mild risk signal for consistent repayment.",
+      "source": "synthetic",
+      "id": "syn_23"
+    },
+    {
+      "theme": "employment",
+      "text": "A note describing imminent retirement or a shift to fixed income should be read for whether income will continue to cover the loan.",
+      "source": "synthetic",
+      "id": "syn_24"
+    },
+    {
+      "theme": "income_stability",
+      "text": "Only recurring income supports a lower-risk reading; a note relying on one-time windfalls does not.",
+      "source": "synthetic",
+      "id": "syn_25"
+    },
+    {
+      "theme": "income_stability",
+      "text": "A note stating income from public assistance, alimony, or child support may count only if the borrower chooses to disclose it and it is likely to continue.",
+      "source": "synthetic",
+      "id": "syn_26"
+    },
+    {
+      "theme": "hardship",
+      "text": "A note describing a temporary, resolved hardship with a recovery plan reads lower-risk than one describing ongoing distress.",
+      "source": "synthetic",
+      "id": "syn_27"
+    },
+    {
+      "theme": "hardship",
+      "text": "A note describing a divorce, medical event, or family emergency is a hardship context; weigh whether the borrower describes recovery or continued strain.",
+      "source": "synthetic",
+      "id": "syn_28"
+    },
+    {
+      "theme": "hardship",
+      "text": "A note expressing urgency or desperation for funds is a mild risk signal and warrants closer review.",
+      "source": "synthetic",
+      "id": "syn_29"
+    },
+    {
+      "theme": "hardship",
+      "text": "A note describing having already reduced expenses or built a repayment plan supports a lower-risk reading.",
+      "source": "synthetic",
+      "id": "syn_30"
+    },
+    {
+      "theme": "repayment_intent",
+      "text": "A note stating a clear, specific repayment plan supports a lower-risk reading of intent.",
+      "source": "synthetic",
+      "id": "syn_31"
+    },
+    {
+      "theme": "repayment_intent",
+      "text": "A note stating the borrower has never missed a payment or has always paid debts on time is a positive reliability signal, if consistent with the credit file.",
+      "source": "synthetic",
+      "id": "syn_32"
+    },
+    {
+      "theme": "repayment_intent",
+      "text": "A note that is vague about how the loan will be repaid is treated as neutral, not risk-reducing.",
+      "source": "synthetic",
+      "id": "syn_33"
+    },
+    {
+      "theme": "repayment_intent",
+      "text": "A borrower's self-reported good payment history should be corroborated against the credit file, not accepted on its own.",
+      "source": "synthetic",
+      "id": "syn_34"
+    },
+    {
+      "theme": "credit_history",
+      "text": "A note acknowledging a past bankruptcy should be checked against the 7-year exclusion window.",
+      "source": "synthetic",
+      "id": "syn_35"
+    },
+    {
+      "theme": "credit_history",
+      "text": "A note referencing a past collection or write-off should be checked against the 12-month exclusion, with medical collections exempt.",
+      "source": "synthetic",
+      "id": "syn_36"
+    },
+    {
+      "theme": "credit_history",
+      "text": "A note describing rebuilding credit after past problems reads as neutral-to-mild-positive if it shows recent responsible behavior.",
+      "source": "synthetic",
+      "id": "syn_37"
+    },
+    {
+      "theme": "credit_history",
+      "text": "A note admitting current delinquency aligns with an exclusion trigger and is a strong risk signal.",
+      "source": "synthetic",
+      "id": "syn_38"
+    },
+    {
+      "theme": "dti_narrative",
+      "text": "A note describing high existing debt relative to income aligns with DTI concerns and reads as a risk signal.",
+      "source": "synthetic",
+      "id": "syn_39"
+    },
+    {
+      "theme": "dti_narrative",
+      "text": "A note describing low debt and comfortable income supports a lower-risk reading, consistent with a favorable DTI.",
+      "source": "synthetic",
+      "id": "syn_40"
+    },
+    {
+      "theme": "dti_narrative",
+      "text": "A note where the new loan clearly raises total debt service without offsetting benefit is a mild risk signal.",
+      "source": "synthetic",
+      "id": "syn_41"
+    },
+    {
+      "theme": "fraud_signal",
+      "text": "Internal inconsistencies in a note (conflicting amounts, purposes, or facts) are a misrepresentation red flag.",
+      "source": "synthetic",
+      "id": "syn_42"
+    },
+    {
+      "theme": "fraud_signal",
+      "text": "A note that appears copied, templated, or generic without personal detail is a mild credibility concern.",
+      "source": "synthetic",
+      "id": "syn_43"
+    },
+    {
+      "theme": "fraud_signal",
+      "text": "A note whose stated purpose contradicts the application's stated purpose is a misrepresentation red flag.",
+      "source": "synthetic",
+      "id": "syn_44"
+    },
+    {
+      "theme": "fraud_signal",
+      "text": "A note attempting to disguise a prohibited use (education, securities) behind an allowed label is a misrepresentation concern.",
+      "source": "synthetic",
+      "id": "syn_45"
+    },
+    {
+      "theme": "verification_narrative",
+      "text": "A note offering to provide documentation or proof supports a lower-risk, cooperative reading.",
+      "source": "synthetic",
+      "id": "syn_46"
+    },
+    {
+      "theme": "verification_narrative",
+      "text": "A note resisting or objecting to verification is a mild risk signal.",
+      "source": "synthetic",
+      "id": "syn_47"
+    },
+    {
+      "theme": "neutral_read",
+      "text": "A short, factual note that states a common purpose with no risk or mitigation signals is read as neutral.",
+      "source": "synthetic",
+      "id": "syn_48"
+    },
+    {
+      "theme": "neutral_read",
+      "text": "Absence of a note, or an empty note, carries no narrative signal and defers to the numeric assessment.",
+      "source": "synthetic",
+      "id": "syn_49"
+    },
+    {
+      "theme": "neutral_read",
+      "text": "A note that only expresses gratitude or general hope, with no substantive detail, is read as neutral.",
+      "source": "synthetic",
+      "id": "syn_50"
+    },
+    {
+      "theme": "positive_read",
+      "text": "A note combining a low-risk purpose, stable employment, and a clear repayment plan supports a mitigating reading.",
+      "source": "synthetic",
+      "id": "syn_51"
+    },
+    {
+      "theme": "positive_read",
+      "text": "A note showing the loan improves the borrower's financial position (lower rate, lower payment) supports a mitigating reading.",
+      "source": "synthetic",
+      "id": "syn_52"
+    },
+    {
+      "theme": "negative_read",
+      "text": "A note combining a discretionary purpose, unstable income, and urgency supports a corroborating (higher-risk) reading.",
+      "source": "synthetic",
+      "id": "syn_53"
+    },
+    {
+      "theme": "purpose_credit_card",
+      "text": "A note to pay off credit card balances is a consolidation-style, generally low-risk purpose when it reduces interest.",
+      "source": "synthetic",
+      "id": "syn_54"
+    },
+    {
+      "theme": "purpose_major_purchase",
+      "text": "A note for a major purchase (appliance, furniture) is a common consumer purpose and reads as neutral risk.",
+      "source": "synthetic",
+      "id": "syn_55"
+    },
+    {
+      "theme": "purpose_home_buying",
+      "text": "A note referencing a home purchase down payment should be read cautiously, as it adds a large future mortgage obligation.",
+      "source": "synthetic",
+      "id": "syn_56"
+    },
+    {
+      "theme": "purpose_green",
+      "text": "A note for energy-efficiency or green home improvements is a low-risk, value-adding purpose.",
+      "source": "synthetic",
+      "id": "syn_57"
+    },
+    {
+      "theme": "purpose_small_business_startup",
+      "text": "A note for a startup with no revenue is speculative and reads as higher risk than an established business.",
+      "source": "synthetic",
+      "id": "syn_58"
+    },
+    {
+      "theme": "purpose_debt_management",
+      "text": "A note describing enrollment in a debt-management or counseling program is a mixed signal: responsible intent but existing distress.",
+      "source": "synthetic",
+      "id": "syn_59"
+    },
+    {
+      "theme": "income_detail",
+      "text": "A note stating a specific, verifiable annual income supports a stronger repayment-capacity reading than a vague income claim.",
+      "source": "synthetic",
+      "id": "syn_60"
+    },
+    {
+      "theme": "income_detail",
+      "text": "A note relying on a spouse's or household income conflicts with the rule that income is the borrower's own gross income only.",
+      "source": "synthetic",
+      "id": "syn_61"
+    },
+    {
+      "theme": "eligibility",
+      "text": "A note indicating the borrower is not U.S.-domiciled conflicts with KYC eligibility requirements.",
+      "source": "synthetic",
+      "id": "syn_62"
+    },
+    {
+      "theme": "eligibility",
+      "text": "A note indicating the borrower cannot authorize a bank account validation conflicts with authentication requirements.",
+      "source": "synthetic",
+      "id": "syn_63"
+    },
+    {
+      "theme": "amount_narrative",
+      "text": "A requested amount well above the guidance limit for the borrower's grade is a risk signal and lowers the sub-grade.",
+      "source": "synthetic",
+      "id": "syn_64"
+    },
+    {
+      "theme": "amount_narrative",
+      "text": "A modest requested amount relative to income and grade supports a lower-risk reading.",
+      "source": "synthetic",
+      "id": "syn_65"
+    },
+    {
+      "theme": "employment_stability",
+      "text": "The credit policy treats stable, continuing income as a factor in repayment capacity. A note describing long tenure with one employer, or steady ongoing work, speaks to this factor.",
+      "source": "adapted_from_real_policy",
+      "id": "adapt_01"
+    },
+    {
+      "theme": "employment_stability",
+      "text": "The credit policy weighs whether income is likely to continue. A note describing a recent layoff, reduced hours, or an ended job speaks to this factor of income continuity.",
+      "source": "adapted_from_real_policy",
+      "id": "adapt_02"
+    },
+    {
+      "theme": "employment_stability",
+      "text": "The credit policy considers income reliability. A note describing irregular, seasonal, or gig income speaks to how consistent the borrower's income is.",
+      "source": "adapted_from_real_policy",
+      "id": "adapt_03"
+    },
+    {
+      "theme": "employment_stability",
+      "text": "The credit policy considers whether income is the borrower's own and ongoing. A note describing imminent retirement or a shift to fixed income speaks to future income continuity.",
+      "source": "adapted_from_real_policy",
+      "id": "adapt_04"
+    },
+    {
+      "theme": "income_source",
+      "text": "The credit policy counts only the borrower's own recurring income. A note relying on a spouse's income, household income, or a one-time windfall speaks to whether the stated income qualifies.",
+      "source": "adapted_from_real_policy",
+      "id": "adapt_05"
+    },
+    {
+      "theme": "delinquency_narrative",
+      "text": "The credit policy treats current delinquency as disqualifying. A note describing currently missing or being behind on payments speaks directly to this factor.",
+      "source": "adapted_from_real_policy",
+      "id": "adapt_06"
+    },
+    {
+      "theme": "credit_recovery",
+      "text": "The credit policy treats past bankruptcy and past collections as risk-relevant, with defined look-back windows. A note describing rebuilding after past financial trouble speaks to where the borrower is in that recovery.",
+      "source": "adapted_from_real_policy",
+      "id": "adapt_07"
+    },
+    {
+      "theme": "payment_history",
+      "text": "The credit policy relies on credit-file payment history. A note describing a consistent record of paying obligations on time speaks to this factor, and should be consistent with the file.",
+      "source": "adapted_from_real_policy",
+      "id": "adapt_08"
+    },
+    {
+      "theme": "debt_burden",
+      "text": "The credit policy caps debt relative to income (pre-loan DTI up to 30%). A note describing juggling many payments, being stretched thin, or carrying high balances speaks to the borrower's debt burden.",
+      "source": "adapted_from_real_policy",
+      "id": "adapt_09"
+    },
+    {
+      "theme": "debt_relief",
+      "text": "The credit policy weighs the borrower's payment obligations. A note describing a loan that lowers the monthly payment or interest rate speaks to whether the borrower's debt burden improves.",
+      "source": "adapted_from_real_policy",
+      "id": "adapt_10"
+    },
+    {
+      "theme": "purpose_capacity",
+      "text": "The credit policy assesses purpose alongside capacity to repay. A note describing borrowing to cover ongoing living costs, rent, or existing credit-card minimums speaks to whether current income covers obligations.",
+      "source": "adapted_from_real_policy",
+      "id": "adapt_11"
+    },
+    {
+      "theme": "purpose_prohibited",
+      "text": "The credit policy prohibits certain uses (securities, post-secondary education, illegal activity). A note describing such a use speaks directly to a prohibited-purpose concern.",
+      "source": "adapted_from_real_policy",
+      "id": "adapt_12"
+    },
+    {
+      "theme": "verification_cooperation",
+      "text": "The credit policy reserves the right to verify any information. A note offering documentation, or one resisting verification, speaks to the borrower's cooperation with verification.",
+      "source": "adapted_from_real_policy",
+      "id": "adapt_13"
+    },
+    {
+      "theme": "misrepresentation_narrative",
+      "text": "The credit policy prohibits false or misleading statements in a listing. A note whose stated purpose conflicts with the application, or that contains internal contradictions, speaks to a misrepresentation concern.",
+      "source": "adapted_from_real_policy",
+      "id": "adapt_14"
+    }
+  ]
+}
