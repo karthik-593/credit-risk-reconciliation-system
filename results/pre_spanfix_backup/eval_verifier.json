@@ -2,20 +2,20 @@
   "sample_n": 2500,
   "sample_default_rate": 0.1528,
   "seed": 42,
-  "n_new_llm_calls": 742,
+  "n_new_llm_calls": 723,
   "n_cache_hits_this_run": 0,
   "verifier_verdict_counts": {
-    "supported": 477,
-    "unsupported": 272,
-    "unclear": 38,
+    "supported": 465,
+    "unsupported": 287,
+    "unclear": 35,
     "skipped_neutral": 1713
   },
   "verifier_source_counts": {
-    "mechanical": 45,
-    "llm": 742,
+    "mechanical": 64,
+    "llm": 723,
     "skipped": 1713
   },
-  "n_downgraded": 272,
+  "n_downgraded": 287,
   "pre_verifier_disagree": {
     "n": 2500,
     "underpowered": false,
@@ -27,19 +27,19 @@
   "post_verifier_disagree": {
     "n": 2500,
     "underpowered": false,
-    "k": 186,
-    "rate": 0.0744,
-    "ci_low": 0.06475327217389301,
-    "ci_high": 0.08535270897124012
+    "k": 177,
+    "rate": 0.0708,
+    "ci_low": 0.06139024568433353,
+    "ci_high": 0.08152678229379416
   },
   "build7_disagree_rate_pct_reference": 11.565507031828275,
   "disagree_to_low_conf_flips": {
     "n": 299,
     "underpowered": false,
-    "k": 113,
-    "rate": 0.3779264214046823,
-    "ci_low": 0.32484291626971,
-    "ci_high": 0.4341069770078319
+    "k": 122,
+    "rate": 0.4080267558528428,
+    "ci_low": 0.3538278400258491,
+    "ci_high": 0.4645590658681893
   },
   "false_decline_catch": {
     "pre": {
@@ -53,10 +53,10 @@
     "post": {
       "n": 691,
       "underpowered": false,
-      "k": 120,
-      "rate": 0.1736613603473227,
-      "ci_low": 0.14724066893049975,
-      "ci_high": 0.20369053610961296
+      "k": 117,
+      "rate": 0.16931982633863965,
+      "ci_low": 0.1432023475659656,
+      "ci_high": 0.1990937959004014
     },
     "build7_reference_pct": 24.05286343612335,
     "note": "Build 7's README mislabels this 'false approvals'; it is false declines per the code."
@@ -90,12 +90,12 @@
       "ci_high": 0.646172159974151
     },
     "post": {
-      "n": 186,
+      "n": 177,
       "underpowered": false,
-      "k": 120,
-      "rate": 0.6451612903225806,
-      "ci_low": 0.5740976414684602,
-      "ci_high": 0.710350024375064
+      "k": 117,
+      "rate": 0.6610169491525424,
+      "ci_low": 0.5885191964459926,
+      "ci_high": 0.7266737680046649
     }
   },
   "underpowered_buckets": [],
@@ -535,12 +535,12 @@
       "y": 0,
       "tabular_alone_decision": "decline",
       "stance": "mitigates_risk",
-      "verifier_verdict": "supported",
-      "verifier_source": "llm",
-      "downgraded": false,
+      "verifier_verdict": "unsupported",
+      "verifier_source": "mechanical",
+      "downgraded": true,
       "pre_route": "disagree",
-      "post_route": "disagree",
-      "agent_decision": "human_review"
+      "post_route": "low_conf",
+      "agent_decision": "auto_decline"
     },
     {
       "loan_id": 1889076,
@@ -2030,11 +2030,11 @@
       "y": 0,
       "tabular_alone_decision": "approve",
       "stance": "mitigates_risk",
-      "verifier_verdict": "unclear",
+      "verifier_verdict": "unsupported",
       "verifier_source": "llm",
-      "downgraded": false,
+      "downgraded": true,
       "pre_route": "agree",
-      "post_route": "agree",
+      "post_route": "low_conf",
       "agent_decision": "auto_approve"
     },
     {
@@ -5176,12 +5176,12 @@
       "y": 0,
       "tabular_alone_decision": "approve",
       "stance": "corroborates_risk",
-      "verifier_verdict": "supported",
-      "verifier_source": "llm",
-      "downgraded": false,
+      "verifier_verdict": "unsupported",
+      "verifier_source": "mechanical",
+      "downgraded": true,
       "pre_route": "disagree",
-      "post_route": "disagree",
-      "agent_decision": "human_review"
+      "post_route": "low_conf",
+      "agent_decision": "auto_approve"
     },
     {
       "loan_id": 1931200,
@@ -5566,12 +5566,12 @@
       "y": 0,
       "tabular_alone_decision": "decline",
       "stance": "mitigates_risk",
-      "verifier_verdict": "unsupported",
+      "verifier_verdict": "supported",
       "verifier_source": "llm",
-      "downgraded": true,
+      "downgraded": false,
       "pre_route": "disagree",
-      "post_route": "low_conf",
-      "agent_decision": "auto_decline"
+      "post_route": "disagree",
+      "agent_decision": "human_review"
     },
     {
       "loan_id": 1886163,
@@ -5762,7 +5762,7 @@
       "tabular_alone_decision": "decline",
       "stance": "mitigates_risk",
       "verifier_verdict": "unsupported",
-      "verifier_source": "llm",
+      "verifier_source": "mechanical",
       "downgraded": true,
       "pre_route": "disagree",
       "post_route": "low_conf",
@@ -5891,11 +5891,11 @@
       "y": 0,
       "tabular_alone_decision": "decline",
       "stance": "corroborates_risk",
-      "verifier_verdict": "supported",
+      "verifier_verdict": "unsupported",
       "verifier_source": "llm",
-      "downgraded": false,
+      "downgraded": true,
       "pre_route": "agree",
-      "post_route": "agree",
+      "post_route": "low_conf",
       "agent_decision": "auto_decline"
     },
     {
@@ -5995,12 +5995,12 @@
       "y": 1,
       "tabular_alone_decision": "decline",
       "stance": "mitigates_risk",
-      "verifier_verdict": "supported",
+      "verifier_verdict": "unsupported",
       "verifier_source": "llm",
-      "downgraded": false,
+      "downgraded": true,
       "pre_route": "disagree",
-      "post_route": "disagree",
-      "agent_decision": "human_review"
+      "post_route": "low_conf",
+      "agent_decision": "auto_decline"
     },
     {
       "loan_id": 1927862,
@@ -6282,7 +6282,7 @@
       "tabular_alone_decision": "approve",
       "stance": "mitigates_risk",
       "verifier_verdict": "unsupported",
-      "verifier_source": "llm",
+      "verifier_source": "mechanical",
       "downgraded": true,
       "pre_route": "agree",
       "post_route": "low_conf",
@@ -8375,7 +8375,7 @@
       "tabular_alone_decision": "decline",
       "stance": "corroborates_risk",
       "verifier_verdict": "unsupported",
-      "verifier_source": "llm",
+      "verifier_source": "mechanical",
       "downgraded": true,
       "pre_route": "agree",
       "post_route": "low_conf",
@@ -10077,12 +10077,12 @@
       "y": 0,
       "tabular_alone_decision": "decline",
       "stance": "mitigates_risk",
-      "verifier_verdict": "supported",
-      "verifier_source": "llm",
-      "downgraded": false,
+      "verifier_verdict": "unsupported",
+      "verifier_source": "mechanical",
+      "downgraded": true,
       "pre_route": "disagree",
-      "post_route": "disagree",
-      "agent_decision": "human_review"
+      "post_route": "low_conf",
+      "agent_decision": "auto_decline"
     },
     {
       "loan_id": 1638250,
@@ -12781,11 +12781,11 @@
       "y": 0,
       "tabular_alone_decision": "decline",
       "stance": "corroborates_risk",
-      "verifier_verdict": "supported",
-      "verifier_source": "llm",
-      "downgraded": false,
+      "verifier_verdict": "unsupported",
+      "verifier_source": "mechanical",
+      "downgraded": true,
       "pre_route": "agree",
-      "post_route": "agree",
+      "post_route": "low_conf",
       "agent_decision": "auto_decline"
     },
     {
@@ -13471,7 +13471,7 @@
       "tabular_alone_decision": "approve",
       "stance": "mitigates_risk",
       "verifier_verdict": "unsupported",
-      "verifier_source": "llm",
+      "verifier_source": "mechanical",
       "downgraded": true,
       "pre_route": "agree",
       "post_route": "low_conf",
@@ -13951,12 +13951,12 @@
       "y": 0,
       "tabular_alone_decision": "decline",
       "stance": "mitigates_risk",
-      "verifier_verdict": "supported",
-      "verifier_source": "llm",
-      "downgraded": false,
+      "verifier_verdict": "unsupported",
+      "verifier_source": "mechanical",
+      "downgraded": true,
       "pre_route": "disagree",
-      "post_route": "disagree",
-      "agent_decision": "human_review"
+      "post_route": "low_conf",
+      "agent_decision": "auto_decline"
     },
     {
       "loan_id": 1882365,
@@ -14406,12 +14406,12 @@
       "y": 1,
       "tabular_alone_decision": "decline",
       "stance": "mitigates_risk",
-      "verifier_verdict": "unclear",
+      "verifier_verdict": "unsupported",
       "verifier_source": "llm",
-      "downgraded": false,
+      "downgraded": true,
       "pre_route": "disagree",
-      "post_route": "disagree",
-      "agent_decision": "human_review"
+      "post_route": "low_conf",
+      "agent_decision": "auto_decline"
     },
     {
       "loan_id": 1928647,
@@ -14536,11 +14536,11 @@
       "y": 0,
       "tabular_alone_decision": "approve",
       "stance": "mitigates_risk",
-      "verifier_verdict": "supported",
-      "verifier_source": "llm",
-      "downgraded": false,
+      "verifier_verdict": "unsupported",
+      "verifier_source": "mechanical",
+      "downgraded": true,
       "pre_route": "agree",
-      "post_route": "agree",
+      "post_route": "low_conf",
       "agent_decision": "auto_approve"
     },
     {
@@ -16395,11 +16395,11 @@
       "y": 0,
       "tabular_alone_decision": "decline",
       "stance": "corroborates_risk",
-      "verifier_verdict": "supported",
-      "verifier_source": "llm",
-      "downgraded": false,
+      "verifier_verdict": "unsupported",
+      "verifier_source": "mechanical",
+      "downgraded": true,
       "pre_route": "agree",
-      "post_route": "agree",
+      "post_route": "low_conf",
       "agent_decision": "auto_decline"
     },
     {
@@ -16512,11 +16512,11 @@
       "y": 0,
       "tabular_alone_decision": "approve",
       "stance": "mitigates_risk",
-      "verifier_verdict": "supported",
-      "verifier_source": "llm",
-      "downgraded": false,
+      "verifier_verdict": "unsupported",
+      "verifier_source": "mechanical",
+      "downgraded": true,
       "pre_route": "agree",
-      "post_route": "agree",
+      "post_route": "low_conf",
       "agent_decision": "auto_approve"
     },
     {
@@ -16864,7 +16864,7 @@
       "tabular_alone_decision": "approve",
       "stance": "mitigates_risk",
       "verifier_verdict": "unsupported",
-      "verifier_source": "llm",
+      "verifier_source": "mechanical",
       "downgraded": true,
       "pre_route": "agree",
       "post_route": "low_conf",
@@ -18306,12 +18306,12 @@
       "y": 0,
       "tabular_alone_decision": "approve",
       "stance": "corroborates_risk",
-      "verifier_verdict": "unclear",
+      "verifier_verdict": "unsupported",
       "verifier_source": "llm",
-      "downgraded": false,
+      "downgraded": true,
       "pre_route": "disagree",
-      "post_route": "disagree",
-      "agent_decision": "human_review"
+      "post_route": "low_conf",
+      "agent_decision": "auto_approve"
     },
     {
       "loan_id": 1647778,
@@ -19606,11 +19606,11 @@
       "y": 0,
       "tabular_alone_decision": "decline",
       "stance": "corroborates_risk",
-      "verifier_verdict": "supported",
-      "verifier_source": "llm",
-      "downgraded": false,
+      "verifier_verdict": "unsupported",
+      "verifier_source": "mechanical",
+      "downgraded": true,
       "pre_route": "agree",
-      "post_route": "agree",
+      "post_route": "low_conf",
       "agent_decision": "auto_decline"
     },
     {
@@ -20035,11 +20035,11 @@
       "y": 0,
       "tabular_alone_decision": "approve",
       "stance": "mitigates_risk",
-      "verifier_verdict": "unclear",
-      "verifier_source": "llm",
-      "downgraded": false,
+      "verifier_verdict": "unsupported",
+      "verifier_source": "mechanical",
+      "downgraded": true,
       "pre_route": "agree",
-      "post_route": "agree",
+      "post_route": "low_conf",
       "agent_decision": "auto_approve"
     },
     {
@@ -21036,11 +21036,11 @@
       "y": 0,
       "tabular_alone_decision": "approve",
       "stance": "mitigates_risk",
-      "verifier_verdict": "unsupported",
+      "verifier_verdict": "unclear",
       "verifier_source": "llm",
-      "downgraded": true,
+      "downgraded": false,
       "pre_route": "agree",
-      "post_route": "low_conf",
+      "post_route": "agree",
       "agent_decision": "auto_approve"
     },
     {
@@ -21504,11 +21504,11 @@
       "y": 0,
       "tabular_alone_decision": "approve",
       "stance": "mitigates_risk",
-      "verifier_verdict": "unsupported",
+      "verifier_verdict": "unclear",
       "verifier_source": "llm",
-      "downgraded": true,
+      "downgraded": false,
       "pre_route": "agree",
-      "post_route": "low_conf",
+      "post_route": "agree",
       "agent_decision": "auto_approve"
     },
     {
@@ -21803,12 +21803,12 @@
       "y": 1,
       "tabular_alone_decision": "decline",
       "stance": "mitigates_risk",
-      "verifier_verdict": "supported",
-      "verifier_source": "llm",
-      "downgraded": false,
+      "verifier_verdict": "unsupported",
+      "verifier_source": "mechanical",
+      "downgraded": true,
       "pre_route": "disagree",
-      "post_route": "disagree",
-      "agent_decision": "human_review"
+      "post_route": "low_conf",
+      "agent_decision": "auto_decline"
     },
     {
       "loan_id": 1759313,
@@ -23832,7 +23832,7 @@
       "tabular_alone_decision": "decline",
       "stance": "mitigates_risk",
       "verifier_verdict": "unsupported",
-      "verifier_source": "llm",
+      "verifier_source": "mechanical",
       "downgraded": true,
       "pre_route": "disagree",
       "post_route": "low_conf",
@@ -24169,11 +24169,11 @@
       "y": 1,
       "tabular_alone_decision": "approve",
       "stance": "mitigates_risk",
-      "verifier_verdict": "unsupported",
+      "verifier_verdict": "supported",
       "verifier_source": "llm",
-      "downgraded": true,
+      "downgraded": false,
       "pre_route": "agree",
-      "post_route": "low_conf",
+      "post_route": "agree",
       "agent_decision": "auto_approve"
     },
     {
@@ -25274,12 +25274,12 @@
       "y": 0,
       "tabular_alone_decision": "approve",
       "stance": "corroborates_risk",
-      "verifier_verdict": "unclear",
+      "verifier_verdict": "unsupported",
       "verifier_source": "llm",
-      "downgraded": false,
+      "downgraded": true,
       "pre_route": "disagree",
-      "post_route": "disagree",
-      "agent_decision": "human_review"
+      "post_route": "low_conf",
+      "agent_decision": "auto_approve"
     },
     {
       "loan_id": 1919101,
@@ -26119,12 +26119,12 @@
       "y": 0,
       "tabular_alone_decision": "decline",
       "stance": "mitigates_risk",
-      "verifier_verdict": "supported",
-      "verifier_source": "llm",
-      "downgraded": false,
+      "verifier_verdict": "unsupported",
+      "verifier_source": "mechanical",
+      "downgraded": true,
       "pre_route": "disagree",
-      "post_route": "disagree",
-      "agent_decision": "human_review"
+      "post_route": "low_conf",
+      "agent_decision": "auto_decline"
     },
     {
       "loan_id": 1903861,
@@ -26171,12 +26171,12 @@
       "y": 0,
       "tabular_alone_decision": "decline",
       "stance": "mitigates_risk",
-      "verifier_verdict": "supported",
-      "verifier_source": "llm",
-      "downgraded": false,
+      "verifier_verdict": "unsupported",
+      "verifier_source": "mechanical",
+      "downgraded": true,
       "pre_route": "disagree",
-      "post_route": "disagree",
-      "agent_decision": "human_review"
+      "post_route": "low_conf",
+      "agent_decision": "auto_decline"
     },
     {
       "loan_id": 1901125,
@@ -29395,11 +29395,11 @@
       "y": 0,
       "tabular_alone_decision": "approve",
       "stance": "mitigates_risk",
-      "verifier_verdict": "supported",
+      "verifier_verdict": "unsupported",
       "verifier_source": "llm",
-      "downgraded": false,
+      "downgraded": true,
       "pre_route": "agree",
-      "post_route": "agree",
+      "post_route": "low_conf",
       "agent_decision": "auto_approve"
     },
     {
@@ -31592,12 +31592,12 @@
       "y": 0,
       "tabular_alone_decision": "decline",
       "stance": "mitigates_risk",
-      "verifier_verdict": "unsupported",
+      "verifier_verdict": "supported",
       "verifier_source": "llm",
-      "downgraded": true,
+      "downgraded": false,
       "pre_route": "disagree",
-      "post_route": "low_conf",
-      "agent_decision": "auto_decline"
+      "post_route": "disagree",
+      "agent_decision": "human_review"
     },
     {
       "loan_id": 1885828,

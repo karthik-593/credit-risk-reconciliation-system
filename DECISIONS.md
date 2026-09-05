@@ -782,6 +782,138 @@ experiments/ablation_results_build11.json). Tracked in MLflow (same experiment
 "ablation_agentic", runs overwritten with Build 12's metrics). Does not change the shipped
 agent's default reconciler.
 
+## Build 13 — verifier grounding-check defect: found, fixed, re-measured — COMPLETE
+
+**The defect.** `verifier()`'s mechanical layer tested evidence spans with a bare exact
+substring match, `span not in desc`. That marks a span unsupported — and downgrades the
+stance to neutral — whenever the model returns an otherwise-perfect quote wrapped in its own
+quote characters (`"I have been at my job for 9 years"`) or with a letter re-cased. Neither is
+a fabricated quote. The verifier was designed to catch over-claiming; on these spans it was
+punishing quoting style instead, and silently discarding real narrative signal.
+
+Worse, the project already had the correct check: `scripts/eval_agent._is_grounded` (strip
+surrounding quote chars, case-insensitive substring) had been written for `--validate`'s
+grounding-rate reporting. So `--validate` and production disagreed about whether the same span
+was grounded, and had done since the verifier shipped in Build 9.
+
+**The evidence.** `experiments/reasoning_stack_spanfix.py` re-scored 2,000 cached stances from
+three frozen reasoning arms under the normalized check, changing nothing else — same stances,
+same policy-id check, same LLM auditor prompt, zero new stance calls. Correcting only the span
+test moved the structured arms' unsupported rate 41.4% → 18.7% and 42.4% → 20.3%, both
+CI-separated, while the shipped-prompt baseline moved only 35.2% → 33.8%. Every span the
+correction newly accepted was a quote-wrapping or casing case; not one was a paraphrase. That
+asymmetry is the whole finding: the defect's severity depends entirely on how often a prompt
+quote-wraps, and the shipped prompt rarely does.
+
+**The fix (surgical).** `agent/reconciler_agent._evidence_is_grounded(span, desc)` is now the
+canonical check, byte-identical in logic to the vetted version. `verifier()`'s span test calls
+it; `scripts/eval_agent._is_grounded` and `_QUOTE_CHARS` are now thin aliases delegating to it,
+so production, `--validate`, and the experiments cannot drift apart again. Dependency direction
+unchanged (`agent` is the base layer, `eval_agent` imports it).
+
+Deliberately NOT broadened: no internal-whitespace collapse, no punctuation stripping, no fuzzy
+or token-overlap matching. Each of those would begin accepting genuine paraphrase, which is
+exactly the over-claim this layer exists to catch. **The policy-id membership check was left
+EXACT** — a cited id must still be one actually retrieved, matched literally.
+
+**Regression tests** (`agent/test_verifier.py`, 5 cases → 8, all passing). The five originals
+pass unchanged — in particular (a), a genuinely absent quote, is still `unsupported`, so the fix
+did not loosen the negative case. Added: (f) a real quote wrapped in literal quote chars now
+clears the mechanical layer and reaches the LLM verifier; (g) same for a re-cased real quote;
+(h) **the boundary** — `"I have worked at my job for 9 years"` against a statement reading
+`"I have been at my job for 9 years"` is high word-overlap but not a quote, and is STILL
+mechanically `unsupported`. Without (h), a future "improvement" to the normalizer could start
+accepting paraphrase with no test objecting.
+
+### Re-measurement — what the FIX actually moved
+
+Stances are untouched by a verifier change, so all 21,616 cached stances were reused verbatim
+(zero stance LLM calls). The two verifier caches were stale — computed under the defect — and
+were deleted and rebuilt (originals preserved under `results/pre_spanfix_backup/`).
+
+Like-for-like, verifier-under-defect vs verifier-fixed, same sample, same stances:
+
+| Metric | OLD (defect) | NEW (fixed) |
+|---|---|---|
+| n=2,500 mechanical rejections | 64 | 45 |
+| n=2,500 stances downgraded | 287 | 272 |
+| n=2,500 post-verifier disagree | 7.08% [6.14%, 8.15%] | 7.44% [6.48%, 8.54%] |
+| n=2,500 disagree→low_conf flips | 40.80% [35.38%, 46.46%] | 37.79% [32.48%, 43.41%] |
+| n=2,500 wrongful-decline catch (post) | 16.93% [14.32%, 19.91%] | 17.37% [14.72%, 20.37%] |
+| n=2,500 bad-approval catch (post) | 0.00% [0.00%, 2.22%] | 0.00% [0.00%, 2.22%] |
+| n=2,500 disagree-queue precision (post) | 66.10% [58.85%, 72.67%] | 64.52% [57.41%, 71.04%] |
+| n=2,000 stances downgraded | 225 | 209 |
+| n=2,000 review rate | 7.10% | 7.65% |
+| n=2,000 wrongful-decline catch | 16.93% [14.06%, 20.26%] | 17.83% [14.88%, 21.21%] |
+
+**HONEST VERDICT ON THE FIX: correct, and small. Not one metric is CI-separated — every
+interval overlaps.** The direction is right everywhere it should be (fewer mechanical
+rejections, fewer downgrades, slightly more stances surviving to the LLM layer, a marginally
+larger review queue that catches marginally more wrongful declines), but the magnitude in
+production is ~15 stances in 2,500 — 0.6%. The reason is the same asymmetry the spanfix
+experiment measured: the shipped stance prompt rarely quote-wraps, so the shipped system was
+barely exposed. The 22-point swings in that experiment were on arms 1 and 2, **experimental
+prompts that never shipped.** Recording this explicitly because the temptation is to let the
+experiment's effect size stand in for the production one; they differ by more than an order of
+magnitude.
+
+The fix's real value is prospective, not retrospective: it removes a systematic penalty that
+would bite hard the moment the stance prompt or the model changes to one that quotes with
+quote marks — which the reasoning experiments show is a common thing for a model to do.
+
+### A separate documentation defect this surfaced
+
+The full-population re-run (`--full`, n=21,616) exposed something unrelated to the fix.
+`results/agent_eval_fullpower.json` was a **Build 7 artifact that predates the verifier
+entirely** — its records carry no `verifier_verdict` field, and `eval_verifier.json` labels its
+11.57% disagree rate `build7_disagree_rate_pct_reference`. The README's headline catch rates
+and review rate were still quoting it, two builds after the verifier shipped. So those figures
+described a system configuration that had not been the shipped one since Build 9.
+
+| Metric (n=21,616) | README / Build 7 (PRE-verifier) | NEW (verifier, fixed) |
+|---|---|---|
+| Review (disagree) rate | 11.57% | 6.86% |
+| Wrongful-decline catch | 24.05% [22.96%, 25.18%] | 16.41% [15.46%, 17.39%] |
+| Bad-approval catch | 5.90% [4.77%, 7.29%] | 1.92% [1.31%, 2.80%] |
+| Deferred false positives | 1,365 | 931 |
+| Deferred false negatives | 80 | 26 |
+| Automated-subset Brier | 0.1157 | 0.1174 |
+| Calibration lift | +0.0056 | +0.0039 |
+| Within 15% review budget | yes | yes |
+
+**Both catch rates are CI-separated and materially lower.** This is NOT the fix's doing — it is
+overwhelmingly the verifier existing at all, which Build 9 already measured at n=2,500 and
+whose population-level consequence simply never made it into the README. The fix accounts for
+the small part; adding the verifier accounts for the rest. Reported this way because a single
+OLD→NEW column here would silently credit the fix with the verifier's whole effect.
+
+The substantive read is unchanged and still uncomfortable: the verifier makes the review queue
+smaller and more conservative, and in doing so it catches **fewer** of the tabular model's real
+errors in absolute terms — wrongful declines caught fall from 1,365 to 931, bad approvals from
+80 to 26. Both headline outcome comparisons remain **inconclusive** at full power
+(flagged-approves 11.30% [7.83%, 16.05%] vs clean-approves 10.13% [9.01%, 11.38%];
+mitigated-declines 25.70% [23.36%, 28.19%] vs clean-declines 27.54% [21.90%, 33.99%]) — same
+verdict as Builds 6/7, not rounded up because the point estimates lean the right way.
+
+**Feasibility-pipeline numbers are untouched** (PR-AUC 0.2803, content lift +0.0099, presence
+−0.0002, length +0.0014). Different pipeline, unaffected by a verifier change, not recomputed.
+
+### Known stale, left alone deliberately
+
+- `experiments/retrieval_stack.py` and `experiments/reasoning_stack.py` still apply the old
+  exact check. That is correct: each mirrors the verifier as it was when its experiment ran, and
+  `reasoning_stack`'s raw-vs-normalized decomposition *depends* on the strict test. "Fixing" them
+  would retroactively alter published results.
+- `results/ablation_verifier_cache.pkl` (Build 11/12's agentic ablation) was built under the
+  defect and is now stale. Not re-run here — out of scope for a surgical verifier fix; its
+  numbers would shift slightly if it were.
+
+Files: `agent/reconciler_agent.py` (`_QUOTE_CHARS`, `_evidence_is_grounded`, one line in
+`verifier()`, docstring), `scripts/eval_agent.py` (`_is_grounded`/`_QUOTE_CHARS` now delegate),
+`agent/test_verifier.py` (cases f/g/h). Data: `results/eval_verifier.json`,
+`results/agent_eval.json`, `results/agent_eval_fullpower.json` all regenerated; pre-fix
+originals at `results/pre_spanfix_backup/`.
+
 ## Pending
 
 - Commit discipline: requirements.txt bump (langgraph, shap, rank_bm25, optuna,

@@ -14,71 +14,71 @@
     "empty": 0
   },
   "verifier_verdict_breakdown": {
-    "supported": 381,
-    "unsupported": 209,
-    "unclear": 35,
+    "supported": 366,
+    "unsupported": 225,
+    "unclear": 34,
     "skipped_neutral": 1375
   },
   "route_distribution": {
     "agree": {
-      "n": 263,
-      "pct": 13.15
+      "n": 258,
+      "pct": 12.9
     },
     "disagree": {
-      "n": 153,
-      "pct": 7.65
+      "n": 142,
+      "pct": 7.1
     },
     "low_conf": {
-      "n": 1584,
-      "pct": 79.2
+      "n": 1600,
+      "pct": 80.0
     },
-    "disagree_rate_pct": 7.65
+    "disagree_rate_pct": 7.1
   },
   "decisions_changed": {
-    "n_changed": 153,
-    "pct_changed": 7.65,
-    "approve_to_review": 21,
-    "decline_to_review": 132
+    "n_changed": 142,
+    "pct_changed": 7.1,
+    "approve_to_review": 18,
+    "decline_to_review": 124
   },
   "realized_rates": {
     "clean_approve": {
-      "n": 239,
+      "n": 238,
       "underpowered": false,
-      "k": 25,
-      "realized_default_rate": 0.10460251046025104,
-      "ci_low": 0.07186028050956009,
-      "ci_high": 0.14985461512611353
+      "k": 26,
+      "realized_default_rate": 0.1092436974789916,
+      "ci_low": 0.07564791332978509,
+      "ci_high": 0.15525363545255838
     },
     "approve_but_flagged": {
-      "n": 21,
+      "n": 18,
       "underpowered": true
     },
     "clean_decline": {
-      "n": 24,
+      "n": 20,
       "underpowered": true
     },
     "decline_but_mitigated": {
-      "n": 132,
+      "n": 124,
       "underpowered": false,
-      "k": 32,
-      "realized_default_rate": 0.24242424242424243,
-      "ci_low": 0.1772735800586854,
-      "ci_high": 0.3221433879393357
+      "k": 29,
+      "realized_default_rate": 0.23387096774193547,
+      "ci_low": 0.16805670588601213,
+      "ci_high": 0.31567941756676066
     },
     "flagged_higher_than_clean_approve": null,
     "mitigated_lower_than_clean_decline": null
   },
   "calibration_fp_fn": {
     "brier_full": 0.12414418972771868,
-    "brier_automated": 0.12090969480350373,
-    "calibration_lift": 0.003234494924214945,
+    "brier_automated": 0.12137608817680211,
+    "calibration_lift": 0.0027681015509165713,
     "fp_baseline": 561,
     "fn_baseline": 131,
-    "fp_deferred": 100,
+    "fp_deferred": 95,
     "fn_deferred": 0,
-    "fp_automated": 461,
+    "fp_automated": 466,
     "fn_automated": 131,
-    "review_rate_pct": 7.65,
+    "review_rate_pct": 7.1,
     "review_budget_pct": 15.0,
     "within_budget": true
   },
@@ -108,8 +108,8 @@
         "n": 844,
         "underpowered": false,
         "tabular_approve_rate_pct": 55.56872037914692,
-        "agent_approve_rate_pct": 54.2654028436019,
-        "shift_pp": -1.3033175355450197,
+        "agent_approve_rate_pct": 54.62085308056872,
+        "shift_pp": -0.9478672985781955,
         "default_rate_pct": 16.23222748815166
       }
     },
@@ -118,8 +118,8 @@
         "n": 690,
         "underpowered": false,
         "tabular_approve_rate_pct": 74.4927536231884,
-        "agent_approve_rate_pct": 73.62318840579711,
-        "shift_pp": -0.8695652173912976,
+        "agent_approve_rate_pct": 73.76811594202898,
+        "shift_pp": -0.7246376811594217,
         "default_rate_pct": 11.594202898550725
       },
       "Source Verified": {
@@ -134,8 +134,8 @@
         "n": 881,
         "underpowered": false,
         "tabular_approve_rate_pct": 53.68898978433598,
-        "agent_approve_rate_pct": 52.667423382519864,
-        "shift_pp": -1.0215664018161164,
+        "agent_approve_rate_pct": 52.894438138479,
+        "shift_pp": -0.794551645856977,
         "default_rate_pct": 18.728717366628832
       }
     }
@@ -144,12 +144,12 @@
     {
       "section": "realized_rates",
       "bucket": "approve_but_flagged",
-      "n": 21
+      "n": 18
     },
     {
       "section": "realized_rates",
       "bucket": "clean_decline",
-      "n": 24
+      "n": 20
     },
     {
       "section": "fairness",
@@ -1136,15 +1136,15 @@
     {
       "loan_id": 1649105,
       "p_default": 0.30859607458114624,
-      "stance": "corroborates_risk",
-      "confidence": 0.8,
-      "route": "agree",
+      "stance": "neutral",
+      "confidence": 0.0,
+      "route": "low_conf",
       "agent_decision": "auto_decline",
       "tabular_alone_decision": "decline",
       "y": 0,
       "stance_source": "parsed",
-      "verifier_verdict": "supported",
-      "verifier_source": "llm"
+      "verifier_verdict": "unsupported",
+      "verifier_source": "mechanical"
     },
     {
       "loan_id": 1649259,
@@ -2085,14 +2085,14 @@
     {
       "loan_id": 1889870,
       "p_default": 0.3400658667087555,
-      "stance": "mitigates_risk",
-      "confidence": 0.8,
-      "route": "disagree",
-      "agent_decision": "human_review",
+      "stance": "neutral",
+      "confidence": 0.0,
+      "route": "low_conf",
+      "agent_decision": "auto_decline",
       "tabular_alone_decision": "decline",
       "y": 1,
       "stance_source": "parsed",
-      "verifier_verdict": "supported",
+      "verifier_verdict": "unsupported",
       "verifier_source": "llm"
     },
     {
@@ -2917,14 +2917,14 @@
     {
       "loan_id": 1937908,
       "p_default": 0.1874295324087143,
-      "stance": "mitigates_risk",
-      "confidence": 0.8,
-      "route": "disagree",
-      "agent_decision": "human_review",
+      "stance": "neutral",
+      "confidence": 0.0,
+      "route": "low_conf",
+      "agent_decision": "auto_decline",
       "tabular_alone_decision": "decline",
       "y": 1,
       "stance_source": "parsed",
-      "verifier_verdict": "supported",
+      "verifier_verdict": "unsupported",
       "verifier_source": "llm"
     },
     {
@@ -3450,15 +3450,15 @@
     {
       "loan_id": 1626795,
       "p_default": 0.31822291016578674,
-      "stance": "corroborates_risk",
-      "confidence": 0.8,
-      "route": "agree",
+      "stance": "neutral",
+      "confidence": 0.0,
+      "route": "low_conf",
       "agent_decision": "auto_decline",
       "tabular_alone_decision": "decline",
       "y": 0,
       "stance_source": "parsed",
-      "verifier_verdict": "supported",
-      "verifier_source": "llm"
+      "verifier_verdict": "unsupported",
+      "verifier_source": "mechanical"
     },
     {
       "loan_id": 1641612,
@@ -4082,7 +4082,7 @@
       "y": 1,
       "stance_source": "parsed",
       "verifier_verdict": "unsupported",
-      "verifier_source": "llm"
+      "verifier_source": "mechanical"
     },
     {
       "loan_id": 1649568,
@@ -4256,15 +4256,15 @@
     {
       "loan_id": 1871369,
       "p_default": 0.3883077800273895,
-      "stance": "mitigates_risk",
-      "confidence": 0.8,
-      "route": "disagree",
-      "agent_decision": "human_review",
+      "stance": "neutral",
+      "confidence": 0.0,
+      "route": "low_conf",
+      "agent_decision": "auto_decline",
       "tabular_alone_decision": "decline",
       "y": 0,
       "stance_source": "parsed",
-      "verifier_verdict": "supported",
-      "verifier_source": "llm"
+      "verifier_verdict": "unsupported",
+      "verifier_source": "mechanical"
     },
     {
       "loan_id": 1870580,
@@ -4680,7 +4680,7 @@
       "y": 0,
       "stance_source": "parsed",
       "verifier_verdict": "unsupported",
-      "verifier_source": "llm"
+      "verifier_source": "mechanical"
     },
     {
       "loan_id": 1918259,
@@ -4992,7 +4992,7 @@
       "y": 0,
       "stance_source": "parsed",
       "verifier_verdict": "unsupported",
-      "verifier_source": "llm"
+      "verifier_source": "mechanical"
     },
     {
       "loan_id": 1777456,
@@ -5712,15 +5712,15 @@
     {
       "loan_id": 1926845,
       "p_default": 0.4077019691467285,
-      "stance": "mitigates_risk",
-      "confidence": 0.9,
-      "route": "disagree",
-      "agent_decision": "human_review",
+      "stance": "neutral",
+      "confidence": 0.0,
+      "route": "low_conf",
+      "agent_decision": "auto_decline",
       "tabular_alone_decision": "decline",
       "y": 0,
       "stance_source": "parsed",
-      "verifier_verdict": "supported",
-      "verifier_source": "llm"
+      "verifier_verdict": "unsupported",
+      "verifier_source": "mechanical"
     },
     {
       "loan_id": 1771926,
@@ -8078,15 +8078,15 @@
     {
       "loan_id": 1876544,
       "p_default": 0.11195123195648193,
-      "stance": "corroborates_risk",
-      "confidence": 0.8,
-      "route": "disagree",
-      "agent_decision": "human_review",
+      "stance": "neutral",
+      "confidence": 0.0,
+      "route": "low_conf",
+      "agent_decision": "auto_approve",
       "tabular_alone_decision": "approve",
       "y": 0,
       "stance_source": "parsed",
-      "verifier_verdict": "supported",
-      "verifier_source": "llm"
+      "verifier_verdict": "unsupported",
+      "verifier_source": "mechanical"
     },
     {
       "loan_id": 1897725,
@@ -8780,14 +8780,14 @@
     {
       "loan_id": 1867207,
       "p_default": 0.1965905725955963,
-      "stance": "mitigates_risk",
-      "confidence": 0.8,
-      "route": "disagree",
-      "agent_decision": "human_review",
+      "stance": "neutral",
+      "confidence": 0.0,
+      "route": "low_conf",
+      "agent_decision": "auto_decline",
       "tabular_alone_decision": "decline",
       "y": 0,
       "stance_source": "parsed",
-      "verifier_verdict": "supported",
+      "verifier_verdict": "unsupported",
       "verifier_source": "llm"
     },
     {
@@ -9131,14 +9131,14 @@
     {
       "loan_id": 1613013,
       "p_default": 0.06080193072557449,
-      "stance": "mitigates_risk",
-      "confidence": 0.8,
-      "route": "agree",
+      "stance": "neutral",
+      "confidence": 0.0,
+      "route": "low_conf",
       "agent_decision": "auto_approve",
       "tabular_alone_decision": "approve",
       "y": 0,
       "stance_source": "parsed",
-      "verifier_verdict": "unclear",
+      "verifier_verdict": "unsupported",
       "verifier_source": "llm"
     },
     {
@@ -10613,14 +10613,14 @@
     {
       "loan_id": 1895826,
       "p_default": 0.3210635185241699,
-      "stance": "neutral",
-      "confidence": 0.0,
-      "route": "low_conf",
-      "agent_decision": "auto_decline",
+      "stance": "mitigates_risk",
+      "confidence": 0.8,
+      "route": "disagree",
+      "agent_decision": "human_review",
       "tabular_alone_decision": "decline",
       "y": 0,
       "stance_source": "parsed",
-      "verifier_verdict": "unsupported",
+      "verifier_verdict": "unclear",
       "verifier_source": "llm"
     },
     {
@@ -14071,15 +14071,15 @@
     {
       "loan_id": 1617514,
       "p_default": 0.20324265956878662,
-      "stance": "mitigates_risk",
-      "confidence": 0.8,
-      "route": "disagree",
-      "agent_decision": "human_review",
+      "stance": "neutral",
+      "confidence": 0.0,
+      "route": "low_conf",
+      "agent_decision": "auto_decline",
       "tabular_alone_decision": "decline",
       "y": 1,
       "stance_source": "parsed",
-      "verifier_verdict": "supported",
-      "verifier_source": "llm"
+      "verifier_verdict": "unsupported",
+      "verifier_source": "mechanical"
     },
     {
       "loan_id": 1794045,
@@ -14604,15 +14604,15 @@
     {
       "loan_id": 1843092,
       "p_default": 0.23568587005138397,
-      "stance": "mitigates_risk",
-      "confidence": 0.8,
-      "route": "disagree",
-      "agent_decision": "human_review",
+      "stance": "neutral",
+      "confidence": 0.0,
+      "route": "low_conf",
+      "agent_decision": "auto_decline",
       "tabular_alone_decision": "decline",
       "y": 0,
       "stance_source": "parsed",
-      "verifier_verdict": "supported",
-      "verifier_source": "llm"
+      "verifier_verdict": "unsupported",
+      "verifier_source": "mechanical"
     },
     {
       "loan_id": 1631757,
@@ -15384,14 +15384,14 @@
     {
       "loan_id": 1621595,
       "p_default": 0.01847638562321663,
-      "stance": "mitigates_risk",
-      "confidence": 0.8,
-      "route": "agree",
+      "stance": "neutral",
+      "confidence": 0.0,
+      "route": "low_conf",
       "agent_decision": "auto_approve",
       "tabular_alone_decision": "approve",
       "y": 0,
       "stance_source": "parsed",
-      "verifier_verdict": "supported",
+      "verifier_verdict": "unsupported",
       "verifier_source": "llm"
     },
     {
@@ -15813,14 +15813,14 @@
     {
       "loan_id": 1866380,
       "p_default": 0.10142690688371658,
-      "stance": "neutral",
-      "confidence": 0.0,
-      "route": "low_conf",
+      "stance": "mitigates_risk",
+      "confidence": 0.8,
+      "route": "agree",
       "agent_decision": "auto_approve",
       "tabular_alone_decision": "approve",
       "y": 1,
       "stance_source": "parsed",
-      "verifier_verdict": "unsupported",
+      "verifier_verdict": "supported",
       "verifier_source": "llm"
     },
     {
@@ -16541,15 +16541,15 @@
     {
       "loan_id": 1887984,
       "p_default": 0.3367236852645874,
-      "stance": "corroborates_risk",
-      "confidence": 0.8,
-      "route": "agree",
+      "stance": "neutral",
+      "confidence": 0.0,
+      "route": "low_conf",
       "agent_decision": "auto_decline",
       "tabular_alone_decision": "decline",
       "y": 0,
       "stance_source": "parsed",
-      "verifier_verdict": "supported",
-      "verifier_source": "llm"
+      "verifier_verdict": "unsupported",
+      "verifier_source": "mechanical"
     },
     {
       "loan_id": 1929409,
@@ -17139,15 +17139,15 @@
     {
       "loan_id": 1757257,
       "p_default": 0.11029845476150513,
-      "stance": "mitigates_risk",
-      "confidence": 0.8,
-      "route": "agree",
+      "stance": "neutral",
+      "confidence": 0.0,
+      "route": "low_conf",
       "agent_decision": "auto_approve",
       "tabular_alone_decision": "approve",
       "y": 0,
       "stance_source": "parsed",
-      "verifier_verdict": "supported",
-      "verifier_source": "llm"
+      "verifier_verdict": "unsupported",
+      "verifier_source": "mechanical"
     },
     {
       "loan_id": 1918999,
@@ -17477,15 +17477,15 @@
     {
       "loan_id": 1903741,
       "p_default": 0.15789400041103363,
-      "stance": "mitigates_risk",
-      "confidence": 0.8,
-      "route": "agree",
+      "stance": "neutral",
+      "confidence": 0.0,
+      "route": "low_conf",
       "agent_decision": "auto_approve",
       "tabular_alone_decision": "approve",
       "y": 0,
       "stance_source": "parsed",
-      "verifier_verdict": "supported",
-      "verifier_source": "llm"
+      "verifier_verdict": "unsupported",
+      "verifier_source": "mechanical"
     },
     {
       "loan_id": 1623526,
@@ -17810,7 +17810,7 @@
       "y": 0,
       "stance_source": "parsed",
       "verifier_verdict": "unsupported",
-      "verifier_source": "llm"
+      "verifier_source": "mechanical"
     },
     {
       "loan_id": 1643677,
@@ -17945,15 +17945,15 @@
     {
       "loan_id": 1789035,
       "p_default": 0.2066410630941391,
-      "stance": "mitigates_risk",
-      "confidence": 0.8,
-      "route": "disagree",
-      "agent_decision": "human_review",
+      "stance": "neutral",
+      "confidence": 0.0,
+      "route": "low_conf",
+      "agent_decision": "auto_decline",
       "tabular_alone_decision": "decline",
       "y": 0,
       "stance_source": "parsed",
-      "verifier_verdict": "supported",
-      "verifier_source": "llm"
+      "verifier_verdict": "unsupported",
+      "verifier_source": "mechanical"
     },
     {
       "loan_id": 1875625,
@@ -18226,7 +18226,7 @@
       "y": 0,
       "stance_source": "parsed",
       "verifier_verdict": "unsupported",
-      "verifier_source": "llm"
+      "verifier_source": "mechanical"
     },
     {
       "loan_id": 1826768,
@@ -20142,14 +20142,14 @@
     {
       "loan_id": 1865544,
       "p_default": 0.10513808578252792,
-      "stance": "neutral",
-      "confidence": 0.0,
-      "route": "low_conf",
+      "stance": "mitigates_risk",
+      "confidence": 0.8,
+      "route": "agree",
       "agent_decision": "auto_approve",
       "tabular_alone_decision": "approve",
       "y": 0,
       "stance_source": "parsed",
-      "verifier_verdict": "unsupported",
+      "verifier_verdict": "unclear",
       "verifier_source": "llm"
     },
     {
@@ -20363,14 +20363,14 @@
     {
       "loan_id": 1866632,
       "p_default": 0.23962445557117462,
-      "stance": "neutral",
-      "confidence": 0.0,
-      "route": "low_conf",
-      "agent_decision": "auto_decline",
+      "stance": "mitigates_risk",
+      "confidence": 0.8,
+      "route": "disagree",
+      "agent_decision": "human_review",
       "tabular_alone_decision": "decline",
       "y": 0,
       "stance_source": "parsed",
-      "verifier_verdict": "unsupported",
+      "verifier_verdict": "supported",
       "verifier_source": "llm"
     },
     {
@@ -20571,15 +20571,15 @@
     {
       "loan_id": 1858239,
       "p_default": 0.24036920070648193,
-      "stance": "mitigates_risk",
-      "confidence": 0.8,
-      "route": "disagree",
-      "agent_decision": "human_review",
+      "stance": "neutral",
+      "confidence": 0.0,
+      "route": "low_conf",
+      "agent_decision": "auto_decline",
       "tabular_alone_decision": "decline",
       "y": 0,
       "stance_source": "parsed",
-      "verifier_verdict": "supported",
-      "verifier_source": "llm"
+      "verifier_verdict": "unsupported",
+      "verifier_source": "mechanical"
     },
     {
       "loan_id": 1920997,
@@ -20636,14 +20636,14 @@
     {
       "loan_id": 1636510,
       "p_default": 0.13133473694324493,
-      "stance": "neutral",
-      "confidence": 0.0,
-      "route": "low_conf",
+      "stance": "mitigates_risk",
+      "confidence": 0.8,
+      "route": "agree",
       "agent_decision": "auto_approve",
       "tabular_alone_decision": "approve",
       "y": 0,
       "stance_source": "parsed",
-      "verifier_verdict": "unsupported",
+      "verifier_verdict": "unclear",
       "verifier_source": "llm"
     },
     {
@@ -21156,14 +21156,14 @@
     {
       "loan_id": 1868035,
       "p_default": 0.06769099086523056,
-      "stance": "corroborates_risk",
-      "confidence": 0.8,
-      "route": "disagree",
-      "agent_decision": "human_review",
+      "stance": "neutral",
+      "confidence": 0.0,
+      "route": "low_conf",
+      "agent_decision": "auto_approve",
       "tabular_alone_decision": "approve",
       "y": 0,
       "stance_source": "parsed",
-      "verifier_verdict": "unclear",
+      "verifier_verdict": "unsupported",
       "verifier_source": "llm"
     },
     {
@@ -22807,14 +22807,14 @@
     {
       "loan_id": 1771570,
       "p_default": 0.2661547064781189,
-      "stance": "mitigates_risk",
-      "confidence": 0.8,
-      "route": "disagree",
-      "agent_decision": "human_review",
+      "stance": "neutral",
+      "confidence": 0.0,
+      "route": "low_conf",
+      "agent_decision": "auto_decline",
       "tabular_alone_decision": "decline",
       "y": 0,
       "stance_source": "parsed",
-      "verifier_verdict": "supported",
+      "verifier_verdict": "unsupported",
       "verifier_source": "llm"
     },
     {
@@ -23587,14 +23587,14 @@
     {
       "loan_id": 1850844,
       "p_default": 0.26856228709220886,
-      "stance": "corroborates_risk",
-      "confidence": 0.8,
-      "route": "agree",
+      "stance": "neutral",
+      "confidence": 0.0,
+      "route": "low_conf",
       "agent_decision": "auto_decline",
       "tabular_alone_decision": "decline",
       "y": 0,
       "stance_source": "parsed",
-      "verifier_verdict": "supported",
+      "verifier_verdict": "unsupported",
       "verifier_source": "llm"
     },
     {
@@ -25563,28 +25563,28 @@
     {
       "loan_id": 1801660,
       "p_default": 0.16379939019680023,
-      "stance": "corroborates_risk",
-      "confidence": 0.8,
-      "route": "disagree",
-      "agent_decision": "human_review",
+      "stance": "neutral",
+      "confidence": 0.0,
+      "route": "low_conf",
+      "agent_decision": "auto_approve",
       "tabular_alone_decision": "approve",
       "y": 0,
       "stance_source": "parsed",
-      "verifier_verdict": "unclear",
+      "verifier_verdict": "unsupported",
       "verifier_source": "llm"
     },
     {
       "loan_id": 1912786,
       "p_default": 0.1499411016702652,
-      "stance": "mitigates_risk",
-      "confidence": 0.9,
-      "route": "agree",
+      "stance": "neutral",
+      "confidence": 0.0,
+      "route": "low_conf",
       "agent_decision": "auto_approve",
       "tabular_alone_decision": "approve",
       "y": 0,
       "stance_source": "parsed",
-      "verifier_verdict": "unclear",
-      "verifier_source": "llm"
+      "verifier_verdict": "unsupported",
+      "verifier_source": "mechanical"
     },
     {
       "loan_id": 1839524,
@@ -25667,14 +25667,14 @@
     {
       "loan_id": 1875595,
       "p_default": 0.08940829336643219,
-      "stance": "neutral",
-      "confidence": 0.0,
-      "route": "low_conf",
+      "stance": "mitigates_risk",
+      "confidence": 0.8,
+      "route": "agree",
       "agent_decision": "auto_approve",
       "tabular_alone_decision": "approve",
       "y": 0,
       "stance_source": "parsed",
-      "verifier_verdict": "unsupported",
+      "verifier_verdict": "supported",
       "verifier_source": "llm"
     },
     {

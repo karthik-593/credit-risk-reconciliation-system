@@ -475,15 +475,50 @@ def text_stance(state: AppState) -> dict:
     }
 
 
+# --------------------------------------------------------------------------
+# Evidence grounding -- the CANONICAL check. verifier()'s mechanical layer,
+# scripts/eval_agent.py's --validate reporting, and the experiments all call
+# this one function, so production can never drift from what evaluation
+# measures. (scripts/eval_agent._is_grounded delegates here.)
+#
+# HISTORY: this used to be a bare `span not in desc` exact-substring test.
+# That downgraded genuinely grounded stances to neutral whenever the model
+# wrapped an otherwise-exact quote in its own quote characters, or re-cased a
+# word -- neither of which is a fabricated quote. experiments/
+# reasoning_stack_spanfix.py measured the effect on 2000 cached stances and
+# found it CI-separated: correcting only this test moved arm1 41.4% -> 18.7%
+# unsupported and arm2 42.4% -> 20.3%, while the baseline moved just
+# 35.2% -> 33.8%. Every span the correction newly accepted was a
+# quote-wrapping or casing case; not one was a paraphrase.
+#
+# DELIBERATELY NARROW. Strip surrounding quote characters, compare
+# case-insensitively, and nothing else. No internal-whitespace collapse, no
+# punctuation stripping, no fuzzy or token-overlap matching: each of those
+# would start accepting genuine paraphrase, which is exactly the over-claim
+# this layer exists to catch. A span that differs from the statement by more
+# than its outer quoting and casing must still fail.
+# --------------------------------------------------------------------------
+_QUOTE_CHARS = "\"'“”‘’"
+
+
+def _evidence_is_grounded(span: str, desc: str) -> bool:
+    """True if `span` is a real quote from `desc`, ignoring only surrounding
+    quote characters and letter case. A genuine paraphrase still fails."""
+    normalized_span = span.strip().strip(_QUOTE_CHARS).strip()
+    return normalized_span.lower() in desc.lower()
+
+
 def verifier(state: AppState) -> dict:
     """Second agent: checks whether text_stance's own quoted evidence and
     cited policy actually support the stance it reached. FALSIFIABLE ONLY --
     never re-judges risk, never proposes a different stance. Two layers:
       1. Mechanical (free, no LLM): every evidence span must be a real
-         substring of the applicant's statement, and every cited policy id
-         must be one that was actually retrieved for it. This alone catches
-         the failure mode where a model quotes the POLICY text as if it
-         were applicant evidence.
+         quote from the applicant's statement per _evidence_is_grounded()
+         above (exact text, ignoring only surrounding quote characters and
+         case -- a paraphrase still fails), and every cited policy id must
+         be one that was actually retrieved for it, matched EXACTLY. This
+         alone catches the failure mode where a model quotes the POLICY text
+         as if it were applicant evidence.
       2. LLM check (only if mechanical passes and stance != "neutral"): a
          small, separate call asking whether the quotes, under the cited
          policy, justify the claimed stance.
@@ -511,11 +546,11 @@ def verifier(state: AppState) -> dict:
         }
 
     # Layer 1 -- mechanical, free.
-    bad_span = next((span for span in evidence if span not in desc), None)
+    bad_span = next((span for span in evidence if not _evidence_is_grounded(span, desc)), None)
     if bad_span is not None:
         return {
             "verifier_verdict": "unsupported",
-            "verifier_reason": f"Evidence span is not an exact substring of the applicant's statement: {bad_span!r}",
+            "verifier_reason": f"Evidence span does not appear in the applicant's statement: {bad_span!r}",
             "verifier_source": "mechanical",
             "stance": "neutral",
             "stance_confidence": 0.0,

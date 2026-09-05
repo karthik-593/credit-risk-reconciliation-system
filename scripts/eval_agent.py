@@ -158,17 +158,20 @@ def tabular_alone_decision(p_default: float) -> str:
 # ---------------------------------------------------------------------------
 # --validate: 40 real calls, LLM-quality gate only. No tabular scoring needed.
 # ---------------------------------------------------------------------------
-_QUOTE_CHARS = "\"'“”‘’"
+# Grounding check -- DELEGATED, not duplicated. This logic used to live here
+# while the shipped verifier used a stricter bare-substring test, so
+# --validate's grounding rate and production's mechanical layer could
+# disagree about the same span. reconciler_agent._evidence_is_grounded is now
+# the single source of truth and the verifier calls it too; these two names
+# are kept as thin aliases so existing callers (and the experiments) don't
+# have to change.
+_QUOTE_CHARS = ra._QUOTE_CHARS
 
 
 def _is_grounded(span: str, desc: str) -> bool:
-    """Case-insensitive substring check, with surrounding quote characters
-    stripped from the span first -- some models wrap an otherwise-exact
-    quote in its own "..." or lightly re-case the first letter, neither of
-    which is a fabricated quote. A genuine paraphrase (different words, not
-    just quoting/casing) still correctly fails this check."""
-    normalized_span = span.strip().strip(_QUOTE_CHARS).strip()
-    return normalized_span.lower() in desc.lower()
+    """Alias for reconciler_agent._evidence_is_grounded -- the identical check
+    the shipped verifier's mechanical layer applies."""
+    return ra._evidence_is_grounded(span, desc)
 
 
 def run_validate(sample: pd.DataFrame) -> None:

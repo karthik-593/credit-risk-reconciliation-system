@@ -126,11 +126,68 @@ def case_e_llm_failure_does_not_downgrade():
     print("PASS  (e) verifier LLM call fails -> unclear, NOT downgraded -> original route unaffected")
 
 
+# ---------------------------------------------------------------------------
+# (f)-(h) -- regression cases for the grounding-check fix.
+#
+# The mechanical layer used to test `span not in desc`, an exact substring
+# match. That downgraded genuinely grounded stances to neutral whenever the
+# model wrapped its quote in quote characters or re-cased a word. These three
+# cases pin the corrected behaviour AND its boundary: (f) and (g) must now
+# pass the mechanical layer, (h) must still fail it. Without (h), a future
+# "improvement" to the normalizer could start accepting paraphrase and no
+# test would notice.
+# ---------------------------------------------------------------------------
+def case_f_quote_wrapped_evidence_passes_mechanical():
+    """(f) a real quote wrapped in literal quote chars -> NOT mechanically
+    unsupported; it reaches the LLM verifier like any grounded span."""
+    ra.configure_llm_client(FixedVerifierClient("supported", "Quote matches the applicant's own words."))
+    state = base_stance_state(evidence=[f'"{REAL_EVIDENCE}"'], policy_ids=[REAL_POLICY_ID])
+    verifier_out = ra.verifier(state)
+    assert verifier_out["verifier_source"] == "llm", (
+        f"quote-wrapped evidence must clear the mechanical layer, got {verifier_out}")
+    assert verifier_out["verifier_verdict"] == "supported", verifier_out
+    assert "stance" not in verifier_out, "a grounded stance must not be downgraded"
+    print("PASS  (f) quote-wrapped real evidence -> clears mechanical layer, reaches LLM verifier")
+
+
+def case_g_casing_variant_passes_mechanical():
+    """(g) a casing variant of a present span -> same."""
+    ra.configure_llm_client(FixedVerifierClient("supported", "Quote matches the applicant's own words."))
+    state = base_stance_state(evidence=[REAL_EVIDENCE.upper()], policy_ids=[REAL_POLICY_ID])
+    verifier_out = ra.verifier(state)
+    assert verifier_out["verifier_source"] == "llm", (
+        f"a re-cased real quote must clear the mechanical layer, got {verifier_out}")
+    assert verifier_out["verifier_verdict"] == "supported", verifier_out
+    assert "stance" not in verifier_out, "a grounded stance must not be downgraded"
+    print("PASS  (g) re-cased real evidence -> clears mechanical layer, reaches LLM verifier")
+
+
+def case_h_paraphrase_still_unsupported():
+    """(h) THE BOUNDARY. A near-miss paraphrase sharing most of its words with
+    the statement, but not a substring even after quote/case normalization ->
+    still mechanically unsupported. The fix must accept quoting and casing
+    hygiene ONLY, never paraphrase."""
+    # DESC says "I have been at my job for 9 years"; this says "9 years at my
+    # job" -- same words, reordered. Word overlap is high; it is not a quote.
+    paraphrase = "I have worked at my job for 9 years"
+    assert paraphrase not in DESC, "test setup: the paraphrase must not be a literal substring"
+    state = base_stance_state(evidence=[paraphrase], policy_ids=[REAL_POLICY_ID])
+    verifier_out = ra.verifier(state)
+    assert verifier_out["verifier_verdict"] == "unsupported", verifier_out
+    assert verifier_out["verifier_source"] == "mechanical", verifier_out
+    assert verifier_out["stance"] == "neutral", verifier_out
+    assert verifier_out["stance_confidence"] == 0.0, verifier_out
+    print("PASS  (h) near-miss paraphrase -> STILL unsupported (mechanical) -- boundary holds")
+
+
 if __name__ == "__main__":
     case_a_evidence_not_substring()
     case_b_policy_not_retrieved()
     case_c_neutral_skipped()
     case_d_genuinely_supported()
     case_e_llm_failure_does_not_downgrade()
+    case_f_quote_wrapped_evidence_passes_mechanical()
+    case_g_casing_variant_passes_mechanical()
+    case_h_paraphrase_still_unsupported()
     ra._llm_client = None  # leave module state clean for any test run after this one
-    print("\nAll 5 verifier cases passed.")
+    print("\nAll 8 verifier cases passed.")
